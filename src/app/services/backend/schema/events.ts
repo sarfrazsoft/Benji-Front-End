@@ -1,7 +1,10 @@
 export type EventType =
+  | 'BrainstormSubmitIdeaCommentEvent'
+  | 'BrainstormRemoveIdeaCommentEvent'
+  | 'BrainstormSubmitIdeaHeartEvent '
+  | 'BrainstormRemoveIdeaHeartEvent'
   | 'NotificationEvent'
   | 'JoinEvent'
-  | 'BrainstormSubmitIdeaCommentEvent'
   | 'ParticipantChangeBoardEvent'
   | 'HostChangeBoardEvent'
   | 'BrainstormToggleMeetingMode'
@@ -10,10 +13,16 @@ export type EventType =
   | 'BootParticipantEvent'
   | 'BrainstormChangeModeEvent'
   | 'BrainstormChangeBoardStatusEvent'
+  | 'BrainstormBoardSortOrderEvent'
+  | 'BrainstormToggleAllowCommentEvent'
+  | 'BrainstormToggleAllowHeartEvent'
   | string;
 
 export enum EventTypes {
   brainstormSubmitIdeaCommentEvent = 'BrainstormSubmitIdeaCommentEvent',
+  brainstormRemoveIdeaCommentEvent = 'BrainstormRemoveIdeaCommentEvent',
+  brainstormSubmitIdeaHeartEvent = 'BrainstormSubmitIdeaHeartEvent',
+  brainstormRemoveIdeaHeartEvent = 'BrainstormRemoveIdeaHeartEvent',
   notificationEvent = 'NotificationEvent',
   joinEvent = 'JoinEvent',
   brainstormToggleParticipantNameEvent = 'BrainstormToggleParticipantNameEvent',
@@ -25,4 +34,7 @@ export enum EventTypes {
   bootParticipantEvent = 'BootParticipantEvent',
   brainstormChangeModeEvent = 'BrainstormChangeModeEvent',
   brainstormChangeBoardStatusEvent = 'BrainstormChangeBoardStatusEvent',
+  brainstormBoardSortOrderEvent = 'BrainstormBoardSortOrderEvent',
+  brainstormToggleAllowCommentEvent = 'BrainstormToggleAllowCommentEvent',
+  brainstormToggleAllowHeartEvent = 'BrainstormToggleAllowHeartEvent',
 }

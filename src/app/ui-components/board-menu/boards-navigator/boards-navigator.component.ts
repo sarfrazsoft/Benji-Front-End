@@ -10,11 +10,8 @@ import {
   BoardSort,
   BoardStatus,
   BrainstormBoardSortOrderEvent,
-  BrainstormChangeBoardStatusEvent,
-  BrainstormClearBoardIdeaEvent,
   BrainstormRearrangeBoardEvent,
   BrainstormRemoveBoardEvent,
-  BrainstormToggleParticipantNameEvent,
   Branding,
   DuplicateBoardEvent,
   EventTypes,
@@ -272,21 +269,6 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new DuplicateBoardEvent(this.menuBoard));
   }
 
-  setBoardStatus() {
-    const selected = this.currentboardStatus;
-    this.sendMessage.emit(
-      new BrainstormChangeBoardStatusEvent(this.currentboardStatus, this.selectedBoard.id)
-    );
-  }
-
-  toggleShowAuthorship() {
-    this.sendMessage.emit(new BrainstormToggleParticipantNameEvent(this.selectedBoard.id));
-  }
-
-  copyLink() {
-    this.utilsService.copyToClipboard(this.hostname + this.activityState.lesson_run.lessonrun_code);
-  }
-
   resetBoards() {
     this.boardsCount = 0;
     this.boards = this.boards.filter((board) => board.removed === false);
@@ -295,24 +277,6 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
 
   setMenuBoard(board: Board) {
     this.menuBoard = board.id;
-  }
-
-  clearBoard() {
-    this.dialog
-      .open(ConfirmationDialogComponent, {
-        data: {
-          confirmationMessage: 'Are you sure you want to delete all posts? This action can not be undone?',
-          actionButton: 'Delete',
-        },
-        disableClose: true,
-        panelClass: 'confirmation-dialog',
-      })
-      .afterClosed()
-      .subscribe((res) => {
-        if (res) {
-          this.sendMessage.emit(new BrainstormClearBoardIdeaEvent(this.selectedBoard.id));
-        }
-      });
   }
 
   changeOrder(order: { value: BoardSort; name: string }) {

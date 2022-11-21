@@ -18,6 +18,7 @@ import { WhiteLabelResolver } from './white-label.resolver';
 
 import { ActivitiesServices } from './activities';
 import { LessonGroupService } from './lesson-group.service';
+
 import { LessonService } from './lesson.service';
 
 export * from './activities';
@@ -34,6 +35,7 @@ export {
   GroupingToolService,
   PostLayoutService,
   NotificationService,
+  LessonService,
 };
 
 export const ServicesProviders = [
@@ -52,8 +54,8 @@ export const ServicesProviders = [
   BoardStatusService,
   TopicMediaService,
   LessonGroupService,
-  LessonService,
   PostLayoutService,
   NotificationService,
+  LessonService,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 ];

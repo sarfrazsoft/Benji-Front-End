@@ -1,0 +1,16 @@
+<div class="title">Board Status</div>
+<div class="board-status">
+  <ng-select
+    class="board-status-dropdown"
+    appearance="outline" 
+    placeholder="Status"
+    [items]="boardStatusDropdown"
+    bindValue="value"
+    bindLabel="name"
+    [searchable]="false"
+    [clearable]="false"
+    [(ngModel)]="currentboardStatus"
+    (change)="setBoardStatus()"
+    dropdownPosition="bottom">
+  </ng-select>
+</div>

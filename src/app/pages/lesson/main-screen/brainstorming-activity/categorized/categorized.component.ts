@@ -128,7 +128,6 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
       } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
         this.columnSize = this.board.post_size;
       } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
-      } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
         this.brainstormService.ideaCommented(this.board, this.columns, () => {
           this.refreshMasonryLayout();
         });
@@ -173,7 +172,7 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
         this.brainstormService.updateIdeasPin(this.board, this.columns, () => {
           this.brainstormService.sortIdeas(this.board, this.columns);
         });
-      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+      } else if (this.eventType === EventTypes.brainstormToggleParticipantNameEvent) {
         this.refreshMasonryLayout();
       } else if (this.eventType === 'BrainstormToggleMeetingMode') {
         if (this.act.meeting_mode) {

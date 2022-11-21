@@ -176,10 +176,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
       // don't do anything
-    } else if (
-      this.eventType === EventTypes.joinEvent ||
-      this.eventType === EventTypes.brainstormToggleParticipantNameEvent
-    ) {
+    } else if (this.eventType === EventTypes.joinEvent) {
       this.act = cloneDeep(this.activityState.brainstormactivity);
       this.joinedUsers = this.activityState.lesson_run.participant_set;
     } else if (this.activityState.eventType === EventTypes.brainstormBoardPostSizeEvent) {

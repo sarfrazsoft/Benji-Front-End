@@ -1,8 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { find, forOwn, remove } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { TeamUser, Timer } from './backend/schema';
+import {
+  BrainstormBoardSortOrderResponse,
+  BrainstormChangeBoardStatusResponse,
+  BrainstormChangeModeResponse,
+  BrainstormRemoveIdeaCommentResponse,
+  BrainstormRemoveIdeaHeartResponse,
+  BrainstormSubmitIdeaCommentResponse,
+  BrainstormSubmitIdeaHeartResponse,
+  BrainstormToggleAllowCommentResponse,
+  BrainstormToggleAllowHeartResponse,
+  BrainstormToggleParticipantNameResponse,
+  HostChangeBoardEventResponse,
+  ParticipantChangeBoardResponse,
+} from 'src/app/services/backend/schema/event-responses';
+import { Board, Category, TeamUser, Timer, UpdateMessage } from './backend/schema';
 import { Participant } from './backend/schema/course_details';
 import { PartnerInfo } from './backend/schema/whitelabel_info';
 
@@ -160,5 +175,183 @@ export class ContextService {
 
   destroyActivityTimer() {
     this.activityTimer$.next(null);
+  }
+
+  removeCommentFromActivityState(
+    removedComment: BrainstormRemoveIdeaCommentResponse,
+    oldActivityState: UpdateMessage
+  ) {
+    // we have existing categories and we have id of the idea
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const board: Board = oldBoards[i];
+      if (board.id === removedComment.board_id) {
+        for (let j = 0; j < board.brainstormcategory_set.length; j++) {
+          const oldCategory = board.brainstormcategory_set[j];
+          const existingIdea = find(oldCategory.brainstormidea_set, {
+            id: removedComment.brainstormidea_id,
+          });
+          if (existingIdea) {
+            remove(existingIdea.comments, (comment) => comment.id === Number(removedComment.comment_id));
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  addCommentToActivityState(
+    newComment: BrainstormSubmitIdeaCommentResponse,
+    oldActivityState: UpdateMessage
+  ) {
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const categorySet: Array<Category> = oldBoards[i].brainstormcategory_set;
+      for (let j = 0; j < categorySet.length; j++) {
+        const existingCategory = categorySet[j];
+        const existingIdea = find(existingCategory.brainstormidea_set, { id: newComment.brainstormidea_id });
+        if (existingIdea) {
+          existingIdea.comments.push({
+            comment: newComment.comment,
+            id: newComment.id,
+            participant: newComment.participant,
+            comment_hearts: [],
+            reply_comments: [],
+          });
+          break;
+        }
+      }
+    }
+  }
+
+  brainstormSubmitIdeaHeart(res: BrainstormSubmitIdeaHeartResponse, oldActivityState: UpdateMessage) {
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const categorySet: Array<Category> = oldBoards[i].brainstormcategory_set;
+      for (let j = 0; j < categorySet.length; j++) {
+        const existingCategory = categorySet[j];
+        const existingIdea = find(existingCategory.brainstormidea_set, { id: res.brainstormidea_id });
+        if (existingIdea) {
+          existingIdea.hearts.push({
+            id: res.id,
+            participant: res.participant,
+          });
+          break;
+        }
+      }
+    }
+  }
+
+  brainstormRemovedIdeaHeart(res: BrainstormRemoveIdeaHeartResponse, oldActivityState: UpdateMessage) {
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const categorySet: Array<Category> = oldBoards[i].brainstormcategory_set;
+      for (let j = 0; j < categorySet.length; j++) {
+        const existingCategory = categorySet[j];
+        const existingIdea = find(existingCategory.brainstormidea_set, { id: res.brainstormidea_id });
+        if (existingIdea) {
+          remove(existingIdea.hearts, (heart) => heart.id === res.heart_id);
+          break;
+        }
+      }
+    }
+  }
+
+  changeHostBoardInActivityState(hostBoard: HostChangeBoardEventResponse, oldActivityState: UpdateMessage) {
+    oldActivityState.brainstormactivity.host_board = hostBoard.host_board;
+  }
+
+  changeParticipantBoardInActivityState(
+    participantBoard: ParticipantChangeBoardResponse,
+    oldActivityState: UpdateMessage,
+    participantCode: number
+  ) {
+    forOwn(oldActivityState.brainstormactivity.participants, function (value, key) {
+      remove(value, (code) => code === participantCode);
+      if (key === participantBoard.board_id.toString()) {
+        value.push(participantCode);
+      }
+    });
+  }
+
+  changeBoardStatus(statusChange: BrainstormChangeBoardStatusResponse, oldActivityState: UpdateMessage) {
+    // we have existing categories and we have id of the idea
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const board: Board = oldBoards[i];
+      if (board.id === statusChange.board_id) {
+        board.status = statusChange.status;
+        break;
+      }
+    }
+  }
+
+  changeBoardToggleParticipantName(
+    res: BrainstormToggleParticipantNameResponse,
+    oldActivityState: UpdateMessage
+  ) {
+    // we have existing categories and we have id of the idea
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const board: Board = oldBoards[i];
+      if (board.id === res.board_id) {
+        board.board_activity.show_participant_name_flag = res.show_participant_name_flag;
+        break;
+      }
+    }
+  }
+
+  changeBoardSortOrder(sortOrder: BrainstormBoardSortOrderResponse, oldActivityState: UpdateMessage) {
+    // we have existing categories and we have id of the idea
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const board: Board = oldBoards[i];
+      if (board.id === sortOrder.board_id) {
+        board.sort = sortOrder.sort;
+        break;
+      }
+    }
+  }
+
+  brainstormToggleAllowComment(
+    allowComment: BrainstormToggleAllowCommentResponse,
+    oldActivityState: UpdateMessage
+  ) {
+    // we have existing categories and we have id of the idea
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const board: Board = oldBoards[i];
+      if (board.id === allowComment.board_id) {
+        board.allow_comment = allowComment.allow_comment;
+        break;
+      }
+    }
+  }
+
+  brainstormToggleAllowHeart(
+    allowHeart: BrainstormToggleAllowHeartResponse,
+    oldActivityState: UpdateMessage
+  ) {
+    // we have existing categories and we have id of the idea
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const board: Board = oldBoards[i];
+      if (board.id === allowHeart.board_id) {
+        board.allow_heart = allowHeart.allow_heart;
+        break;
+      }
+    }
+  }
+
+  brainstormChangeMode(res: BrainstormChangeModeResponse, oldActivityState: UpdateMessage) {
+    // we have existing categories and we have id of the idea
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const board: Board = oldBoards[i];
+      if (board.id === res.board_id) {
+        board.board_activity.mode = res.mode;
+        break;
+      }
+    }
   }
 }

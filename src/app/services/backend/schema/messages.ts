@@ -31,6 +31,20 @@ import {
   WhereDoYouStandChoice,
 } from './activities';
 import { Lesson, LessonRun, RunningTools } from './course_details';
+import {
+  BrainstormBoardSortOrderResponse,
+  BrainstormChangeBoardStatusResponse,
+  BrainstormChangeModeResponse,
+  BrainstormRemoveIdeaCommentResponse,
+  BrainstormRemoveIdeaHeartResponse,
+  BrainstormSubmitIdeaCommentResponse,
+  BrainstormSubmitIdeaHeartResponse,
+  BrainstormToggleAllowCommentResponse,
+  BrainstormToggleAllowHeartResponse,
+  BrainstormToggleParticipantNameResponse,
+  HostChangeBoardEventResponse,
+  ParticipantChangeBoardResponse,
+} from './event-responses';
 import { EventType, EventTypes } from './events';
 import { LessonRunNotification, Notification } from './notification';
 import { User } from './user';
@@ -73,7 +87,17 @@ export interface UpdateMessage {
   event_msg?:
     | BrainstormSubmitIdeaCommentResponse
     | ParticipantChangeBoardResponse
-    | HostChangeBoardEventResponse;
+    | HostChangeBoardEventResponse
+    | BrainstormToggleParticipantNameResponse
+    | BrainstormRemoveIdeaCommentResponse
+    | BrainstormBoardSortOrderResponse
+    | BrainstormChangeBoardStatusResponse
+    | BrainstormToggleAllowCommentResponse
+    | BrainstormChangeModeResponse
+    | BrainstormSubmitIdeaHeartResponse
+    | BrainstormToggleParticipantNameResponse
+    | BrainstormRemoveIdeaHeartResponse
+    | BrainstormToggleAllowHeartResponse;
 }
 
 export interface ClientError {
@@ -105,7 +129,17 @@ export interface ServerMessage {
   event_msg?:
     | BrainstormSubmitIdeaCommentResponse
     | ParticipantChangeBoardResponse
-    | HostChangeBoardEventResponse;
+    | HostChangeBoardEventResponse
+    | BrainstormToggleParticipantNameResponse
+    | BrainstormRemoveIdeaCommentResponse
+    | BrainstormBoardSortOrderResponse
+    | BrainstormChangeBoardStatusResponse
+    | BrainstormToggleAllowCommentResponse
+    | BrainstormChangeModeResponse
+    | BrainstormSubmitIdeaHeartResponse
+    | BrainstormToggleParticipantNameResponse
+    | BrainstormRemoveIdeaHeartResponse
+    | BrainstormToggleAllowHeartResponse;
 }
 
 export interface QueryParamsObject {
@@ -567,21 +601,6 @@ export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {
   }
 }
 
-// export class BrainstormImageSubmitEvent extends ActivityEvent {
-//   event_name = 'BrainstormSubmitEvent';
-
-//   constructor(text: string, title: string, category: number, groupId: number, image_path?: string) {
-//     super();
-//     this.extra_args = {
-//       idea: text,
-//       title: title,
-//       category: category,
-//       group_id: groupId,
-//       image_path: image_path,
-//     };
-//   }
-// }
-
 export class BrainstormSubmitIdeaCommentEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitIdeaCommentEvent';
 
@@ -593,22 +612,6 @@ export class BrainstormSubmitIdeaCommentEvent extends ActivityEvent {
     };
   }
 }
-
-export class BrainstormSubmitIdeaCommentResponse {
-  board_id: number;
-  brainstormidea_id: number;
-  comment: string;
-  id: number;
-  participant: any;
-}
-export class ParticipantChangeBoardResponse {
-  board_id: number;
-  participant_code: number;
-}
-export class HostChangeBoardEventResponse {
-  host_board: number;
-}
-
 export class BrainstormRemoveIdeaCommentEvent extends ActivityEvent {
   event_name = 'BrainstormRemoveIdeaCommentEvent';
 

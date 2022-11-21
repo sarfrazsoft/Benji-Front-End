@@ -30,7 +30,6 @@ import {
   BrainstormRemoveIdeaHeartEvent,
   BrainstormRemoveIdeaPinEvent,
   BrainstormSubmitIdeaCommentEvent,
-  BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartEvent,
   EventTypes,
   Idea,
@@ -38,6 +37,10 @@ import {
   QueryParamsObject,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import {
+  BrainstormRemoveIdeaCommentResponse,
+  BrainstormSubmitIdeaCommentResponse,
+} from 'src/app/services/backend/schema/event-responses';
 import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
@@ -408,7 +411,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   removeHeart(item, event) {
-    if (!this.board.allow_comment) {
+    if (!this.board.allow_heart) {
       return;
     }
     let hearted;
@@ -429,7 +432,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   setHeart(idea: Idea) {
-    if (this.board.allow_comment) {
+    if (this.board.allow_heart) {
       if (!this.deactivateHearting) {
         this.deactivateHearting = true;
         this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));

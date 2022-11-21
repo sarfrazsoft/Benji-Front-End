@@ -1,13 +1,21 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Subject } from 'rxjs/internal/Subject';
-import { BrainstormSubmitIdeaCommentResponse, UpdateMessage } from '../backend/schema';
+import { UpdateMessage } from '../backend/schema';
+import {
+  BrainstormRemoveIdeaCommentResponse,
+  BrainstormSubmitIdeaCommentResponse,
+} from '../backend/schema/event-responses';
 import { LessonRunNotification } from '../backend/schema/notification';
 
 @Injectable()
 export class BrainstormEventService {
   set ideaCommentEvent(l: BrainstormSubmitIdeaCommentResponse) {
     this.ideaCommentEvent$.next(l);
+  }
+
+  set ideaRemoveCommentEvent(l: BrainstormRemoveIdeaCommentResponse) {
+    this.ideaRemoveCommentEvent$.next(l);
   }
 
   set notifications(l: Array<LessonRunNotification>) {
@@ -29,9 +37,15 @@ export class BrainstormEventService {
     return this.participantBoardId$.value;
   }
 
+  set showAuthorship(l: boolean) {
+    this.showAuthorship$.next(l);
+  }
+
   constructor() {}
 
   ideaCommentEvent$ = new Subject<BrainstormSubmitIdeaCommentResponse>();
+
+  ideaRemoveCommentEvent$ = new Subject<BrainstormRemoveIdeaCommentResponse>();
 
   notifications$ = new BehaviorSubject<Array<LessonRunNotification>>(null);
 
@@ -40,4 +54,6 @@ export class BrainstormEventService {
   hostBoardId$ = new BehaviorSubject<number>(null);
 
   participantBoardId$ = new BehaviorSubject<number>(null);
+
+  showAuthorship$ = new BehaviorSubject<boolean>(null);
 }

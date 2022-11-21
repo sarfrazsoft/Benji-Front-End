@@ -7,6 +7,7 @@ import {
   Board,
   BoardStatus,
   BrainstormActivity,
+  BrainstormRemoveIdeaCommentResponse,
   BrainstormSubmitIdeaCommentResponse,
   Category,
   ColsCategoryChangeIdeaOrderInfo,

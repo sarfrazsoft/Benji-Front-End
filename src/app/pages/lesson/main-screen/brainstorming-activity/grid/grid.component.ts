@@ -164,7 +164,7 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
         this.postLayoutService.sortGrid(this.board.sort, this.grid);
       } else if (this.eventType === 'BrainstormToggleAllowHeartEvent') {
         this.postLayoutService.refreshGridLayout(this.grid, false);
-      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+      } else if (this.eventType === EventTypes.brainstormToggleParticipantNameEvent) {
         this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (this.eventType === EventTypes.brainstormToggleMeetingMode) {
         if (this.act.meeting_mode) {
@@ -187,7 +187,7 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
           // do nothing
         }
       } else if (
-        this.eventType === 'BrainstormChangeBoardStatusEvent' ||
+        this.eventType === EventTypes.brainstormChangeBoardStatusEvent ||
         this.eventType === 'BrainstormToggleAllowCommentEvent'
       ) {
         this.postLayoutService.refreshGridLayout(this.grid, false);

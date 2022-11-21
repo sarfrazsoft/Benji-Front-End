@@ -14,13 +14,7 @@ import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
-import {
-  Board,
-  Branding,
-  EventTypes,
-  Timer,
-  UpdateMessage,
-} from 'src/app/services/backend/schema';
+import { Board, Branding, EventTypes, Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { Lesson, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 import {
@@ -169,7 +163,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   updateNotificationCount(count: number): void {
-    this.notificationCount = count;
+    setTimeout(() => {
+      this.notificationCount = count;
+    }, 0);
   }
 
   notificationMenuOpened(): void {

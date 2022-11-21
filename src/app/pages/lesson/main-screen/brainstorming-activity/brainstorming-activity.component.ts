@@ -26,18 +26,22 @@ import {
   BoardMode,
   BoardStatus,
   BrainstormActivity,
-  BrainstormSubmitIdeaCommentResponse,
   EventTypes,
   Group,
   HostChangeBoardEvent,
-  HostChangeBoardEventResponse,
   Idea,
   ParticipantChangeBoardEvent,
-  ParticipantChangeBoardResponse,
   QueryParamsObject,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import {
+  BrainstormRemoveIdeaCommentResponse,
+  BrainstormSubmitIdeaCommentResponse,
+  BrainstormToggleParticipantNameResponse,
+  HostChangeBoardEventResponse,
+  ParticipantChangeBoardResponse,
+} from 'src/app/services/backend/schema/event-responses';
 import { BoardStatusService } from 'src/app/services/board-status.service';
 import { LessonService } from 'src/app/services/lesson.service';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
@@ -216,7 +220,7 @@ export class MainScreenBrainstormingActivityComponent
         this.boardMode = mode;
         this.brainstormService.boardMode = this.boardMode;
       });
-    } else if (currentEventType === 'BrainstormChangeBoardStatusEvent') {
+    } else if (currentEventType === EventTypes.brainstormChangeBoardStatusEvent) {
       this.changeBoardStatus();
       this.selectUserBoard();
     } else if (currentEventType === 'BrainstormAddBoardEventBaseEvent') {

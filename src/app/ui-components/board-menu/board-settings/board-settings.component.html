@@ -22,22 +22,9 @@
   </div>
 
   <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.BOARD_STATUS)">
-    <div class="title">Board Status</div>
-    <div class="board-status">
-      <ng-select
-        class="board-status-dropdown"
-        appearance="outline" 
-        placeholder="Status"
-        [items]="boardStatusDropdown"
-        bindValue="value"
-        bindLabel="name"
-        [searchable]="false"
-        [clearable]="false"
-        [(ngModel)]="currentboardStatus"
-        (change)="setBoardStatus()"
-        dropdownPosition="bottom">
-      </ng-select>
-    </div>
+    <benji-board-status
+      (sendMessage)="sendMessage.emit($event)">
+    </benji-board-status>
   </div>
 
   <!-- Authorship on cards -->

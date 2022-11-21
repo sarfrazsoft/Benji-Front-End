@@ -2,11 +2,8 @@ export * from './components';
 export * from './directives';
 export * from './dialogs';
 
-import {
-  MainScreenBrainStormComponents,
-  MainScreenPollComponent,
-  MainScreenPopQuizComponent,
-} from 'src/app/pages/lesson/main-screen';
+import { MainScreenBrainStormComponents } from 'src/app/pages/lesson/main-screen';
+import { MainScreenPollComponent, MainScreenPopQuizComponent } from 'src/app/pages/lesson/main-screen';
 import { ParticipantLobbyComponents } from 'src/app/pages/participant';
 import { SafeHtmlPipe } from '../services/safe-html.pipe';
 import { SafePipe } from '../services/safe.pipe';
