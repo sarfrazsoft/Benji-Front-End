@@ -45,9 +45,9 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
       }
     });
 
-    this.brainstormEventService.participantBoardId$.subscribe((participantBoardId: number) => {
-      if (participantBoardId) {
-        this.participantBoardId = participantBoardId;
+    this.brainstormService.selectedBoard$.subscribe((board: Board) => {
+      if (board) {
+        this.participantBoardId = board.id;
         this.setUpNavigationButtons();
       }
     });

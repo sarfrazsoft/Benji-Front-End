@@ -222,16 +222,17 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         isHost: this.clientType === 'participant' ? false : true,
       };
     } else if (msg.eventtype === EventTypes.participantChangeBoardEvent) {
-      this.serverMessage = {
-        event_msg: msg.event_msg,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
       this.contextService.changeParticipantBoardInActivityState(
         msg.event_msg as ParticipantChangeBoardResponse,
         this.oldServerMessage,
         this.participantCode
       );
+      this.serverMessage = {
+        ...this.oldServerMessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
+      console.log(this.serverMessage);
     } else if (msg.eventtype === EventTypes.hostChangeBoardEvent) {
       this.serverMessage = {
         event_msg: msg.event_msg,
