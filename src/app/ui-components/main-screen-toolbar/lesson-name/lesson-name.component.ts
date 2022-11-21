@@ -5,7 +5,8 @@ import { UpdateMessage } from 'src/app/services/backend/schema';
 import { LessonRun } from 'src/app/services/backend/schema/course_details';
 import { GetUpdatedLessonDetailEvent } from 'src/app/services/backend/schema/messages';
 import { LessonService } from 'src/app/services/lesson.service';
-import { SessionSettingsDialogComponent } from 'src/app/shared';
+import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
+
 @Component({
   selector: 'benji-lesson-name',
   templateUrl: './lesson-name.component.html',
@@ -17,8 +18,8 @@ export class LessonNameComponent implements OnInit {
   lessonRun: LessonRun;
   lessonName: string;
   coverPhoto: string;
-  lessonImage: string = null;
-  imageUrl: string = null;
+  lessonImage: string;
+  imageUrl: string;
 
   constructor(
     private matDialog: MatDialog,
@@ -45,9 +46,7 @@ export class LessonNameComponent implements OnInit {
     });
 
     this.brainstormService.lessonImage$.subscribe((lessonImage) => {
-      if (lessonImage) {
-        this.coverPhoto = lessonImage;
-      }
+      this.coverPhoto = lessonImage;
     });
   }
 
