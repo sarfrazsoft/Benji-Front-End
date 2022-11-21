@@ -4,9 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Intercom } from 'ng-intercom';
 import { AuthService, ContextService } from 'src/app/services';
 import { TeamUser, User } from 'src/app/services/backend/schema';
-import {
-  SessionSettingsDialogComponent,
-} from '../../shared';
+import { SessionSettingsDialogComponent } from '../../shared';
 import { AdminService } from './services/admin.service';
 
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
@@ -14,11 +12,11 @@ import { EditorView } from 'prosemirror-view';
 
 import { Validators } from 'ngx-editor';
 
-import doc from './../../shared/ngx-editor/doc';
-import { LessonGroupService } from 'src/app/services/lesson-group.service';
 import { Title } from '@angular/platform-browser';
-import { UtilsService } from 'src/app/services/utils.service';
 import { Observable } from 'rxjs';
+import { LessonGroupService } from 'src/app/services/lesson-group.service';
+import { UtilsService } from 'src/app/services/utils.service';
+import doc from './../../shared/ngx-editor/doc';
 
 @Component({
   selector: 'benji-admin-panel',
@@ -58,7 +56,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
     private router: Router,
     private route: ActivatedRoute,
     private utilsService: UtilsService,
-    private lessonGroupService: LessonGroupService,
+    private lessonGroupService: LessonGroupService
   ) {
     this.initDashData();
   }
@@ -74,13 +72,11 @@ export class AdminPanelComponent implements OnInit, OnChanges {
 
     this.adminName = this.contextService.user.first_name;
 
-    this.route.queryParams
-      .subscribe(params => {
-        if (params.folder) {
-          this.contextService.selectedFolder = params.folder;
-        }
+    this.route.queryParams.subscribe((params) => {
+      if (params.folder) {
+        this.contextService.selectedFolder = params.folder;
       }
-      );
+    });
 
     this.contextService.selectedFolder$.subscribe((folderId) => {
       if (folderId === null) {
@@ -88,28 +84,26 @@ export class AdminPanelComponent implements OnInit, OnChanges {
         this.folderName = null;
       } else if (folderId) {
         this.selectedFolderId = folderId;
-        this.lessonGroupService.getFolderDetails(folderId)
-          .subscribe(
-            (folder) => {
-              this.folderName = folder.name;
-              this.lessons = folder.lesson;
-              this.setFolderLessonsIDs();
-              this.lessonRuns = [];
-              this.activatedRoute.data.forEach((data: any) => {
-                data.dashData.lessonRuns.forEach((lessonRun) => {
-                  this.lessons.forEach((lesson) => {
-                    if (lessonRun.lesson.id === lesson.id) {
-                      this.lessonRuns.push(lessonRun);
-                    }
-                  });
+        this.lessonGroupService.getFolderDetails(folderId).subscribe(
+          (folder) => {
+            this.folderName = folder.name;
+            this.lessons = folder.lesson;
+            this.setFolderLessonsIDs();
+            this.lessonRuns = [];
+            this.activatedRoute.data.forEach((data: any) => {
+              data.dashData.lessonRuns.forEach((lessonRun) => {
+                this.lessons.forEach((lesson) => {
+                  if (lessonRun.lesson.id === lesson.id) {
+                    this.lessonRuns.push(lessonRun);
+                  }
                 });
               });
-            },
-            (error) => console.log(error)
-          );
+            });
+          },
+          (error) => console.log(error)
+        );
       }
     });
-
   }
 
   ngOnChanges() {
@@ -118,7 +112,6 @@ export class AdminPanelComponent implements OnInit, OnChanges {
 
   initDashData(): void {
     this.activatedRoute.data.forEach((data: any) => {
-      this.lessons = data.dashData.lessons.filter((lesson) => lesson.public_permission !== 'duplicate');
       this.lessonRuns = data.dashData.lessonRuns;
     });
   }
@@ -162,7 +155,8 @@ export class AdminPanelComponent implements OnInit, OnChanges {
             const folderId = this.selectedFolderId;
             this.folderLessonsIDs.push(res.lesson);
             if (folderId) {
-              this.lessonGroupService.updateFolder({ title: this.folderName, lessonsIds: this.folderLessonsIDs, id: folderId })
+              this.lessonGroupService
+                .updateFolder({ title: this.folderName, lessonsIds: this.folderLessonsIDs, id: folderId })
                 .subscribe(
                   (data) => {
                     console.log(data);

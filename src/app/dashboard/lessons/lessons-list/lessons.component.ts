@@ -69,19 +69,6 @@ export class LessonsComponent implements OnInit {
     });
   }
 
-  updateLessons() {
-    this.adminService.getLessons().subscribe((lessons) => {
-      if (lessons.length) {
-        lessons = orderBy(lessons, (lesson) => new Date(lesson.last_edited), 'desc');
-      }
-      if (this.isTemplates) {
-        this.lessons = lessons.filter((lesson) => lesson.public_permission === 'duplicate');
-      } else {
-        this.lessons = lessons.filter((lesson) => lesson.public_permission !== 'duplicate');
-      }
-    });
-  }
-
   updateLessonRuns(notify: NotificationTypes) {
     this.adminService.getLessonRuns().subscribe((lessonRuns) => {
       this.lessonRuns = lessonRuns;

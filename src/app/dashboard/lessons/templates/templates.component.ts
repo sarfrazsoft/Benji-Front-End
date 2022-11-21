@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { orderBy, sortBy } from 'lodash';
 import * as moment from 'moment';
@@ -62,15 +62,6 @@ export class TemplatesComponent implements OnInit {
           relativeTo: this.activatedRoute,
         });
       }
-    });
-  }
-
-  updateLessons() {
-    this.adminService.getLessons().subscribe((lessons) => {
-      if (lessons.length) {
-        lessons = orderBy(lessons, (lesson) => new Date(lesson.last_edited), 'desc');
-      }
-      this.lessons = lessons.filter((lesson) => lesson.public_permission === 'duplicate');
     });
   }
 
