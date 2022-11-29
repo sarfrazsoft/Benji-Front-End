@@ -37,13 +37,16 @@ import {
   BrainstormChangeModeResponse,
   BrainstormRemoveIdeaCommentResponse,
   BrainstormRemoveIdeaHeartResponse,
+  BrainstormRemoveSubmitResponse,
   BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartResponse,
+  BrainstormSubmitResponse,
   BrainstormToggleAllowCommentResponse,
   BrainstormToggleAllowHeartResponse,
   BrainstormToggleParticipantNameResponse,
   HostChangeBoardEventResponse,
   ParticipantChangeBoardResponse,
+  RemoveIdeaDocumentResponse,
 } from './event-responses';
 import { EventType, EventTypes } from './events';
 import { LessonRunNotification, Notification } from './notification';
@@ -84,20 +87,7 @@ export interface UpdateMessage {
   wheredoyoustandactivity?: WhereDoYouStandActivity;
   triadgroupingactivity?: TriadGroupingActivity;
 
-  event_msg?:
-    | BrainstormSubmitIdeaCommentResponse
-    | ParticipantChangeBoardResponse
-    | HostChangeBoardEventResponse
-    | BrainstormToggleParticipantNameResponse
-    | BrainstormRemoveIdeaCommentResponse
-    | BrainstormBoardSortOrderResponse
-    | BrainstormChangeBoardStatusResponse
-    | BrainstormToggleAllowCommentResponse
-    | BrainstormChangeModeResponse
-    | BrainstormSubmitIdeaHeartResponse
-    | BrainstormToggleParticipantNameResponse
-    | BrainstormRemoveIdeaHeartResponse
-    | BrainstormToggleAllowHeartResponse;
+  event_msg?: EventResponseTypes;
 }
 
 export interface ClientError {
@@ -118,6 +108,24 @@ export interface ServerNotification {
   detail: any;
 }
 
+export type EventResponseTypes =
+  | BrainstormSubmitIdeaCommentResponse
+  | ParticipantChangeBoardResponse
+  | HostChangeBoardEventResponse
+  | BrainstormToggleParticipantNameResponse
+  | BrainstormRemoveIdeaCommentResponse
+  | BrainstormBoardSortOrderResponse
+  | BrainstormChangeBoardStatusResponse
+  | BrainstormToggleAllowCommentResponse
+  | BrainstormChangeModeResponse
+  | BrainstormSubmitIdeaHeartResponse
+  | BrainstormToggleParticipantNameResponse
+  | BrainstormRemoveIdeaHeartResponse
+  | BrainstormToggleAllowHeartResponse
+  | BrainstormRemoveSubmitResponse
+  | BrainstormSubmitResponse
+  | RemoveIdeaDocumentResponse;
+
 export interface ServerMessage {
   messagetime: number;
   updatemessage?: UpdateMessage;
@@ -126,20 +134,7 @@ export interface ServerMessage {
   servernotification?: ServerNotification;
   notifications?: Array<LessonRunNotification>;
   eventtype: string | 'NotificationEvent';
-  event_msg?:
-    | BrainstormSubmitIdeaCommentResponse
-    | ParticipantChangeBoardResponse
-    | HostChangeBoardEventResponse
-    | BrainstormToggleParticipantNameResponse
-    | BrainstormRemoveIdeaCommentResponse
-    | BrainstormBoardSortOrderResponse
-    | BrainstormChangeBoardStatusResponse
-    | BrainstormToggleAllowCommentResponse
-    | BrainstormChangeModeResponse
-    | BrainstormSubmitIdeaHeartResponse
-    | BrainstormToggleParticipantNameResponse
-    | BrainstormRemoveIdeaHeartResponse
-    | BrainstormToggleAllowHeartResponse;
+  event_msg?: EventResponseTypes;
 }
 
 export interface QueryParamsObject {

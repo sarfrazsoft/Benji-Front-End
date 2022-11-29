@@ -16,6 +16,22 @@ export type EventType =
   | 'BrainstormBoardSortOrderEvent'
   | 'BrainstormToggleAllowCommentEvent'
   | 'BrainstormToggleAllowHeartEvent'
+  | 'BrainstormSubmitEvent'
+  | 'BrainstormEditIdeaSubmitEvent'
+  | 'RemoveIdeaDocumentEvent'
+  | 'BrainstormRemoveSubmissionEvent'
+  | 'BrainstormCreateCategoryEvent'
+  | 'BrainstormRemoveCategoryEvent'
+  | 'BrainstormRenameCategoryEvent'
+  | 'BrainstormAddBoardEventBaseEvent'
+  | 'DuplicateBoardEvent'
+  | 'BrainstormRemoveBoardEvent'
+  | 'BrainstormAddIdeaPinEvent'
+  | 'BrainstormRemoveIdeaPinEvent'
+  | 'BrainstormRearrangeBoardEvent'
+  | 'BrainstormMoveIdeaBoardEvent'
+  | 'BrainstormBoardPostSizeEvent'
+  | 'MoveBrainstormIdeaEvent'
   | string;
 
 export enum EventTypes {
@@ -37,4 +53,21 @@ export enum EventTypes {
   brainstormBoardSortOrderEvent = 'BrainstormBoardSortOrderEvent',
   brainstormToggleAllowCommentEvent = 'BrainstormToggleAllowCommentEvent',
   brainstormToggleAllowHeartEvent = 'BrainstormToggleAllowHeartEvent',
+
+  brainstormSubmitEvent = 'BrainstormSubmitEvent',
+  brainstormEditIdeaSubmitEvent = 'BrainstormEditIdeaSubmitEvent',
+  removeIdeaDocumentEvent = 'RemoveIdeaDocumentEvent',
+  brainstormRemoveSubmissionEvent = 'BrainstormRemoveSubmissionEvent',
+
+  brainstormCreateCategoryEvent = 'BrainstormCreateCategoryEvent',
+  brainstormRemoveCategoryEvent = 'BrainstormRemoveCategoryEvent',
+  brainstormRenameCategoryEvent = 'BrainstormRenameCategoryEvent',
+  brainstormAddBoardEventBaseEvent = 'BrainstormAddBoardEventBaseEvent',
+  duplicateBoardEvent = 'DuplicateBoardEvent',
+  brainstormRemoveBoardEvent = 'BrainstormRemoveBoardEvent',
+  brainstormAddIdeaPinEvent = 'BrainstormAddIdeaPinEvent',
+  brainstormRemoveIdeaPinEvent = 'BrainstormRemoveIdeaPinEvent',
+  brainstormRearrangeBoardEvent = 'BrainstormRearrangeBoardEvent',
+  brainstormMoveIdeaBoardEvent = 'BrainstormMoveIdeaBoardEvent',
+  moveBrainstormIdeaEvent = 'MoveBrainstormIdeaEvent',
 }

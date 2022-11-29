@@ -67,11 +67,11 @@ export interface CoverPhoto {
 }
 
 export interface LessonRunImageData {
-  lessonrunCode: number,
-  lessonImage: Blob,
-  lessonImageName: string,
-  imageUrl: string,
-  imageId: number
+  lessonrunCode: number;
+  lessonImage: Blob;
+  lessonImageName: string;
+  imageUrl: string;
+  imageId: number;
 }
 
 export interface RunningTools {
@@ -129,6 +129,26 @@ export interface LessonRunDetails {
   idea_count: number;
   board_count: number;
   lessonrun_images: Array<CoverPhoto>;
+}
+
+export interface LessonRunDashboardDetails {
+  end_time: string;
+  host: Host;
+  id: number;
+  lesson: Lesson;
+  lessonrun_code: number;
+  participant_count: number;
+  screen_socet: string;
+  start_time: string;
+  branding: Branding;
+  idea_count: number;
+  board_count: number;
+  lessonrun_images: Array<CoverPhoto>;
+}
+
+export interface Host {
+  id: number;
+  name: string;
 }
 
 export interface Participant {

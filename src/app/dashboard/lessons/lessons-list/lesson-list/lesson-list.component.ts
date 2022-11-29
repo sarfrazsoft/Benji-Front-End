@@ -74,7 +74,7 @@ export class LessonListComponent implements OnChanges {
     this.dataSource = [];
     const slicedArray = this.lessonRuns;
     slicedArray.forEach((val: any, index: number) => {
-      const ids = val.lessonrun_images.map((object) => {
+      const ids = val.lessonrun_images?.map((object) => {
         return object.id;
       });
       const max = Math.max(...ids);
@@ -85,10 +85,10 @@ export class LessonListComponent implements OnChanges {
         lessonId: val.lesson.id,
         lessonTitle: val.lesson.lesson_name,
         lessonDescription: val.lesson.lesson_description,
-        host: val.host.first_name + ' ' + val.host.last_name,
+        host: val.host.name,
         hostId: val.host.id,
         boards: val.board_count,
-        participants: val.participant_set.length,
+        participants: val.participant_count,
         startDate: moment(val.start_time).format('MMM D, YYYY'),
         lessonImageId: val.lessonrun_images[this.maxIdIndex]?.id,
         lessonImage: val.lessonrun_images[this.maxIdIndex]?.img

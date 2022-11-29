@@ -1,4 +1,13 @@
-import { BoardMode, BoardSort, BoardStatus } from './activities';
+import {
+  BoardMode,
+  BoardSort,
+  BoardStatus,
+  Idea,
+  IdeaComment,
+  IdeaDocument,
+  IdeaDocumentType,
+  IdeaHeart,
+} from './activities';
 
 export interface BrainstormSubmitIdeaCommentResponse {
   board_id: number;
@@ -48,6 +57,51 @@ export interface BrainstormToggleParticipantNameResponse {
 export interface BrainstormChangeBoardStatusResponse {
   board_id: number;
   status: BoardStatus;
+}
+
+export interface BrainstormSubmitResponse {
+  id: number;
+  idea: string;
+  category_id: number;
+  board_id: number;
+  participant: number;
+  title: string;
+  version: number;
+  meta: any;
+  time: string;
+  idea_image: IdeaDocument;
+  idea_document: IdeaDocument;
+  idea_video: IdeaDocument;
+}
+
+export interface BrainstormEditResponse {
+  id: number;
+  idea: string;
+  category_id: number;
+  board_id: number;
+  participant: number;
+  title: string;
+  comments: Array<IdeaComment>;
+  hearts: Array<IdeaHeart>;
+  version: number;
+  meta: any;
+  time: string;
+  idea_image: IdeaDocument;
+  idea_document: IdeaDocument;
+  idea_video: IdeaDocument;
+}
+
+export interface BrainstormRemoveSubmitResponse {
+  brainstormidea_id: number;
+  board_id: number;
+  participant: number;
+}
+
+export interface RemoveIdeaDocumentResponse {
+  document_id: number;
+  brainstormidea_id: number;
+  board_id: number;
+  participant: number;
 }
 
 export interface BrainstormChangeModeResponse {

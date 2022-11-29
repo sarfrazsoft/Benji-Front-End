@@ -1,23 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { find, forOwn, remove } from 'lodash';
+import { find, findIndex, forOwn, remove } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import {
   BrainstormBoardSortOrderResponse,
   BrainstormChangeBoardStatusResponse,
   BrainstormChangeModeResponse,
+  BrainstormEditResponse,
   BrainstormRemoveIdeaCommentResponse,
   BrainstormRemoveIdeaHeartResponse,
+  BrainstormRemoveSubmitResponse,
   BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartResponse,
+  BrainstormSubmitResponse,
   BrainstormToggleAllowCommentResponse,
   BrainstormToggleAllowHeartResponse,
   BrainstormToggleParticipantNameResponse,
   HostChangeBoardEventResponse,
   ParticipantChangeBoardResponse,
+  RemoveIdeaDocumentResponse,
 } from 'src/app/services/backend/schema/event-responses';
-import { Board, Category, TeamUser, Timer, UpdateMessage } from './backend/schema';
+import { Board, Category, Idea, IdeaDocument, TeamUser, Timer, UpdateMessage } from './backend/schema';
 import { Participant } from './backend/schema/course_details';
 import { PartnerInfo } from './backend/schema/whitelabel_info';
 
@@ -350,6 +354,114 @@ export class ContextService {
       const board: Board = oldBoards[i];
       if (board.id === res.board_id) {
         board.board_activity.mode = res.mode;
+        break;
+      }
+    }
+  }
+
+  addIdea(res: BrainstormSubmitResponse, oldActivityState: UpdateMessage) {
+    // we have existing categories and we have id of the idea
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const board: Board = oldBoards[i];
+      if (board.id === res.board_id) {
+        for (let j = 0; j < board.brainstormcategory_set.length; j++) {
+          const category = board.brainstormcategory_set[j];
+          if (category.id === res.category_id) {
+            const idea_document: IdeaDocument = {
+              ...res.idea_document,
+              id: res.idea_document?.id,
+            };
+
+            const idea: Idea = {
+              ...res,
+              submitting_participant: {
+                participant_code: res.participant,
+                display_name: find(
+                  oldActivityState?.lesson_run?.participant_set,
+                  (p) => p.participant_code === res.participant
+                )?.display_name,
+              },
+              pinned: false,
+              comments: [],
+              hearts: [],
+              num_votes: 0,
+              removed: false,
+              version: 0,
+              idea_document: res.idea_document ?? null,
+              idea_video: res.idea_video ?? null,
+              idea_image: res.idea_image ?? null,
+            };
+            category.brainstormidea_set.push(idea);
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  editIdea(res: BrainstormEditResponse, oldActivityState: UpdateMessage) {
+    // we have existing categories and we have id of the idea
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const board: Board = oldBoards[i];
+      if (board.id === res.board_id) {
+        for (let j = 0; j < board.brainstormcategory_set.length; j++) {
+          const category = board.brainstormcategory_set[j];
+          if (category.id === res.category_id) {
+            const existingIdeaIndex = findIndex(category.brainstormidea_set, { id: res.id });
+
+            const editedIdea: Idea = {
+              ...category.brainstormidea_set[existingIdeaIndex],
+              ...res,
+            };
+            category.brainstormidea_set[existingIdeaIndex] = editedIdea;
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  removeIdea(res: BrainstormRemoveSubmitResponse, oldActivityState: UpdateMessage) {
+    // we have existing categories and we have id of the idea
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const board: Board = oldBoards[i];
+      if (board.id === res.board_id) {
+        for (let j = 0; j < board.brainstormcategory_set.length; j++) {
+          const category = board.brainstormcategory_set[j];
+          const existingIdea = find(category.brainstormidea_set, { id: res.brainstormidea_id });
+          if (existingIdea) {
+            remove(category.brainstormidea_set, { id: res.brainstormidea_id });
+            break;
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  removeIdeaDocument(res: RemoveIdeaDocumentResponse, oldActivityState: UpdateMessage) {
+    // we have existing categories and we have id of the idea
+    const oldBoards = oldActivityState.brainstormactivity.boards;
+    for (let i = 0; i < oldBoards.length; i++) {
+      const board: Board = oldBoards[i];
+      if (board.id === res.board_id) {
+        for (let j = 0; j < board.brainstormcategory_set.length; j++) {
+          const category = board.brainstormcategory_set[j];
+          const existingIdea = find(category.brainstormidea_set, { id: res.brainstormidea_id });
+          if (existingIdea?.idea_document?.id === res.document_id) {
+            existingIdea.idea_document = null;
+            break;
+          } else if (existingIdea?.idea_image?.id === res.document_id) {
+            existingIdea.idea_image = null;
+            break;
+          } else if (existingIdea?.idea_video?.id === res.document_id) {
+            existingIdea.idea_video = null;
+            break;
+          }
+        }
         break;
       }
     }

@@ -431,7 +431,7 @@ export interface Idea {
   editing?: boolean;
   addingIdea?: boolean;
   comments: Array<IdeaComment>;
-  hearts: Array<{ id: number; participant: number }>;
+  hearts: Array<IdeaHeart>;
   version: number;
   time: string;
   idea_document: IdeaDocument;
@@ -439,7 +439,12 @@ export interface Idea {
   meta: any;
 }
 
-export class IdeaComment {
+export interface IdeaHeart {
+  id: number;
+  participant: number;
+}
+
+export interface IdeaComment {
   comment: string;
   comment_hearts: Array<number>;
   id: number;
@@ -449,10 +454,12 @@ export class IdeaComment {
 export interface IdeaDocument {
   id: number;
   document: string;
-  document_type: 'video' | 'document' | 'image';
+  document_type: IdeaDocumentType;
   document_url: string;
   document_url_converted: string;
 }
+
+export type IdeaDocumentType = 'video' | 'document' | 'image';
 
 export interface ParticipantCode {
   participant_code: number;

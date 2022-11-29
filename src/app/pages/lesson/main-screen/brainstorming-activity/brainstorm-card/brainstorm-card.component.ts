@@ -243,7 +243,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   ngOnChanges(changes) {
-    if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
+    if (this.eventType === EventTypes.brainstormEditIdeaSubmitEvent) {
       if (this.item.idea_video && this.videoAvailable) {
         if (this.oldVideo !== this.item.idea_video.id) {
           // video was already available and probably changed
@@ -253,6 +253,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
             this.videoAvailable = true;
           }, 5);
         }
+      } else if (this.item.idea_video && !this.videoAvailable) {
+        // video did not exist and probably added now
+        this.videoAvailable = true;
       }
     } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
       this.postSize = this.board.post_size;
