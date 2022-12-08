@@ -11,7 +11,6 @@ import { AccountService } from './services';
 @Component({
   selector: 'benji-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit {
   focusFn: boolean;

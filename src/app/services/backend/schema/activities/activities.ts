@@ -365,6 +365,11 @@ export interface BoardParticipants {
 }
 
 export interface BoardInfo {
+  background_type: BoardBackgroundType;
+  blur_image: boolean;
+  color: string;
+  image_upload: string;
+  image_url: string;
   instructions: string;
   sub_instructions: string;
   max_participant_submissions: number;
@@ -390,6 +395,7 @@ export interface BoardInfo {
 export type BoardMode = 'columns' | 'thread' | 'grid';
 
 // export type BoardType = 'page' | 'posts';
+export type BoardBackgroundType = 'none' | 'color' | 'image';
 
 export enum NotificationTypes {
   DUPLICATE = 'duplicate',

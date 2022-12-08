@@ -20,6 +20,7 @@ import { ActivitiesServices } from './activities';
 import { LessonGroupService } from './lesson-group.service';
 
 import { LessonService } from './lesson.service';
+import { BoardBackgroundService } from './board-background.service';
 
 export * from './activities';
 export { AuthGuard } from './auth/auth.guard';
@@ -53,6 +54,7 @@ export const ServicesProviders = [
   GroupingToolService,
   BoardStatusService,
   TopicMediaService,
+  BoardBackgroundService,
   LessonGroupService,
   PostLayoutService,
   NotificationService,

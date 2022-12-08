@@ -8,6 +8,9 @@ export type EventType =
   | 'ParticipantChangeBoardEvent'
   | 'HostChangeBoardEvent'
   | 'BrainstormToggleMeetingMode'
+  | 'ChangeBoardBackgroundTypeEvent'
+  | 'BrainstormBoardBackgroudEvent'
+  | 'ToggleBlurBackgroundImageEvent'
   | 'BrainstormBoardPostSizeEvent'
   | 'GetUpdatedLessonDetailEvent'
   | 'BootParticipantEvent'
@@ -70,4 +73,7 @@ export enum EventTypes {
   brainstormRearrangeBoardEvent = 'BrainstormRearrangeBoardEvent',
   brainstormMoveIdeaBoardEvent = 'BrainstormMoveIdeaBoardEvent',
   moveBrainstormIdeaEvent = 'MoveBrainstormIdeaEvent',
+  changeBoardBackgroundTypeEvent = 'ChangeBoardBackgroundTypeEvent',
+  brainstormBoardBackgroudEvent = 'BrainstormBoardBackgroudEvent',
+  toggleBlurBackgroundImageEvent = 'ToggleBlurBackgroundImageEvent',
 }

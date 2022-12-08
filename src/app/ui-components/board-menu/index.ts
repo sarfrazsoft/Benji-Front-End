@@ -1,4 +1,5 @@
 import { BoardMenuComponent } from './board-menu.component';
+import { BoardBackgroundComponent } from './board-settings/board-background/board-background.component';
 import { BoardModeComponent } from './board-settings/board-mode/board-mode.component';
 import { BoardSettingsComponent } from './board-settings/board-settings.component';
 import { BoardStatusComponent } from './board-settings/board-status/board-status.component';
@@ -12,4 +13,5 @@ export const BoardMenuComponents = [
   BoardSettingsComponent,
   BoardModeComponent,
   PostSizeComponent,
+  BoardBackgroundComponent,
 ];

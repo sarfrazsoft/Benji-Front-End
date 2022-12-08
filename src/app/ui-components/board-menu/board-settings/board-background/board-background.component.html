@@ -1,0 +1,122 @@
+<!-- <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.ADMIN)"> -->
+<div fxLayout="column">
+  <div class="title">Background</div>
+  <div class="background">
+    <div
+      [ngClass]="{ 'bg-none': bgType === 'none' }"
+      class="posting-settings background-options"
+      fxLayout="row"
+      fxLayoutGap="12px"
+    >
+      <div
+        class="option none"
+        fxLayoutAlign="center center"
+        (click)="backgroundTypeChanged('none')"
+        [ngClass]="{ selected: bgType === 'none' }"
+      >
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px">
+          <div class="box"></div>
+          <div class="name">None</div>
+        </div>
+      </div>
+      <div
+        class="option"
+        fxLayoutAlign="center center"
+        (click)="backgroundTypeChanged('color')"
+        [ngClass]="{ selected: bgType === 'color' }"
+      >
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px">
+          <div class="box color"></div>
+          <div class="name">Colour</div>
+        </div>
+      </div>
+      <div
+        class="option bg-image"
+        fxLayoutAlign="center center"
+        (click)="backgroundTypeChanged('image')"
+        [ngClass]="{ selected: bgType === 'image' }"
+      >
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px">
+          <img src="../../../assets/img/side-nav/board-bg-img.svg" />
+          <div class="name">Image</div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="bgType != 'none'"
+      class="posting-settings background-controls"
+      fxLayout="column"
+      fxLayoutGap="16px"
+    >
+      <div *ngIf="bgType === 'color'" class="setting" fxLayout="row" fxLayoutAlign="space-between">
+        <div>
+          <div class="label">Colour</div>
+          <div class="sub-label">Pick a colour for the background</div>
+        </div>
+        <div class="pick-color" fxLayout="row" fxLayoutAlign="center center">
+          <div
+            class="code"
+            [cpOutputFormat]="'hex'"
+            [(colorPicker)]="bgColor"
+            [cpAlphaChannel]="'disabled'"
+            [cpPresetColors]="[
+              '#ED6E74',
+              '#FFA9B1',
+              '#FCA773',
+              '#FFDAB3',
+              '#FCD879',
+              '#88E7BE',
+              '#00C3B2',
+              '#11887E',
+              '#C8E8FE',
+              '#58B4EE',
+              '#5587F1',
+              '#BCBEFE',
+              '#A977DA',
+              '#6A8198',
+              '#CAD3DB',
+              '#F3F4F7'
+            ]"
+            (colorPickerChange)="bgColor = $event; onColorChange($event)"
+            fxLayout="row"
+            fxLayoutGap="8px"
+            fxLayoutAlign="space-between center"
+          >
+            <span [style.background]="bgColor"></span>
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="bgType === 'image'" class="setting" fxLayout="row" fxLayoutAlign="space-between">
+        <div>
+          <div class="label">Choose Image</div>
+          <div class="sub-label">Pick an image for the background</div>
+        </div>
+        <div class="upload" (click)="openImagePickerDialog()" fxLayout="row">
+          <div class="img-upload">
+            <img *ngIf="bgImage" [src]="bgImage" />
+          </div>
+          <div class="select-img" fxLayoutAlign="center center">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="bgType === 'image'"
+        class="setting"
+        benji-click-stop-propagation
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+      >
+        <div>
+          <div class="label">Blur Image</div>
+          <div class="sub-label">Blur the background image</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" [checked]="blurImage" (change)="toggleBlurImage()" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

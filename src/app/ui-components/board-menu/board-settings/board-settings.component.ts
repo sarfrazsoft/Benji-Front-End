@@ -73,6 +73,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
 
   showBottom = true;
   settingTypes = SettingsTypes;
+  lessonRunCode: number;
 
   constructor(
     private dialog: MatDialog,
@@ -81,6 +82,8 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
+    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code;
+
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
       if (board) {
         this.selectedBoardChanged(board);

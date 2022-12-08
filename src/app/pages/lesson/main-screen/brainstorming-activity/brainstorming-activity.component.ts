@@ -42,6 +42,7 @@ import {
   HostChangeBoardEventResponse,
   ParticipantChangeBoardResponse,
 } from 'src/app/services/backend/schema/event-responses';
+import { BoardBackgroundService } from 'src/app/services/board-background.service';
 import { BoardStatusService } from 'src/app/services/board-status.service';
 import { LessonService } from 'src/app/services/lesson.service';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
@@ -51,7 +52,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-brainstorming-activity',
   templateUrl: './brainstorming-activity.component.html',
-  styleUrls: ['./brainstorming-activity.component.scss'],
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
@@ -76,7 +76,8 @@ export class MainScreenBrainstormingActivityComponent
     private permissionsService: NgxPermissionsService,
     private boardStatusService: BoardStatusService,
     private topicMediaService: TopicMediaService,
-    private title: Title
+    private title: Title,
+    private boardBackgroundService: BoardBackgroundService,
   ) {
     super();
     iframely.load();
@@ -153,6 +154,15 @@ export class MainScreenBrainstormingActivityComponent
     this.brainstormService.selectedBoard$.subscribe((val: Board) => {
       if (val) {
         this.boardMode = val.board_activity.mode;
+      }
+    });
+
+    this.brainstormService.selectedBoard$.subscribe((val: Board) => {
+      if (val) {
+        this.boardBackgroundService.boardBackgroundType = this.selectedBoard.board_activity.background_type;
+        this.boardBackgroundService.boardBackgroundColor = this.selectedBoard.board_activity.color;
+        this.boardBackgroundService.boardBackgroundImage = this.selectedBoard.board_activity.image_upload ?? this.selectedBoard.board_activity.image_url;
+        this.boardBackgroundService.blurBackgroundImage = this.selectedBoard.board_activity.blur_image;
       }
     });
 

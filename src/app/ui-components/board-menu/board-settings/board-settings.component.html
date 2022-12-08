@@ -1,9 +1,9 @@
-<div 
-  *ngIf="navType=='board-settings'"
-  class="board-settings-navigation" 
-  fxLayout="column" 
-  fxLayoutGap="24px">
-
+<div
+  *ngIf="navType == 'board-settings'"
+  class="board-settings-navigation"
+  fxLayout="column"
+  fxLayoutGap="24px"
+>
   <div fxLayout="row" fxLayoutAlign="space-between">
     <div class="board-settings">Board Settings</div>
     <mat-icon class="close" (click)="closeNav()">clear</mat-icon>
@@ -14,17 +14,16 @@
     <div class="topic-media">
       <!-- Topic media -->
       <benji-topic-media
-        [lessonRunCode]="lesssonRunCode"
+        [lessonRunCode]="lessonRunCode"
         [selectedBoard]="selectedBoard"
-        (sendMessage)="sendMessage.emit($event)">
+        (sendMessage)="sendMessage.emit($event)"
+      >
       </benji-topic-media>
     </div>
   </div>
 
   <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.BOARD_STATUS)">
-    <benji-board-status
-      (sendMessage)="sendMessage.emit($event)">
-    </benji-board-status>
+    <benji-board-status (sendMessage)="sendMessage.emit($event)"> </benji-board-status>
   </div>
 
   <!-- Authorship on cards -->
@@ -32,20 +31,13 @@
     <div>
       <div class="title">Post</div>
       <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
-        <div 
-          class="setting"
-          benji-click-stop-propagation
-          fxLayout="row"
-          fxLayoutAlign="space-between">
+        <div class="setting" benji-click-stop-propagation fxLayout="row" fxLayoutAlign="space-between">
           <div>
             <div class="label">Show authorship on cards</div>
             <div class="sub-label">Name of the author appears on card</div>
           </div>
           <label class="switch">
-            <input 
-              type="checkbox"
-              [checked]="showAuthorship"
-              (change)="toggleShowAuthorship()">
+            <input type="checkbox" [checked]="showAuthorship" (change)="toggleShowAuthorship()" />
             <span class="slider round"></span>
           </label>
         </div>
@@ -58,20 +50,13 @@
       Comments
       </div> -->
       <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
-        <div 
-          class="setting"
-          benji-click-stop-propagation
-          fxLayout="row"
-          fxLayoutAlign="space-between">
+        <div class="setting" benji-click-stop-propagation fxLayout="row" fxLayoutAlign="space-between">
           <div>
             <div class="label">Comments</div>
             <div class="sub-label">Participants can comment on posts</div>
           </div>
           <label class="switch">
-            <input 
-              type="checkbox"
-              [checked]="allowCommenting"
-              (change)="toggleCommenting()">
+            <input type="checkbox" [checked]="allowCommenting" (change)="toggleCommenting()" />
             <span class="slider round"></span>
           </label>
         </div>
@@ -84,33 +69,26 @@
         Hearts
       </div> -->
       <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
-        <div 
-          class="setting"
-          benji-click-stop-propagation
-          fxLayout="row"
-          fxLayoutAlign="space-between">
+        <div class="setting" benji-click-stop-propagation fxLayout="row" fxLayoutAlign="space-between">
           <div>
             <div class="label">Likes</div>
             <div class="sub-label">Participants can like posts</div>
           </div>
           <label class="switch">
-            <input 
-              type="checkbox"
-              [checked]="allowHearting"
-              (change)="toggleHearting()">
+            <input type="checkbox" [checked]="allowHearting" (change)="toggleHearting()" />
             <span class="slider round"></span>
           </label>
         </div>
       </div>
     </div>
   </div>
-  
+
   <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.POST_ORDER)">
     <div class="title">Posts Order</div>
     <div class="board-status">
       <ng-select
         class="board-status-dropdown"
-        appearance="outline" 
+        appearance="outline"
         placeholder="Status"
         [clearable]="false"
         [searchable]="false"
@@ -120,7 +98,8 @@
         bindLabel="name"
         dropdownPosition="bottom"
         (change)="changeOrder($event)"
-        [(ngModel)]="defaultSort">
+        [(ngModel)]="defaultSort"
+      >
         <ng-template ng-option-tmp let-item="item" let-index="index">
           <span> {{ item.name }} </span>
         </ng-template>
@@ -129,49 +108,36 @@
   </div>
 
   <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.POST_ORDER)">
-    <benji-post-size
-      (sendMessage)="sendMessage.emit($event)">
-    </benji-post-size>
+    <benji-post-size (sendMessage)="sendMessage.emit($event)"> </benji-post-size>
   </div>
 
   <div *ngIf="allowedSettings.includes(settingTypes.BOARD_MODE)">
-    <benji-board-mode
-      (sendMessage)="sendMessage.emit($event)">
-    </benji-board-mode>
+    <benji-board-mode (sendMessage)="sendMessage.emit($event)"> </benji-board-mode>
   </div>
+
+  <benji-board-background
+    (sendMessage)="sendMessage.emit($event)"
+    [selectedBoard]="selectedBoard"
+    [lessonRunCode]="lessonRunCode"
+  >
+  </benji-board-background>
 
   <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.ADMIN)">
     <div class="title">Admin</div>
     <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
-      <div 
-        class="setting"
-        benji-click-stop-propagation
-        fxLayout="row"
-        fxLayoutAlign="space-between"
-      >
+      <div class="setting" benji-click-stop-propagation fxLayout="row" fxLayoutAlign="space-between">
         <div>
           <div class="label">Share Board</div>
           <div class="sub-label">Share board link to invite participants</div>
         </div>
-        <div class="option primary-color" (click)="copyLink()">
-          Copy link
-        </div>
+        <div class="option primary-color" (click)="copyLink()">Copy link</div>
       </div>
-      <div 
-        class="setting"
-        benji-click-stop-propagation
-        fxLayout="row"
-        fxLayoutAlign="space-between"
-      >
+      <div class="setting" benji-click-stop-propagation fxLayout="row" fxLayoutAlign="space-between">
         <div>
           <div class="label">Clear Board</div>
           <div class="sub-label">Delete all posts on the board</div>
         </div>
-        <div 
-          class="option clear-board" 
-          (click)="clearBoard()">
-          Clear board
-        </div>
+        <div class="option clear-board" (click)="clearBoard()">Clear board</div>
       </div>
     </div>
   </div>

@@ -1,32 +1,38 @@
-
-      
-  <benji-main-screen-toolbar 
-    [activityState]="serverMessage"
-    *ngIf="isConnected() && serverMessage"
-    [disableControls]="disableControls"
-    [participantCode]="getParticipantCode()"
-    (socketMessage)="sendSocketMessage($event)"
-    (openSettingsMenuEvent)="openSettingsMenu()"
-    (toggleBoardsMenuEvent)="toggleBoardsMenu()"
-    [boardsMenuClosed]="boardsMenuClosed"
-  ></benji-main-screen-toolbar>
+<benji-main-screen-toolbar
+  [activityState]="serverMessage"
+  *ngIf="isConnected() && serverMessage"
+  [disableControls]="disableControls"
+  [participantCode]="getParticipantCode()"
+  (socketMessage)="sendSocketMessage($event)"
+  (openSettingsMenuEvent)="openSettingsMenu()"
+  (toggleBoardsMenuEvent)="toggleBoardsMenu()"
+  [boardsMenuClosed]="boardsMenuClosed"
+></benji-main-screen-toolbar>
 
 <mat-sidenav-container
-    class="example-container" (backdropClick)="closeAndResetNav()">
-  <mat-sidenav 
+  [style.background-color]="boardBgColor"
+  [style.background-image]="'url(' + boardBgImage + ')'"
+  [ngClass]="{ 'board-bg-blur': blurBgImage }"
+  class="example-container"
+  (backdropClick)="closeAndResetNav()"
+>
+  <mat-sidenav
     #sidenav
-    [mode]="sideNavMode" 
+    [mode]="sideNavMode"
     (keydown.escape)="closeAndResetNav()"
     [position]="sideNavPosition"
-    (openedChange)="openedChange($event)">
-      <benji-board-menu *ngIf="serverMessage"
-        #boardMenu
-        [sidenav]="sidenav" 
-        [navType]="navType"
-        [activityState]="serverMessage"
-        (sendMessage)="sendSocketMessage($event)"
-        (settingsNavClosed)="nullNavVars()">
-      </benji-board-menu>
+    (openedChange)="openedChange($event)"
+  >
+    <benji-board-menu
+      *ngIf="serverMessage"
+      #boardMenu
+      [sidenav]="sidenav"
+      [navType]="navType"
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+      (settingsNavClosed)="nullNavVars()"
+    >
+    </benji-board-menu>
   </mat-sidenav>
 
   <mat-sidenav-content>
@@ -34,8 +40,7 @@
       <mat-spinner></mat-spinner>
     </div>
 
-    <div class="ms-fullheight-container" [ngClass]="{'boards-menu-opened': !boardsMenuClosed}">
-
+    <div class="ms-fullheight-container" [ngClass]="{ 'boards-menu-opened': !boardsMenuClosed }">
       <!-- <benji-main-screen-toolbar 
         [activityState]="serverMessage"
         *ngIf="isConnected() && serverMessage && navType!=='boards'"
@@ -55,7 +60,6 @@
             : 'ms-lesson__activity-container'
         "
       >
-
         <benji-ms-brainstorming-activity
           [activityState]="serverMessage"
           [avgServerTimeOffset]="avgServerTimeOffset"
@@ -63,7 +67,6 @@
           (firstLaunchEvent)="openBoardSettings()"
         >
         </benji-ms-brainstorming-activity>
-
       </div>
     </div>
   </mat-sidenav-content>

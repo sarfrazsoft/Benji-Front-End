@@ -831,7 +831,6 @@ benji-categorized-ideas {
   }
 }
 
-
 .user-name {
   .name {
     font-size: 14px;
@@ -945,7 +944,7 @@ benji-ps-brainstorming-activity {
 .brainstorm-main {
   .head-wrapper {
     border-bottom: 1px solid #e7e7e7;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.9);
   }
   .brainstorm-header {
     padding: 24px 32px;
@@ -975,6 +974,7 @@ benji-ps-brainstorming-activity {
       border: 0px;
       border-radius: 0px;
       margin-right: 10px;
+      background: unset;
       &:focus-visible {
         outline: 0px;
       }

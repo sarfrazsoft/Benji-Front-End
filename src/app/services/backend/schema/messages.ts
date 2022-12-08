@@ -1108,6 +1108,27 @@ export class BrainstormChangeModeEvent extends ActivityEvent {
     this.extra_args = { mode: val, board: id };
   }
 }
+export class ChangeBoardBackgroundTypeEvent extends ActivityEvent {
+  event_name = EventTypes.changeBoardBackgroundTypeEvent;
+  constructor(boardId: number, backgroundType: string) {
+    super();
+    this.extra_args = { board: boardId, background_type: backgroundType };
+  }
+}
+export class BrainstormBoardBackgroudEvent extends ActivityEvent {
+  event_name = EventTypes.brainstormBoardBackgroudEvent;
+  constructor(boardId: number, imgUpload: string, imgUrl: string, bgColor: string) {
+    super();
+    this.extra_args = { board: boardId, image_upload: imgUpload, image_url: imgUrl, color: bgColor };
+  }
+}
+export class ToggleBlurBackgroundImageEvent extends ActivityEvent {
+  event_name = EventTypes.toggleBlurBackgroundImageEvent;
+  constructor(id: number) {
+    super();
+    this.extra_args = { board: id };
+  }
+}
 export class BrainstormClearBoardIdeaEvent extends ActivityEvent {
   event_name = 'BrainstormClearBoardIdeaEvent';
   constructor(id: number) {
