@@ -12,7 +12,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { differenceBy, find, findIndex, includes, remove } from 'lodash';
+import { cloneDeep, differenceBy, find, findIndex, includes, remove } from 'lodash';
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
@@ -229,6 +229,11 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
       ) {
         this.brainstormService.uncategorizedUpdateIdeasPin(this.board, this.ideas);
         this.postLayoutService.sortGrid(this.board.sort, this.grid);
+        // for unknown reason this has to be called twice
+        setTimeout(() => {
+          this.brainstormService.uncategorizedUpdateIdeasPin(this.board, this.ideas);
+          this.postLayoutService.sortGrid(this.board.sort, this.grid);
+        }, 100);
       } else if (this.eventType === EventTypes.brainstormToggleParticipantNameEvent) {
         this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (this.eventType === EventTypes.brainstormToggleMeetingMode) {

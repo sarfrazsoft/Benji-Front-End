@@ -417,7 +417,6 @@ export enum SettingsTypes {
 }
 
 export interface Category {
-  status: string;
   id: number;
   brainstormidea_set: Array<Idea>;
   category_name: string;

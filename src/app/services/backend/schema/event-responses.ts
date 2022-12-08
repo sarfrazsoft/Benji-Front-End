@@ -1,4 +1,6 @@
 import {
+  Board,
+  BoardInfo,
   BoardMode,
   BoardSort,
   BoardStatus,
@@ -7,6 +9,7 @@ import {
   IdeaDocument,
   IdeaDocumentType,
   IdeaHeart,
+  PostSize,
 } from './activities';
 
 export interface BrainstormSubmitIdeaCommentResponse {
@@ -123,3 +126,58 @@ export interface BrainstormToggleAllowHeartResponse {
   board_id: number;
   allow_heart: boolean;
 }
+
+export interface BrainstormCreateCategoryResponse {
+  category_name: string;
+  board: number;
+  id: number;
+  removed: boolean;
+}
+
+export interface BrainstormRemoveCategoryResponse {
+  board: number;
+  id: number;
+}
+
+export interface BrainstormRenameCategoryResponse {
+  id: number;
+  board: number;
+  name: string;
+}
+
+export interface BrainstormAddBoardResponse {
+  id: number;
+  instructions: string;
+  meta: any;
+  name: string;
+  next_board: number;
+  previous_board: number;
+  sub_instructions: string;
+}
+
+export interface BrainstormRemoveBoardResponse {
+  id: number;
+}
+
+export interface BrainstormAddRemoveIdeaPinResponse {
+  brainstormidea_id: number;
+  board_id: number;
+  participant: number;
+}
+
+export interface BrainstormBoardPostSizeResponse {
+  board_id: number;
+  post_size: PostSize;
+}
+
+export interface BrainstormRearrangeBoardResponse {
+  board_id: number;
+  previous_board: number;
+  next_board: number;
+}
+export interface MoveBrainstormIdeaResponse {
+  board_id: number;
+  brainstormidea_id: number;
+  category_id: number;
+}
+// BrainstormMoveIdeaBoardEvent;

@@ -33,7 +33,6 @@ export type EventType =
   | 'BrainstormRemoveIdeaPinEvent'
   | 'BrainstormRearrangeBoardEvent'
   | 'BrainstormMoveIdeaBoardEvent'
-  | 'BrainstormBoardPostSizeEvent'
   | 'MoveBrainstormIdeaEvent'
   | string;
 

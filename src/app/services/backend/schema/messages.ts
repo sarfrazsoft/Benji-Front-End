@@ -1,4 +1,5 @@
 import {
+  Board,
   BoardMetaData,
   ColsCategoryChangeIdeaOrderInfo,
   ColsIdeaOrderInfo,
@@ -32,12 +33,19 @@ import {
 } from './activities';
 import { Lesson, LessonRun, RunningTools } from './course_details';
 import {
+  BrainstormAddBoardResponse,
+  BrainstormAddRemoveIdeaPinResponse,
+  BrainstormBoardPostSizeResponse,
   BrainstormBoardSortOrderResponse,
   BrainstormChangeBoardStatusResponse,
   BrainstormChangeModeResponse,
+  BrainstormCreateCategoryResponse,
+  BrainstormRemoveBoardResponse,
+  BrainstormRemoveCategoryResponse,
   BrainstormRemoveIdeaCommentResponse,
   BrainstormRemoveIdeaHeartResponse,
   BrainstormRemoveSubmitResponse,
+  BrainstormRenameCategoryResponse,
   BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartResponse,
   BrainstormSubmitResponse,
@@ -124,7 +132,15 @@ export type EventResponseTypes =
   | BrainstormToggleAllowHeartResponse
   | BrainstormRemoveSubmitResponse
   | BrainstormSubmitResponse
-  | RemoveIdeaDocumentResponse;
+  | RemoveIdeaDocumentResponse
+  | BrainstormCreateCategoryResponse
+  | BrainstormRemoveCategoryResponse
+  | BrainstormRenameCategoryResponse
+  | BrainstormAddBoardResponse
+  | Board
+  | BrainstormRemoveBoardResponse
+  | BrainstormAddRemoveIdeaPinResponse
+  | BrainstormBoardPostSizeResponse;
 
 export interface ServerMessage {
   messagetime: number;

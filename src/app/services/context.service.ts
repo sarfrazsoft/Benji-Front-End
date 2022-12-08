@@ -4,13 +4,20 @@ import { Router } from '@angular/router';
 import { find, findIndex, forOwn, remove } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import {
+  BrainstormAddBoardResponse,
+  BrainstormAddRemoveIdeaPinResponse,
+  BrainstormBoardPostSizeResponse,
   BrainstormBoardSortOrderResponse,
   BrainstormChangeBoardStatusResponse,
   BrainstormChangeModeResponse,
+  BrainstormCreateCategoryResponse,
   BrainstormEditResponse,
+  BrainstormRemoveBoardResponse,
+  BrainstormRemoveCategoryResponse,
   BrainstormRemoveIdeaCommentResponse,
   BrainstormRemoveIdeaHeartResponse,
   BrainstormRemoveSubmitResponse,
+  BrainstormRenameCategoryResponse,
   BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartResponse,
   BrainstormSubmitResponse,
@@ -21,14 +28,28 @@ import {
   ParticipantChangeBoardResponse,
   RemoveIdeaDocumentResponse,
 } from 'src/app/services/backend/schema/event-responses';
-import { Board, Category, Idea, IdeaDocument, TeamUser, Timer, UpdateMessage } from './backend/schema';
+import { BoardsNavigationService } from './activities/boards-navigation.service';
+import {
+  Board,
+  BoardInfo,
+  Category,
+  Idea,
+  IdeaDocument,
+  TeamUser,
+  Timer,
+  UpdateMessage,
+} from './backend/schema';
 import { Participant } from './backend/schema/course_details';
 import { PartnerInfo } from './backend/schema/whitelabel_info';
 
 export type SideNavAction = 'opened' | 'closed';
 @Injectable()
 export class ContextService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private boardsNavigationService: BoardsNavigationService
+  ) {}
 
   set user(user: TeamUser) {
     this.user$.next(user);
@@ -463,6 +484,165 @@ export class ContextService {
           }
         }
         break;
+      }
+    }
+  }
+
+  createCategory(res: BrainstormCreateCategoryResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board,
+      oldActivityState.brainstormactivity.boards
+    );
+
+    board.brainstormcategory_set.push({
+      category_name: res.category_name,
+      id: res.id,
+      brainstormidea_set: [],
+      removed: false,
+    });
+  }
+
+  removeCategory(res: BrainstormRemoveCategoryResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board,
+      oldActivityState.brainstormactivity.boards
+    );
+    remove(board.brainstormcategory_set, { id: res.id });
+  }
+
+  renameCategory(res: BrainstormRenameCategoryResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board,
+      oldActivityState.brainstormactivity.boards
+    );
+
+    board.brainstormcategory_set.forEach((category) => {
+      if (category.id === res.id) {
+        category.category_name = res.name;
+      }
+    });
+  }
+
+  addBoard(res: BrainstormAddBoardResponse, oldActivityState: UpdateMessage) {
+    // find the board previous to the added board
+    // and set this board as the next_board
+    const previousBoard = this.boardsNavigationService.getBoard(
+      res.previous_board,
+      oldActivityState.brainstormactivity.boards
+    );
+    previousBoard.next_board = res.id;
+    oldActivityState.brainstormactivity.boards.push({
+      board_activity: { instructions: res.instructions, sub_instructions: res.sub_instructions } as BoardInfo,
+      id: res.id,
+      meta: res.meta,
+      name: res.name,
+      removed: false,
+      next_board: res.next_board,
+      previous_board: res.previous_board,
+    } as Board);
+  }
+
+  duplicateBoard(res: Board, oldActivityState: UpdateMessage) {
+    // set next_board of the duplicated board to the new board
+    const duplicatedBoardId = res.previous_board;
+    const board = this.boardsNavigationService.getBoard(
+      duplicatedBoardId,
+      oldActivityState.brainstormactivity.boards
+    );
+    board.next_board = res.id;
+
+    // push the new board in boards
+    oldActivityState.brainstormactivity.boards.push(res);
+  }
+
+  removeBoard(res: BrainstormRemoveBoardResponse, oldActivityState: UpdateMessage) {
+    const deletedBoard = this.boardsNavigationService.getBoard(
+      res.id,
+      oldActivityState.brainstormactivity.boards
+    );
+    if (deletedBoard.next_board) {
+      // find the board that was next to the deleted board
+      // and set previous_board value as the previous of deleted board
+      const nextBoard = this.boardsNavigationService.getBoard(
+        deletedBoard.next_board,
+        oldActivityState.brainstormactivity.boards
+      );
+
+      nextBoard.previous_board = deletedBoard.previous_board;
+    } else {
+      const previousBoard = this.boardsNavigationService.getBoard(
+        deletedBoard.previous_board,
+        oldActivityState.brainstormactivity.boards
+      );
+      previousBoard.next_board = null;
+    }
+
+    if (deletedBoard.previous_board) {
+      // find the board that was previous to the deleted board
+      // and set the next_board value as the next of deleted board
+      const previousBoard = this.boardsNavigationService.getBoard(
+        deletedBoard.previous_board,
+        oldActivityState.brainstormactivity.boards
+      );
+
+      previousBoard.next_board = deletedBoard.next_board;
+    } else {
+      // we're deleting the first board
+      const nextBoard = this.boardsNavigationService.getBoard(
+        deletedBoard.next_board,
+        oldActivityState.brainstormactivity.boards
+      );
+
+      nextBoard.previous_board = null;
+    }
+
+    // if host board is deleted
+    // change host board to previous board
+    if (oldActivityState.brainstormactivity.host_board === res.id) {
+      if (deletedBoard.previous_board) {
+        oldActivityState.brainstormactivity.host_board = deletedBoard.previous_board;
+      } else if (deletedBoard.next_board) {
+        oldActivityState.brainstormactivity.host_board = deletedBoard.next_board;
+      }
+    }
+    remove(oldActivityState.brainstormactivity.boards, { id: res.id });
+  }
+
+  addPinIdea(res: BrainstormAddRemoveIdeaPinResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board_id,
+      oldActivityState.brainstormactivity.boards
+    );
+
+    const idea = this.getIdea(res.brainstormidea_id, board.brainstormcategory_set);
+    idea.pinned = true;
+  }
+
+  removePinIdea(res: BrainstormAddRemoveIdeaPinResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board_id,
+      oldActivityState.brainstormactivity.boards
+    );
+
+    const idea = this.getIdea(res.brainstormidea_id, board.brainstormcategory_set);
+    idea.pinned = false;
+  }
+
+  changePostSize(res: BrainstormBoardPostSizeResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board_id,
+      oldActivityState.brainstormactivity.boards
+    );
+
+    board.post_size = res.post_size;
+  }
+
+  getIdea(id: number, categorySet: Array<Category>): Idea {
+    for (let j = 0; j < categorySet.length; j++) {
+      const existingCategory = categorySet[j];
+      const existingIdea = find(existingCategory.brainstormidea_set, { id: id });
+      if (existingIdea) {
+        return existingIdea;
       }
     }
   }

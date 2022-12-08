@@ -163,11 +163,11 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.minWidth = this.board?.post_size;
   }
 
-  ngOnChanges() {
-    this.onChanges();
+  ngOnChanges($event) {
+    this.onChanges($event);
   }
 
-  onChanges() {
+  onChanges($event?) {
     if (this.elementView && this.elementView.nativeElement) {
       this.headWrapperHeight = this.elementView.nativeElement.offsetHeight + 49;
     }
