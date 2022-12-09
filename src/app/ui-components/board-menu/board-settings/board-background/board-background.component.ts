@@ -1,12 +1,19 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Board, BoardBackgroundType, BrainstormBoardBackgroudEvent, ChangeBoardBackgroundTypeEvent, IdeaDocument, ToggleBlurBackgroundImageEvent } from 'src/app/services/backend/schema';
+import * as global from 'src/app/globals';
+import { BrainstormService } from 'src/app/services';
+import {
+  Board,
+  BoardBackgroundType,
+  BrainstormBoardBackgroudEvent,
+  ChangeBoardBackgroundTypeEvent,
+  IdeaDocument,
+  ToggleBlurBackgroundImageEvent,
+} from 'src/app/services/backend/schema';
 import { BoardBackgroundService } from 'src/app/services/board-background.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
-import * as global from 'src/app/globals';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BrainstormService } from 'src/app/services';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -34,7 +41,7 @@ export class BoardBackgroundComponent implements OnInit {
     private brainstormService: BrainstormService,
     private matDialog: MatDialog,
     private utilsService: UtilsService,
-    private httpClient: HttpClient,
+    private httpClient: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +59,8 @@ export class BoardBackgroundComponent implements OnInit {
     // If no color then we need default color
     this.bgColor = this.selectedBoard.board_activity.color ?? '#555BEA';
     // BG upload and URL are mutually exlusive
-    this.bgImage = this.selectedBoard.board_activity.image_upload ?? this.selectedBoard.board_activity.image_url;
+    this.bgImage =
+      this.selectedBoard.board_activity.image_upload ?? this.selectedBoard.board_activity.image_url;
     this.bgImgUpload = this.selectedBoard.board_activity.image_upload;
     this.bgImgUrl = this.selectedBoard.board_activity.image_url;
     this.blurImage = this.selectedBoard.board_activity.blur_image;
@@ -68,7 +76,14 @@ export class BoardBackgroundComponent implements OnInit {
     this.bgColor = color;
     if (this.bgType === 'color') {
       this.boardBackgroundService.boardBackgroundColor = color;
-      this.sendMessage.emit(new BrainstormBoardBackgroudEvent(this.selectedBoard.id, this.bgImgUpload, this.bgImgUrl, this.bgColor));
+      this.sendMessage.emit(
+        new BrainstormBoardBackgroudEvent(
+          this.selectedBoard.id,
+          this.bgImgUpload,
+          this.bgImgUrl,
+          this.bgColor
+        )
+      );
     }
   }
 
@@ -110,7 +125,9 @@ export class BoardBackgroundComponent implements OnInit {
             this.selectedImageName = null;
             this.boardBackgroundService.boardBackgroundImage = this.bgImgUrl;
             this.bgImgUpload = null; // BG upload and URL are mutually exlusive
-            this.sendMessage.emit(new BrainstormBoardBackgroudEvent(this.selectedBoard.id, null, this.bgImgUrl, this.bgColor));
+            this.sendMessage.emit(
+              new BrainstormBoardBackgroudEvent(this.selectedBoard.id, null, this.bgImgUrl, this.bgColor)
+            );
           }
         }
       });
@@ -131,7 +148,14 @@ export class BoardBackgroundComponent implements OnInit {
         this.bgImage = this.bgImgUpload;
         this.boardBackgroundService.boardBackgroundImage = this.bgImage;
         this.bgImgUrl = null; // BG upload and URL are mutually exlusive
-        this.sendMessage.emit(new BrainstormBoardBackgroudEvent(this.selectedBoard.id, this.bgImgUpload, this.bgImgUrl, this.bgColor));
+        this.sendMessage.emit(
+          new BrainstormBoardBackgroudEvent(
+            this.selectedBoard.id,
+            this.bgImgUpload,
+            this.bgImgUrl,
+            this.bgColor
+          )
+        );
       },
       (error) => console.log(error)
     );

@@ -24,6 +24,7 @@ import { Course, Lesson, LessonRun, Participant } from 'src/app/services/backend
 import {
   BrainstormAddBoardResponse,
   BrainstormAddRemoveIdeaPinResponse,
+  BrainstormBoardBackgroundResponse,
   BrainstormBoardPostSizeResponse,
   BrainstormBoardSortOrderResponse,
   BrainstormChangeBoardStatusResponse,
@@ -42,9 +43,11 @@ import {
   BrainstormToggleAllowCommentResponse,
   BrainstormToggleAllowHeartResponse,
   BrainstormToggleParticipantNameResponse,
+  ChangeBoardBackgroundTypeResponse,
   HostChangeBoardEventResponse,
   ParticipantChangeBoardResponse,
   RemoveIdeaDocumentResponse,
+  ToggleBlurBackgroundImageResponse,
 } from 'src/app/services/backend/schema/event-responses';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -451,6 +454,36 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       // } else if (msg.eventtype === EventTypes.brainstormRearrangeBoardEvent) {
       // } else if (msg.eventtype === EventTypes.brainstormMoveIdeaBoardEvent) {
       // } else if (msg.eventtype === EventTypes.moveBrainstormIdeaEvent) {
+    } else if (msg.eventtype === EventTypes.brainstormBoardBackgroudEvent) {
+      this.contextService.brainstormBoardBackground(
+        msg.event_msg as BrainstormBoardBackgroundResponse,
+        this.oldServerMessage
+      );
+      this.serverMessage = {
+        ...this.oldServerMessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
+    } else if (msg.eventtype === EventTypes.changeBoardBackgroundTypeEvent) {
+      this.contextService.changeBoardBackgroundType(
+        msg.event_msg as ChangeBoardBackgroundTypeResponse,
+        this.oldServerMessage
+      );
+      this.serverMessage = {
+        ...this.oldServerMessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
+    } else if (msg.eventtype === EventTypes.toggleBlurBackgroundImageEvent) {
+      this.contextService.toggleBlurBackgroundImage(
+        msg.event_msg as ToggleBlurBackgroundImageResponse,
+        this.oldServerMessage
+      );
+      this.serverMessage = {
+        ...this.oldServerMessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
     } else if (msg.eventtype === EventTypes.brainstormBoardPostSizeEvent) {
       this.contextService.changePostSize(
         msg.event_msg as BrainstormBoardPostSizeResponse,

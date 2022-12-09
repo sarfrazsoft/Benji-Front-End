@@ -40,6 +40,11 @@ import {
   UpdateMessage,
 } from './backend/schema';
 import { Participant } from './backend/schema/course_details';
+import {
+  BrainstormBoardBackgroundResponse,
+  ChangeBoardBackgroundTypeResponse,
+  ToggleBlurBackgroundImageResponse,
+} from './backend/schema/event-responses';
 import { PartnerInfo } from './backend/schema/whitelabel_info';
 
 export type SideNavAction = 'opened' | 'closed';
@@ -635,6 +640,34 @@ export class ContextService {
     );
 
     board.post_size = res.post_size;
+  }
+
+  toggleBlurBackgroundImage(res: ToggleBlurBackgroundImageResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board_id,
+      oldActivityState.brainstormactivity.boards
+    );
+
+    board.board_activity.blur_image = res.blur_image;
+  }
+
+  changeBoardBackgroundType(res: ChangeBoardBackgroundTypeResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board_id,
+      oldActivityState.brainstormactivity.boards
+    );
+    board.board_activity.background_type = res.background_type;
+  }
+
+  brainstormBoardBackground(res: BrainstormBoardBackgroundResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board,
+      oldActivityState.brainstormactivity.boards
+    );
+
+    board.board_activity.color = res.color;
+    board.board_activity.image_upload = res.image_upload;
+    board.board_activity.image_url = res.image_url;
   }
 
   getIdea(id: number, categorySet: Array<Category>): Idea {

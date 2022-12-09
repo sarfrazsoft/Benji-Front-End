@@ -181,3 +181,19 @@ export interface MoveBrainstormIdeaResponse {
   category_id: number;
 }
 // BrainstormMoveIdeaBoardEvent;
+export interface BrainstormBoardBackgroundResponse {
+  board: 3230;
+  color: string;
+  image_upload: string;
+  image_url: string;
+}
+
+export interface ChangeBoardBackgroundTypeResponse {
+  background_type: 'none' | 'color' | 'image';
+  board_id: number;
+}
+
+export interface ToggleBlurBackgroundImageResponse {
+  blur_image: boolean;
+  board_id: number;
+}
