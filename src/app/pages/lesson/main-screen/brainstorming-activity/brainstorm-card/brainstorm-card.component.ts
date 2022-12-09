@@ -217,7 +217,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
 
     if (this.board.post_size) {
       this.postSize = this.board.post_size;
-      this.hostAvatarSize = this.postSize === 'small' && this.minWidth > 264 ? 'small' : 'medium';
+      this.hostAvatarSize = this.postSize === 'small' ? 'small' : 'medium';
     }
     this.brainstormService.selectedBoard$.pipe(untilDestroyed(this)).subscribe((board: Board) => {
       if (board) {

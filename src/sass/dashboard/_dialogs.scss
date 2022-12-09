@@ -176,14 +176,14 @@
       margin-top: 16px;
       padding: 0px;
       overflow: auto;
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
       &::-webkit-scrollbar {
         display: none;
       }
       .search-query {
         width: 100%;
-        background: #F3F4F7;
+        background: #f3f4f7;
         border-radius: 8px;
         border: unset;
         padding: 16px;
@@ -236,7 +236,8 @@
   .mat-tab-header {
     margin-top: 8px;
     border-bottom: 2px solid #d9d9d9;
-    .mat-tab-label, .mat-tab-link {
+    .mat-tab-label,
+    .mat-tab-link {
       font-size: 16px;
       color: $black;
       opacity: 1;
@@ -302,14 +303,14 @@
       margin: 0px;
       padding: 0px;
       min-height: 65vh;
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
       &::-webkit-scrollbar {
         display: none;
       }
       .dash-input {
         width: 100%;
-        background: #F3F4F7;
+        background: #f3f4f7;
         border-radius: 8px;
         border: unset;
         padding: 16px;
@@ -378,35 +379,36 @@
             }
           }
           .prose-sm {
-            color: #37352F;
+            color: #37352f;
             p {
               font-size: 1rem;
               line-height: 1.5rem;
               letter-spacing: -0.011rem;
               a {
-                color: #555BEA;
+                color: #555bea;
               }
               strong {
-                color: #37352F;
+                color: #37352f;
               }
             }
             blockquote {
               border-left: 3px solid;
-              color: #37352F;
+              color: #37352f;
               padding-left: 12px;
               p {
                 font-style: normal;
                 font-weight: 400;
-                &::after, &::before {
+                &::after,
+                &::before {
                   content: unset !important;
                 }
               }
             }
-            ul{
+            ul {
               margin-left: 5px;
-              >li {
+              > li {
                 &::before {
-                  background-color: #37352F;
+                  background-color: #37352f;
                   width: 6px;
                   height: 6px;
                 }
@@ -415,13 +417,19 @@
             ol {
               margin-left: 6px;
             }
-            ul>li, ol>li {
-              p, p:first-child, p:last-child {
+            ul > li,
+            ol > li {
+              p,
+              p:first-child,
+              p:last-child {
                 margin-top: 4px;
                 margin-bottom: 4px;
               }
             }
-            p, blockquote, ul, ol {
+            p,
+            blockquote,
+            ul,
+            ol {
               margin-bottom: 8px;
               margin-top: 8px;
               li {
@@ -536,13 +544,13 @@ ng-dropdown-panel.post-idea-categories-dropdown {
     .ng-option {
       padding: 8px 16px;
       line-height: 16px;
-      &.ng-option-selected, &.ng-option-marked {
+      &.ng-option-selected,
+      &.ng-option-marked {
         background-color: #e7f4fe;
       }
     }
   }
 }
-
 
 @media (max-width: 600px) {
   .idea-creation-dialog {
@@ -585,7 +593,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
             cursor: pointer;
           }
           .post {
-            background: #BBBDF7;
+            background: #bbbdf7;
             color: #fff;
             font-size: 16px;
             font-weight: 500;
@@ -686,7 +694,28 @@ ng-dropdown-panel.post-idea-categories-dropdown {
 
 .idea-detailed-dialog {
   benji-tiptap-editor .ProseMirror {
-    min-height: unset; 
+    min-height: unset;
+  }
+}
+
+@media (max-height: 712px) {
+  .idea-detailed-dialog {
+    mat-dialog-container {
+      max-height: unset !important;
+      .content .scrollable-area {
+        max-height: calc(100vh - 160px) !important;
+        min-height: unset !important;
+      }
+      .mobile-panel.set-min-height {
+        min-height: unset !important;
+      }
+      .content-area .discussion-tabs {
+        .no-comments,
+        .no-likes {
+          height: unset !important;
+        }
+      }
+    }
   }
 }
 
@@ -706,7 +735,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
     }
     .image-area {
       .opnClose {
-        border-right: 1px solid #E7E7E7;
+        border-right: 1px solid #e7e7e7;
         height: 100%;
       }
       .select-image {
@@ -814,34 +843,35 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         }
       }
       .prose-sm {
-        color: #37352F;
+        color: #37352f;
         p {
           font-size: 1rem;
           line-height: 1.5rem;
           letter-spacing: -0.011rem;
           a {
-            color: #555BEA;
+            color: #555bea;
           }
           strong {
-            color: #37352F;
+            color: #37352f;
           }
         }
         blockquote {
           border-left: 3px solid;
-          color: #37352F;
+          color: #37352f;
           p {
             font-style: normal;
             font-weight: 400;
-            &::after, &::before {
+            &::after,
+            &::before {
               content: unset !important;
             }
           }
         }
-        ul{
+        ul {
           margin-left: 5px;
-          >li {
+          > li {
             &::before {
-              background-color: #37352F;
+              background-color: #37352f;
               width: 6px;
               height: 6px;
             }
@@ -850,13 +880,19 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         ol {
           margin-left: 6px;
         }
-        ul>li, ol>li {
-          p, p:first-child, p:last-child {
+        ul > li,
+        ol > li {
+          p,
+          p:first-child,
+          p:last-child {
             margin-top: 4px;
             margin-bottom: 4px;
           }
         }
-        p, blockquote, ul, ol {
+        p,
+        blockquote,
+        ul,
+        ol {
           margin-bottom: 8px;
           margin-top: 8px;
           li {
@@ -932,11 +968,12 @@ ng-dropdown-panel.post-idea-categories-dropdown {
             overflow: hidden;
           }
         }
-        .no-comments, .no-likes {
+        .no-comments,
+        .no-likes {
           height: 100%;
           padding: 40px 0px;
           line-height: 16px;
-          color: #37352F;
+          color: #37352f;
           .text {
             font-weight: 600;
             font-size: 20px;
@@ -964,7 +1001,8 @@ ng-dropdown-panel.post-idea-categories-dropdown {
                 background: #e7e7e7;
               }
             }
-            &.pinned, &.unpinned {
+            &.pinned,
+            &.unpinned {
               img {
                 top: 10px;
                 left: 10px;
@@ -1029,7 +1067,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       .scrollable-area {
         width: 100%;
         overflow: auto;
-        max-height: 70vh;    
+        max-height: 70vh;
         height: 100%;
         min-height: 432px;
         &::-webkit-scrollbar {
@@ -1265,11 +1303,12 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         .likes-area {
           margin-top: 16px;
         }
-        .no-comments, .no-likes {
+        .no-comments,
+        .no-likes {
           //height: 100%;
           padding: 48px 0px;
           line-height: 16px;
-          color: #37352F;
+          color: #37352f;
           .text {
             font-weight: 600;
             font-size: 18px;
@@ -1293,9 +1332,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
               background: #dedede;
             }
             &.pinned {
-              background: #555BEA;
+              background: #555bea;
               &:hover {
-                background: #555BEA;
+                background: #555bea;
               }
             }
           }
@@ -1387,7 +1426,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         line-height: 24px;
         &.confirm-button {
           color: #fff;
-          background: #F2384B;
+          background: #f2384b;
         }
         &.cancel-button {
           color: #616161;
@@ -1401,7 +1440,8 @@ ng-dropdown-panel.post-idea-categories-dropdown {
   }
 }
 
-.session-duplication, .build-session-dialog {
+.session-duplication,
+.build-session-dialog {
   .dialog-heading {
     margin-bottom: 24px !important;
   }
@@ -1418,7 +1458,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
     height: 20px;
     .mat-checkbox-frame {
       color: #bdbdbd;
-      border: 1px solid #BDBDBD;
+      border: 1px solid #bdbdbd;
       border-radius: 4px;
     }
   }
@@ -1453,7 +1493,8 @@ ng-dropdown-panel.post-idea-categories-dropdown {
     .uppy-DashboardContent-bar {
       padding: 16px;
       height: 56px;
-      .uppy-DashboardContent-back, .uppy-DashboardContent-save {
+      .uppy-DashboardContent-back,
+      .uppy-DashboardContent-save {
         font-family: 'Inter', 'Open-Sans', sans-serif;
         font-size: 16px;
         font-weight: 500;
@@ -1476,7 +1517,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
           height: 56px;
         }
       }
-    } 
+    }
   }
 }
 

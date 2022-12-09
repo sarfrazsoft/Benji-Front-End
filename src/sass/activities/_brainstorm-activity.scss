@@ -28,6 +28,16 @@ benji-ms-brainstorming-activity {
     }
   }
 
+  .brainstorm-idea {
+    &.small {
+      .prose-sm {
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
   .prose-sm {
     color: #37352f;
     p {
@@ -92,6 +102,19 @@ benji-ms-brainstorming-activity {
 
   .brainstorm-container {
     .submitted-ideas {
+      &.categorized,
+      &.uncategorized {
+        .ideas-list-container {
+          .medium,
+          .large {
+            .prose-sm {
+              p {
+                font-size: 16px;
+              }
+            }
+          }
+        }
+      }
       &.categorized,
       .uncategorized {
         .prose-sm {
@@ -207,6 +230,11 @@ benji-ms-brainstorming-activity {
                   &.spaced {
                     margin-bottom: 8px;
                   }
+                }
+              }
+              &.no-image {
+                &.header-hidden {
+                  padding: 16px;
                 }
               }
               &.no-image,
@@ -330,7 +358,7 @@ benji-ms-brainstorming-activity {
             border-radius: 8px;
             padding: 8px;
             outline: 4px solid #f3f4f7;
-            width: 238px;
+            width: calc(100% - 26px);
             font-size: 16px;
             font-weight: 600;
             color: #37352f;
@@ -566,7 +594,8 @@ benji-categorized-ideas {
   &.small {
     width: 264px;
     .card-header {
-      padding: 8px 12px;
+      height: 40px;
+      padding: 0px 12px;
     }
   }
   &.medium {
@@ -581,6 +610,11 @@ benji-categorized-ideas {
       font-size: 16px;
     }
     .content {
+      &.no-image {
+        &.header-hidden {
+          padding: 16px;
+        }
+      }
       &.no-image,
       &.host-pinned {
         padding: 4px 16px 16px 16px;
@@ -601,7 +635,8 @@ benji-categorized-ideas {
     }
   }
   .card-header {
-    padding: 12px 16px;
+    height: 56px;
+    padding: 0px 16px;
     .delete-icon {
       width: 24px;
       height: 24px;
@@ -690,6 +725,11 @@ benji-categorized-ideas {
         &.spaced {
           margin-bottom: 4px;
         }
+      }
+    }
+    &.no-image {
+      &.header-hidden {
+        padding: 12px;
       }
     }
     &.no-image,

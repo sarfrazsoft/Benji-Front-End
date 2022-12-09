@@ -3,12 +3,13 @@
     *ngIf="!item.removed"
     class="brainstorm-idea"
     [ngClass]="postSize"
-    [class.show-user] = ""
+    [class.show-user]=""
     (mouseenter)="item.showClose = true"
     (mouseleave)="item.showClose = false"
     cdkDrag
     [cdkDragDisabled]="!canUserDrag()"
-    [attr.ideaId]="item.id">
+    [attr.ideaId]="item.id"
+  >
     <!-- brainstorm card media -->
     <ng-container>
       <!-- Idea image -->
@@ -16,7 +17,8 @@
         class="brainstorm-image"
         (mousedown)="mouseDownEvent($event)"
         (mouseup)="mouseUpEvent($event, item)"
-        *ngIf="item.idea_image !== null">
+        *ngIf="item.idea_image !== null"
+      >
         <ng-container [ngSwitch]="typeOfImage(item)">
           <ng-container *ngSwitchCase="'giphy'">
             <img [src]="item.idea_image.document" alt="" />
@@ -24,14 +26,13 @@
           <ng-container *ngSwitchCase="'unsplash'">
             <img [src]="item.idea_image.document" alt="" />
           </ng-container>
-          <ng-container  *ngSwitchCase="'uploaded'">
+          <ng-container *ngSwitchCase="'uploaded'">
             <img [src]="hostname + item.idea_image.document" alt="" />
-          </ng-container >
+          </ng-container>
         </ng-container>
 
         <ng-container *ngIf="item.idea_image.document_url">
-          <ng-container 
-            *ngIf="isUploadCare(item.idea_image.document_url); else notUploadCare">
+          <ng-container *ngIf="isUploadCare(item.idea_image.document_url); else notUploadCare">
             <img [src]="item.idea_image.document_url" alt="" />
           </ng-container>
         </ng-container>
@@ -48,31 +49,34 @@
       <!-- Idea video -->
       <div *ngIf="item.idea_video && videoAvailable">
         <ng-container *ngIf="isUploadCare(item.idea_video.document_url)">
-          <video 
-            style="margin: 0 auto;" width="100%" 
-            #player 
+          <video
+            style="margin: 0 auto"
+            width="100%"
+            #player
             controls
             preload="metadata"
-            (loadeddata)="videoLoaded()">
+            (loadeddata)="videoLoaded()"
+          >
             <p>Your browser cannot play the provided video file.</p>
-            <source [src]="item.idea_video.document_url_converted " type="video/mp4" />
+            <source [src]="item.idea_video.document_url_converted" type="video/mp4" />
             <source [src]="item.idea_video.document_url" type="video/webm" />
           </video>
         </ng-container>
 
         <ng-container *ngIf="!isUploadCare(item.idea_video.document_url)">
-          <video style="margin: 0 auto;" width="100%" #player controls (loadeddata)="videoLoaded()">
+          <video style="margin: 0 auto" width="100%" #player controls (loadeddata)="videoLoaded()">
             <source [src]="hostname + item.idea_video.document" type="video/mp4" />
           </video>
         </ng-container>
       </div>
-    
+
       <!-- Idea document -->
       <div
         *ngIf="item.idea_document"
         (mousedown)="mouseDownEvent($event)"
-        (mouseup)="mouseUpEvent($event, item)">
-        <div  style="width: 100%;height: 200px">
+        (mouseup)="mouseUpEvent($event, item)"
+      >
+        <div style="width: 100%; height: 200px">
           <pdf-viewer
             [src]="getPdfSrc()"
             [rotation]="0"
@@ -86,24 +90,26 @@
             [external-link-target]="'blank'"
             [autoresize]="true"
             [show-borders]="false"
-            ></pdf-viewer>
-        </div> 
+          ></pdf-viewer>
+        </div>
       </div>
 
       <!-- Idea iframe -->
       <div *ngIf="item.meta">
-        <div 
-          *ngIf="item.meta.iframe && item.meta.iframe.iframeHTML && item.meta.iframe.iframeHTML.length > 0">
+        <div
+          *ngIf="item.meta.iframe && item.meta.iframe.iframeHTML && item.meta.iframe.iframeHTML.length > 0"
+        >
           <p bind-innerHTML="item.meta.iframe.iframeHTML | safeHtml"></p>
         </div>
       </div>
     </ng-container>
-    <div 
+    <div
       class="card-header"
       (mousedown)="mouseDownEvent($event)"
       (mouseup)="mouseUpEvent($event, item)"
-      [ngClass]="{'hidden': !item.pinned && !showUserName , 'host-pinned': !showUserName && item.pinned}" 
-      fxLayoutAlign="space-between center">
+      [ngClass]="{ hidden: !item.pinned && !showUserName, 'host-pinned': !showUserName && item.pinned }"
+      fxLayoutAlign="space-between center"
+    >
       <div *ngIf="showUserName" class="user-name">
         <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
           <benji-profile-pictures
@@ -115,15 +121,12 @@
           <div class="name">
             {{ getPersonName(item) }}
           </div>
-          <div class="time-stamp"><span>&#183;</span>{{timeStamp}}</div>
-        </div> 
+          <div class="time-stamp"><span>&#183;</span>{{ timeStamp }}</div>
+        </div>
       </div>
       <div *ngIf="!showUserName && item.pinned">
         <div fxLayout="row" fxLayoutGap="8px" benji-click-stop-propagation>
-          <img 
-            *ngIf="item.pinned"
-            (click)="unpin(item.id)"
-            src="/assets/img/idea-creation/blue-pin.svg">
+          <img *ngIf="item.pinned" (click)="unpin(item.id)" src="/assets/img/idea-creation/blue-pin.svg" />
           <span>Pinned by host</span>
         </div>
       </div>
@@ -133,26 +136,26 @@
         class="pin" 
         [ngClass]="{'move-left': item.showClose && userRole === 'owner' }"
         src="/assets/img/idea-creation/blue-pin.svg"> -->
-      <img 
+      <img
         *ngIf="item.pinned && showUserName"
         benji-click-stop-propagation
         (click)="unpin(item.id)"
-        class="pin" 
+        class="pin"
         src="/assets/img/idea-creation/blue-pin.svg"
-        [ngClass]="{'move-left': item.showClose && userRole === 'owner' && !item.idea_image && !item.idea_video }">
-        <div
-          benji-click-stop-propagation
-          (click)="delete(item.id)"
-          class="delete-icon" 
-          fxLayoutAlign="center center"
-          *ngIf="userRole === 'owner'" 
-          [style.opacity]="item.showClose ? 1 : 0">
-          <mat-icon
-            benji-click-stop-propagation
-            (click)="delete(item.id)">
-            clear
-          </mat-icon>
-        </div>
+        [ngClass]="{
+          'move-left': item.showClose && userRole === 'owner' && !item.idea_image && !item.idea_video
+        }"
+      />
+      <div
+        benji-click-stop-propagation
+        (click)="delete(item.id)"
+        class="delete-icon"
+        fxLayoutAlign="center center"
+        *ngIf="userRole === 'owner'"
+        [style.opacity]="item.showClose ? 1 : 0"
+      >
+        <mat-icon benji-click-stop-propagation (click)="delete(item.id)"> clear </mat-icon>
+      </div>
       <!-- <mat-icon
         *ngIf="userRole === 'owner'"
         benji-click-stop-propagation
@@ -161,61 +164,64 @@
         clear
       </mat-icon> -->
     </div>
-    <div 
+    <div
       class="content"
-      [ngClass]="{'no-image': !item.idea_video && !item.idea_document && !item.idea_image || showUserName , 
-                  'host-pinned': !item.idea_video && !item.idea_document && !item.idea_image && !showUserName && item.pinned }"
-      *ngIf="item.title || item.idea" 
+      [ngClass]="{
+        'no-image': (!item.idea_video && !item.idea_document && !item.idea_image) || showUserName,
+        'host-pinned':
+          !item.idea_video && !item.idea_document && !item.idea_image && !showUserName && item.pinned,
+        'header-hidden': !item.pinned && !showUserName,
+        'host-pinned': !showUserName && item.pinned
+      }"
+      *ngIf="item.title || item.idea"
       benji-click-stop-propagation
       (mousedown)="mouseDownEvent($event)"
-      (mouseup)="mouseUpEvent($event, item)">
+      (mouseup)="mouseUpEvent($event, item)"
+    >
       <div *ngIf="item.title || item.idea" class="title-description">
-        <div *ngIf="item.title" class="title" [ngClass]="{'spaced': item.idea }">{{ item.title }}</div>
+        <div *ngIf="item.title" class="title" [ngClass]="{ spaced: item.idea }">{{ item.title }}</div>
         <div *ngIf="item.idea">
-            <benji-tiptap-editor
-            [editable]="false"
-            [defaultValue]="item.idea">
-          </benji-tiptap-editor>
+          <benji-tiptap-editor [editable]="false" [defaultValue]="item.idea"> </benji-tiptap-editor>
         </div>
       </div>
     </div>
     <div class="feedback" *ngIf="areCommentsAllowed() || areHeartsAllowed()">
-      <div 
-        class="counts" 
-        fxLayout="row" 
+      <div
+        class="counts"
+        fxLayout="row"
         fxLayoutAlign="space-between center"
         (mousedown)="mouseDownEvent($event)"
-        (mouseup)="mouseUpEvent($event, item)"> 
+        (mouseup)="mouseUpEvent($event, item)"
+      >
         <div fxLayout="row" fxLayoutAlign="start center" *ngIf="areHeartsAllowed()">
           <img
             *ngIf="!hasParticipantHearted(item) && !deactivateHearting"
             benji-click-stop-propagation
-            (click)="setHeart(item)" 
-            class="heart" 
+            (click)="setHeart(item)"
+            class="heart"
             [src]="imgSrc"
-            (mouseout)="imgSrc='/assets/img/cards/like.svg'"
-            (mouseover)="imgSrc='/assets/img/cards/liking.svg'"> 
+            (mouseout)="imgSrc = '/assets/img/cards/like.svg'"
+            (mouseover)="imgSrc = '/assets/img/cards/liking.svg'"
+          />
           <img
             *ngIf="hasParticipantHearted(item) || deactivateHearting"
             benji-click-stop-propagation
-            (click)="removeHeart(item)" 
-            class="heart" 
-            src="/assets/img/cards/liked.svg">
+            (click)="removeHeart(item)"
+            class="heart"
+            src="/assets/img/cards/liked.svg"
+          />
           <span>{{ item.hearts.length ? item.hearts.length : '0' }}</span>
         </div>
         <div fxLayoutAlign="start center" *ngIf="areCommentsAllowed()">
-          <img class="thought" src="/assets/img/cards/comments.svg"> 
+          <img class="thought" src="/assets/img/cards/comments.svg" />
           <span>{{ item.comments.length ? item.comments.length : '0' }}</span>
         </div>
       </div>
       <ng-container *ngIf="areCommentsAllowed()">
-        <ng-container *ngFor="let comment of item.comments; let i = index;">
+        <ng-container *ngFor="let comment of item.comments; let i = index">
           <div class="user-feed" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start">
             <!-- <img class="dp" src="/assets/img/placeholder.png"> -->
-            <div 
-              class="initials {{ 'color' + ( i % 10 ) }}" 
-              fxLayout="column" 
-              fxLayoutAlign="center center">
+            <div class="initials {{ 'color' + (i % 10) }}" fxLayout="column" fxLayoutAlign="center center">
               <div>
                 <benji-profile-pictures
                   [activityState]="localActivityState"
@@ -224,7 +230,7 @@
                   [size]="avatarSize"
                 ></benji-profile-pictures>
               </div>
-            </div> 
+            </div>
             <div class="grey-bg" fxLayout="column" fxLayoutAlign="start start">
               <div class="name">{{ getParticipantName(comment.participant) }}</div>
               <div class="comment">{{ comment.comment }}</div>
@@ -232,47 +238,47 @@
             <mat-icon
               *ngIf="canDeleteComment(comment.participant) || isAdmin"
               class="delete-icon"
-              (click)="removeComment(comment.id, item.id)">
+              (click)="removeComment(comment.id, item.id)"
+            >
               clear
             </mat-icon>
           </div>
         </ng-container>
-        <div
-          class="post-comment" 
-          fxLayout="row" 
-          fxLayoutGap="8px" 
-          fxLayoutAlign="center start">
+        <div class="post-comment" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
           <benji-profile-pictures
             [activityState]="activityState"
             [participantCodes]="[participantCode]"
             [showTooltip]="false"
             [size]="avatarSize"
           ></benji-profile-pictures>
-          <div 
-            class="comment-input-container" 
-            fxFlex="row" 
+          <div
+            class="comment-input-container"
+            fxFlex="row"
             fxLayoutAlign="start center"
-            [ngClass]="{'grey': classGrey, 'greyed': commentModel.length}">
+            [ngClass]="{ grey: classGrey, greyed: commentModel.length }"
+          >
             <!-- <div *ngIf="userSubmittedComment && !userSubmittedSuccesfully">submitting</div> -->
             <textarea
               matInput
               cdkTextareaAutosize
               cdkAutosizeMinRows="1"
               cdkAutosizeMaxRows="5000"
-              placeholder="Add a comment"  
+              placeholder="Add a comment"
               class="input-comment"
               [(ngModel)]="commentModel"
               (ngModelChange)="commentTyped()"
-              [ngClass]="{'active': commentModel.length}"
+              [ngClass]="{ active: commentModel.length }"
               (focus)="onCommentFocus()"
               (blur)="onCommentBlur()"
               (keydown.enter)="submitComment(item.id, commentModel)"
-              [disabled]="userSubmittedComment && !userSubmittedSuccesfully">
+              [disabled]="userSubmittedComment && !userSubmittedSuccesfully"
+            >
             </textarea>
-            <div  
-              class="send-comment primary-color" 
+            <div
+              class="send-comment primary-color"
               (click)="submitComment(item.id, commentModel)"
-              [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">
+              [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'"
+            >
               Send
             </div>
           </div>
