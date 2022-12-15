@@ -232,7 +232,9 @@
         </ng-container>
         <ng-container *ngIf="isUserRoleOwner() || userIdeaText">
           <benji-tiptap-editor
+            (sendMessage)="sendMessage.emit($event)"
             [editable]="isUserRoleOwner()"
+            [lessonRunCode]="lessonRunCode"
             [defaultValue]="userIdeaText"
             (textChanged)="descriptionTextChanged($event)">
           </benji-tiptap-editor>

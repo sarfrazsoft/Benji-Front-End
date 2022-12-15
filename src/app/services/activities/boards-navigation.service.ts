@@ -59,7 +59,7 @@ export class BoardsNavigationService {
     }
   }
 
-  private boardChangingQueryParams(boardId: number) {
+  boardChangingQueryParams(boardId: number) {
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: { board: boardId },

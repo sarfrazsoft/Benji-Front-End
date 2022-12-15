@@ -21,7 +21,12 @@ import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { fromEvent } from 'rxjs';
-import { ActivitiesService, BrainstormEventService, BrainstormService } from 'src/app/services/activities';
+import {
+  ActivitiesService,
+  BoardsNavigationService,
+  BrainstormEventService,
+  BrainstormService,
+} from 'src/app/services/activities';
 import {
   Board,
   BoardStatus,
@@ -32,7 +37,9 @@ import {
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
   EventTypes,
+  HostChangeBoardEvent,
   Idea,
+  ParticipantChangeBoardEvent,
   PostSize,
   QueryParamsObject,
   UpdateMessage,
@@ -134,6 +141,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
 
   @ViewChild('iframeContainer') iframeContainer: ElementRef;
   hostAvatarSize: string;
+  lessonRunCode;
 
   constructor(
     private router: Router,
@@ -142,6 +150,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     private activitiesService: ActivitiesService,
     private brainstormService: BrainstormService,
     private brainstormEventService: BrainstormEventService,
+    private boardsNavigationService: BoardsNavigationService,
     private deviceService: DeviceDetectorService,
     private _ngZone: NgZone,
     private ngxPermissionsService: NgxPermissionsService,
@@ -163,6 +172,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
         }
       });
     }
+
+    this.lessonRunCode = this.activityState?.lesson_run?.lessonrun_code;
 
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
@@ -452,12 +463,58 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     const diffX = Math.abs(event.pageX - this.startX);
     const diffY = Math.abs(event.pageY - this.startY);
 
+    const link = (event.target as HTMLElement)?.closest('a');
+    if (link) {
+      const href = link.getAttribute('href');
+      if (href.includes('/screen/lesson/') && href.includes('board=') && href.includes(this.lessonRunCode)) {
+        const startIndex = href.indexOf('board=') + 6;
+        const endIndex = href.includes('post=') ? href.indexOf('&post=') : href.length - 1;
+        const board = href.slice(startIndex, endIndex + 1);
+        this.navigateToBoard2(Number(board));
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
+      } else {
+        window.open(href, link.getAttribute('target'));
+        return true;
+      }
+    }
+
     if (diffX < this.delta && diffY < this.delta) {
       // Click!
       // as the query parameters are changed the
       // post will open up by subscription
       this.ideaChangingQueryParams(this.item.id);
+      event.preventDefault();
+      event.stopPropagation();
+      return false;
     }
+  }
+
+  navigateToBoard($event) {
+    console.log('navigate to board from brainstorm card');
+  }
+  navigateToBoard2($event: number) {
+    if (!this.act.meeting_mode) {
+      this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
+        if (val) {
+          this.sendMessage.emit(new ParticipantChangeBoardEvent($event));
+        }
+      });
+    }
+
+    this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.sendMessage.emit(new HostChangeBoardEvent($event));
+      }
+    });
+    console.log('navigate to board actually');
+  }
+
+  ideaCardClicked($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    return false;
   }
 
   checkIfIdeaDragged(): boolean {

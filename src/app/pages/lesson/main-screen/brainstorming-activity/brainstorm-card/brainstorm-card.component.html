@@ -174,14 +174,21 @@
         'host-pinned': !showUserName && item.pinned
       }"
       *ngIf="item.title || item.idea"
-      benji-click-stop-propagation
       (mousedown)="mouseDownEvent($event)"
       (mouseup)="mouseUpEvent($event, item)"
-    >
+      (click)="ideaCardClicked($event)"
+      >
+      <!-- benji-click-stop-propagation -->
       <div *ngIf="item.title || item.idea" class="title-description">
         <div *ngIf="item.title" class="title" [ngClass]="{ spaced: item.idea }">{{ item.title }}</div>
         <div *ngIf="item.idea">
-          <benji-tiptap-editor [editable]="false" [defaultValue]="item.idea"> </benji-tiptap-editor>
+          <benji-tiptap-editor
+            (sendMessage)="sendMessage.emit($event)"
+            (navigateToBoard)="navigateToBoard($event)"
+            [editable]="false"
+            [lessonRunCode]="lessonRunCode"
+            [defaultValue]="item.idea"> 
+          </benji-tiptap-editor>
         </div>
       </div>
     </div>

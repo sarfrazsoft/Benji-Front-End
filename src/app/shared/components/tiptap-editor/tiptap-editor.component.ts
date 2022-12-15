@@ -9,6 +9,9 @@ import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import { Underline } from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
+import { NgxPermissionsService } from 'ngx-permissions';
+import { HostChangeBoardEvent, ParticipantChangeBoardEvent } from 'src/app/services/backend/schema';
+import { createClickHandler } from './extensions/clickHandler';
 import {
   CounterComponentExtension,
   EditableComponentExtension,
@@ -34,6 +37,8 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
   @Input() editable = true;
   @Input() benjiPages = false;
   @Output() textChanged = new EventEmitter<string>();
+  @Output() navigateToBoard = new EventEmitter<string>();
+  @Output() sendMessage = new EventEmitter<any>();
 
   editorContent;
   editor;
@@ -42,7 +47,7 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
     duration: [100, 250],
   };
 
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector, private ngxPermissionsService: NgxPermissionsService) {}
 
   ngOnInit(): void {
     this.editor = new Editor({
@@ -60,17 +65,24 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
           this.textChanged.emit(this.defaultValue);
         }
       },
+      editable: this.editable,
     });
-    this.editor.setEditable(this.editable);
+    // this.editor.setEditable(this.editable);
   }
   ngOnChanges() {}
 
   getEditorExtensions(): any {
     const defaultExtensions = [
       Underline,
+      createClickHandler({
+        lessonRunCode: this.lessonRunCode,
+        navigateToBoard: (board) => {
+          this.navigateToBoard2(board);
+        },
+      }),
       Link.configure({
         HTMLAttributes: {
-          class: 'benji-link-class',
+          class: 'benji-link-classww',
         },
         openOnClick: false,
       }),
@@ -94,12 +106,12 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
       ];
     } else {
       return [
+        ...defaultExtensions,
         StarterKit,
         Placeholder.configure({
           emptyEditorClass: 'is-editor-empty',
           placeholder: 'Description...',
         }),
-        ...defaultExtensions,
       ];
     }
   }
@@ -133,5 +145,20 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
       <angular-component-iframe
         lessonRunCode="${this.lessonRunCode}">
         </angular-component-iframe>`);
+  }
+
+  navigateToBoard2($event: number) {
+    this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.sendMessage.emit(new ParticipantChangeBoardEvent($event));
+      }
+    });
+
+    this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.sendMessage.emit(new HostChangeBoardEvent($event));
+      }
+    });
+
   }
 }

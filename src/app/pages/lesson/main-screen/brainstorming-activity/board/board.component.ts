@@ -294,6 +294,10 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         this.saveIdea(result);
       }
     });
+
+    dialogRef.componentInstance.sendMessage.subscribe((val) => {
+      this.sendMessage.emit(val);
+    });
   }
 
   saveIdea(result) {
