@@ -129,6 +129,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     if (!this.hostname.includes('localhost')) {
       this.hostname = 'https://' + this.hostname;
     }
+
+    // boardsCount is being used in MainScreenLessonComponent
+    this.contextService.boardsCount = (this.activityState.brainstormactivity.boards.filter((board) => board.removed === false)).length;
   }
 
   copyMessage(val: string) {

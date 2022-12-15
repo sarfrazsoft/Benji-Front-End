@@ -33,6 +33,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
   @Output() sendMessage = new EventEmitter<any>();
+  @Output() toggleBoardsNavigator = new EventEmitter<any>();
   participants = [];
 
   board: Board;
@@ -52,6 +53,8 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   lessonDescription: string;
   boardHovered = false;
   meetingMode = false;
+  boardsNavHovered: boolean;
+  closeBoardsNavHovered: boolean;
 
   constructor(
     private dialog: MatDialog,

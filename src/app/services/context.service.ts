@@ -55,7 +55,12 @@ export class ContextService {
     private router: Router,
     private boardsNavigationService: BoardsNavigationService
   ) {}
-
+  set boardsCount(count: number) {
+    this.boardsCount$.next(count);
+  }
+  get boardsCount(): number {
+    return this.boardsCount$.getValue();
+  }
   set user(user: TeamUser) {
     this.user$.next(user);
   }
@@ -142,6 +147,11 @@ export class ContextService {
   get newFolderAdded(): boolean {
     return this.newFolderAdded$.getValue();
   }
+
+  /**
+   * Boards Count
+   */
+  boardsCount$ = new BehaviorSubject<number>(null);
 
   /**
    * Current User

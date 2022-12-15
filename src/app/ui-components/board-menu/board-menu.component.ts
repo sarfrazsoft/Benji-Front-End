@@ -14,6 +14,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   @Input() navType: string;
   @Output() sendMessage = new EventEmitter<any>();
   @Output() settingsNavClosed = new EventEmitter<any>();
+  @Output() toggleBoardsNavigator = new EventEmitter<any>();
 
   allowedSettings: Array<SettingsTypes> = [];
   boardSetttings: Array<SettingsTypes> = [

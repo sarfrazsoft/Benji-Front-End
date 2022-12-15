@@ -1,13 +1,15 @@
-<ng-container *ngIf="navType=='boards'" >
+<ng-container *ngIf="navType == 'boards'">
   <benji-boards-navigator
     [activityState]="oldActivityState"
     [sidenav]="sidenav"
     [navType]="navType"
-    (sendMessage)="sendMessage.emit($event)">
+    (sendMessage)="sendMessage.emit($event)"
+    (toggleBoardsNavigator)="toggleBoardsNavigator.emit()"
+  >
   </benji-boards-navigator>
 </ng-container>
 
-<ng-container *ngIf="navType=='board-settings' && isSet(boardType)">
+<ng-container *ngIf="navType == 'board-settings' && isSet(boardType)">
   <benji-board-settings
     [activityState]="oldActivityState"
     [boardType]="boardType"
@@ -15,6 +17,7 @@
     [sidenav]="sidenav"
     [navType]="navType"
     (sendMessage)="sendMessage.emit($event)"
-    (settingsNavClosed)="settingsNavClosed.emit()">
+    (settingsNavClosed)="settingsNavClosed.emit()"
+  >
   </benji-board-settings>
 </ng-container>

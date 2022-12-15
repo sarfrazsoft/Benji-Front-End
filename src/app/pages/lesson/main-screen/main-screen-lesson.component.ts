@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { combineLatest, defer } from 'rxjs';
 import { ActivityTypes } from 'src/app/globals';
 import {
   AuthService,
@@ -54,7 +55,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
     protected matSnackBar: MatSnackBar,
     protected sharingToolService: SharingToolService,
     protected groupingToolService: GroupingToolService,
-    protected boardBackgroundService: BoardBackgroundService,
+    protected boardBackgroundService: BoardBackgroundService
   ) {
     super(
       deviceDetectorService,
@@ -114,6 +115,14 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
 
   ngAfterViewInit() {
     this.innerWidth = window.innerWidth;
+
+    const participantObservable$ = defer(() => this.permissionsService.hasPermission('PARTICIPANT'));
+    const combined = combineLatest([participantObservable$, this.contextService.boardsCount$]);
+    combined.subscribe((val: Array<boolean | number>) => {
+      if (val[0] && val[1] > 1) {
+        this.toggleBoardsMenu();
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -165,5 +174,4 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
       this.contextService.sideNavAction = 'closed';
     }
   }
-
 }
