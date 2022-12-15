@@ -22,7 +22,6 @@ export const createClickHandler = (options: ClickHandlerOptions) => {
                 const attrs = getAttributes(view.state, 'link');
                 const link = (event.target as HTMLElement)?.closest('a');
 
-                // console.log(link, attrs);
                 if (link && attrs.href) {
                   if (
                     attrs.href.includes('/screen/lesson/') &&
@@ -33,7 +32,7 @@ export const createClickHandler = (options: ClickHandlerOptions) => {
                     const startIndex = href.indexOf('board=') + 6;
                     const endIndex = href.includes('post=') ? href.indexOf('&post=') : href.length - 1;
                     const board = href.slice(startIndex, endIndex + 1);
-                    options.navigateToBoard(board);
+                    options.navigateToBoard(Number(board));
                     event.stopPropagation();
                     event.preventDefault();
                     return false;

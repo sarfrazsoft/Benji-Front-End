@@ -10,6 +10,7 @@ import TaskList from '@tiptap/extension-task-list';
 import { Underline } from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { BrainstormEventService } from 'src/app/services';
 import { HostChangeBoardEvent, ParticipantChangeBoardEvent } from 'src/app/services/backend/schema';
 import { createClickHandler } from './extensions/clickHandler';
 import {
@@ -42,12 +43,17 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
 
   editorContent;
   editor;
+  boardIds;
 
   tippyOptionsBubble = {
     duration: [100, 250],
   };
 
-  constructor(private injector: Injector, private ngxPermissionsService: NgxPermissionsService) {}
+  constructor(
+    private injector: Injector,
+    private ngxPermissionsService: NgxPermissionsService,
+    private brainstormEventService: BrainstormEventService
+  ) {}
 
   ngOnInit(): void {
     this.editor = new Editor({
@@ -68,6 +74,12 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
       editable: this.editable,
     });
     // this.editor.setEditable(this.editable);
+
+    this.brainstormEventService.activityState$.subscribe((s) => {
+      if (s) {
+        this.boardIds = s.brainstormactivity.boards.map((x) => x.id);
+      }
+    });
   }
   ngOnChanges() {}
 
@@ -76,6 +88,7 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
       Underline,
       createClickHandler({
         lessonRunCode: this.lessonRunCode,
+
         navigateToBoard: (board) => {
           this.navigateToBoard2(board);
         },
@@ -148,6 +161,9 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
   }
 
   navigateToBoard2($event: number) {
+    if (!this.boardIds.includes($event)) {
+      return;
+    }
     this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         this.sendMessage.emit(new ParticipantChangeBoardEvent($event));
@@ -159,6 +175,5 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
         this.sendMessage.emit(new HostChangeBoardEvent($event));
       }
     });
-
   }
 }

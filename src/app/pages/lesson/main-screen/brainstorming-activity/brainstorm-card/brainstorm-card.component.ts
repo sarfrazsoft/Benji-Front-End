@@ -142,6 +142,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   @ViewChild('iframeContainer') iframeContainer: ElementRef;
   hostAvatarSize: string;
   lessonRunCode;
+  boardIds;
 
   constructor(
     private router: Router,
@@ -233,6 +234,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     this.brainstormService.selectedBoard$.pipe(untilDestroyed(this)).subscribe((board: Board) => {
       if (board) {
         this.showUserName = board.board_activity?.show_participant_name_flag;
+      }
+    });
+
+    this.brainstormEventService.activityState$.subscribe((s) => {
+      if (s) {
+        this.boardIds = s.brainstormactivity.boards.map((x) => x.id);
       }
     });
   }
@@ -495,6 +502,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     console.log('navigate to board from brainstorm card');
   }
   navigateToBoard2($event: number) {
+    if (!this.boardIds.includes($event)) {
+      return;
+    }
     if (!this.act.meeting_mode) {
       this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
         if (val) {
