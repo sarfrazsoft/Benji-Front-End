@@ -5,37 +5,36 @@ benji-tiptap-editor {
     min-height: 6rem;
     overflow-y: auto;
     outline: none;
-    &[contenteditable="false"] {
+    &[contenteditable='false'] {
       // editor that is not editable styles go here
-
     }
     // &[itemSelected]="isItemSelected()"
     img {
       height: auto;
       max-width: 100%;
     }
-    
+
     h1 {
       font-size: 32px;
       font-weight: 700;
-      color: #37352F;
+      color: #37352f;
     }
     h2 {
       font-size: 24px;
       font-weight: 600;
-      color: #37352F;
+      color: #37352f;
     }
     h3 {
       font-size: 20px;
       font-weight: 600;
-      color: #37352F;
+      color: #37352f;
     }
   }
   .ProseMirror {
     > * + * {
       margin-top: 0.75em;
     }
-  
+
     code {
       background-color: rgba(#616161, 0.1);
       border-radius: 0.25em;
@@ -52,15 +51,14 @@ benji-tiptap-editor {
     }
   }
 
-
-  ul[data-type="taskList"] {
+  ul[data-type='taskList'] {
     list-style: none;
     padding: 0;
-  
+
     p {
       margin: 0;
     }
-  
+
     li {
       display: flex;
       padding-left: 0px !important;
@@ -70,19 +68,19 @@ benji-tiptap-editor {
       &:first-child {
         margin-top: 7px !important;
       }
-      >:first-child {
+      > :first-child {
         margin-top: 7px !important;
       }
-      >:last-child {
+      > :last-child {
         margin-bottom: 2px !important;
       }
-  
+
       > label {
         flex: 0 0 auto;
         margin-right: 0.5rem;
         user-select: none;
       }
-  
+
       > div {
         flex: 1 1 auto;
       }
@@ -108,16 +106,6 @@ benji-brainstorm-card {
   pointer-events: none;
   height: 0;
 }
-
-
-
-
-
-
-
-
-
-
 
 benji-text-editor {
   ngx-editor-menu {
@@ -286,17 +274,21 @@ pre.callout-container {
   .benji-page {
     max-width: 904px;
     margin: 0px auto;
-    background: #FFFFFF;
-    border: 1px solid #E2E6EC;
+    background: #ffffff;
+    border: 1px solid #e2e6ec;
     border-radius: 16px;
-    color: #37352F;
+    color: #37352f;
     box-sizing: border-box;
     tiptap-editor {
       .ProseMirror {
-        width: 85%;
+        width: 100%;
         margin: 0 auto;
-        max-width: 85%;
-        padding: 40px 0px;
+        max-width: 100%;
+        padding: 56px 40px;
+        box-sizing: border-box;
+        h1 {
+          margin-bottom: 12px;
+        }
       }
     }
     .page-title {
@@ -325,9 +317,9 @@ pre.callout-container {
     }
     .header-three {
       font-size: 20px;
-      line-height: 28px;  
+      line-height: 28px;
     }
-    .media{
+    .media {
       margin: 8px 0px;
       img {
         border-radius: 16px;
@@ -343,7 +335,7 @@ pre.callout-container {
       .intro {
         width: 100%;
         padding: 24px;
-        border: 1px solid #DFDFDF;
+        border: 1px solid #dfdfdf;
         border-radius: 0px 16px 16px 0px;
         .title {
           font-weight: 500;
@@ -363,7 +355,7 @@ pre.callout-container {
 .bubble-menu {
   padding: 0px 4px;
   height: 40px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 2px 10px rgba(56, 48, 48, 0.11);
   border-radius: 4px;
   button {
@@ -371,7 +363,7 @@ pre.callout-container {
     background-color: #fff;
     height: 100%;
     &:hover {
-      background: #F3F4F7;
+      background: #f3f4f7;
     }
     div {
       place-content: center;
@@ -383,10 +375,9 @@ pre.callout-container {
   }
 }
 
-
-.floating-menu {    
-  background: #FFFFFF;
-  border: 1px solid #DFDFDF;
+.floating-menu {
+  background: #ffffff;
+  border: 1px solid #dfdfdf;
   border-radius: 8px;
   width: 184px;
   padding: 16px 8px;
@@ -395,11 +386,11 @@ pre.callout-container {
     font-weight: 600;
     font-size: 12px;
     line-height: 14px;
-    color: #A6A6A6;
+    color: #a6a6a6;
     padding: 0px 8px;
   }
   .is-selected {
-    background: #F3F4F7;
+    background: #f3f4f7;
   }
   button {
     padding: 8px 8px;
@@ -407,7 +398,7 @@ pre.callout-container {
     width: 100%;
     border-radius: 4px;
     &:hover {
-      background: #F3F4F7;
+      background: #f3f4f7;
     }
     div {
       font-weight: 400;
@@ -423,9 +414,3 @@ pre.callout-container {
     // }
   }
 }
-
-
-
-
-
-
