@@ -7,3 +7,4 @@ export * from './reports';
 export * from './editor';
 export * from './tools';
 export * from './events';
+export * from './event-responses';

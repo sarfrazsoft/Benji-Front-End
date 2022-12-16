@@ -162,12 +162,11 @@
           <div>Oops! Something went wrong while submitting the form.</div>
         </div>
       </div>
-      <div 
-        class="small-form-text already-member"
-        [ngClass]="{'joining': joinSessionScreen}"
-        (click)="openSignInScreen()">
-        Already have an account?<br>
-        <div class="bold-text-7 sign-up primary-color">Sign in</div>
+      <div class="small-form-text already-member" [ngClass]="{'joining': joinSessionScreen}">
+        Don’t want to create a new account?<br>
+        <a class="bold-text-7 sign-up primary-color" (click)="openSignInScreen()">Log-in</a>
+        <span> / </span>
+        <a class="bold-text-7 sign-up primary-color" (click)="guestJoinClick()">Join as guest</a>
       </div>
     </div>
   </div>

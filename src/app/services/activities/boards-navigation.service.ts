@@ -59,7 +59,7 @@ export class BoardsNavigationService {
     }
   }
 
-  private boardChangingQueryParams(boardId: number) {
+  boardChangingQueryParams(boardId: number) {
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: { board: boardId },
@@ -67,7 +67,7 @@ export class BoardsNavigationService {
     });
   }
 
-  private getBoard(boardId: number, boards: Array<Board>): Board {
+  getBoard(boardId: number, boards: Array<Board>): Board {
     let board;
     boards.forEach((b) => {
       if (b.id === boardId) {

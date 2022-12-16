@@ -1,4 +1,3 @@
-
 benji-ms-brainstorming-activity {
   .empty-board {
     height: calc(100vh - 135px);
@@ -28,34 +27,45 @@ benji-ms-brainstorming-activity {
       position: relative;
     }
   }
-  
+
+  .brainstorm-idea {
+    &.small {
+      .prose-sm {
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
   .prose-sm {
-    color: #37352F;
+    color: #37352f;
     p {
       font-size: 1rem;
       line-height: 1.5rem;
       letter-spacing: -0.011rem;
       strong {
-        color: #37352F;
+        color: #37352f;
       }
     }
     blockquote {
       border-left: 3px solid;
-      color: #37352F;
+      color: #37352f;
       padding-left: 12px;
       p {
         font-style: normal;
         font-weight: 400;
-        &::after, &::before {
+        &::after,
+        &::before {
           content: unset !important;
         }
       }
     }
-    ul{
+    ul {
       margin-left: 5px;
-      >li {
+      > li {
         &::before {
-          background-color: #37352F;
+          background-color: #37352f;
           width: 6px;
           height: 6px;
         }
@@ -63,50 +73,74 @@ benji-ms-brainstorming-activity {
     }
     ol {
       margin-left: 6px;
-      >li {
+      > li {
         &::before {
           color: $black;
         }
       }
     }
-    ul>li, ol>li {
-      p, p:first-child, p:last-child {
+    ul > li,
+    ol > li {
+      p,
+      p:first-child,
+      p:last-child {
         margin-top: 4px;
         margin-bottom: 4px;
       }
     }
-    p, blockquote, ul, ol {
+    p,
+    blockquote,
+    ul,
+    ol {
       margin-bottom: 8px;
       margin-top: 8px;
       li {
-       margin: 0px 12px 0px 0px !important;
+        margin: 0px 12px 0px 0px !important;
       }
     }
   }
 
   .brainstorm-container {
-      .submitted-ideas {
-        &.categorized, .uncategorized {
+    .submitted-ideas {
+      &.categorized,
+      &.uncategorized {
+        .ideas-list-container {
+          .medium,
+          .large {
+            .prose-sm {
+              p {
+                font-size: 16px;
+              }
+            }
+          }
+        }
+      }
+      &.categorized,
+      .uncategorized {
         .prose-sm {
-          color: #37352F;
+          color: #37352f;
           p {
             font-size: 0.875rem;
             line-height: 1.25rem;
           }
           blockquote {
             p {
-              &::after, &::before {
+              &::after,
+              &::before {
                 content: unset;
               }
             }
           }
-          ul>li {
+          ul > li {
             &::before {
               width: 4px;
               height: 4px;
             }
           }
-          p, blockquote, ul, ol {
+          p,
+          blockquote,
+          ul,
+          ol {
             margin-bottom: 4px;
             margin-top: 4px;
           }
@@ -127,17 +161,32 @@ benji-ms-brainstorming-activity {
         margin-top: 16px;
         .ideas-list-container {
           display: block;
-          min-width: 544px;
-          width: 544px;
           margin: 0 auto;
-          overflow: hidden;
+          overflow: visible;
+          &.small {
+            width: 464px;
+          }
+          &.medium {
+            width: 544px;
+          }
+          &.large {
+            width: 628px;
+          }
           .brainstorm-idea-item {
             transition: all;
             margin-right: 0px;
           }
           .brainstorm-idea {
-            min-width: 544px;
             margin: 0px auto;
+            &.small {
+              min-width: 464px;
+            }
+            &.medium {
+              min-width: 544px;
+            }
+            &.large {
+              min-width: 628px;
+            }
             .card-header {
               height: 56px;
               padding: 0 16px;
@@ -163,7 +212,8 @@ benji-ms-brainstorming-activity {
                   top: 12px;
                 }
               }
-              .user-name .name, .time-stamp {
+              .user-name .name,
+              .time-stamp {
                 font-size: 16px;
               }
             }
@@ -182,7 +232,13 @@ benji-ms-brainstorming-activity {
                   }
                 }
               }
-              &.no-image, &.host-pinned {
+              &.no-image {
+                &.header-hidden {
+                  padding: 16px;
+                }
+              }
+              &.no-image,
+              &.host-pinned {
                 padding: 0px 16px 16px 16px;
               }
             }
@@ -209,7 +265,7 @@ benji-ms-brainstorming-activity {
                 padding: 9px 11px;
                 border-radius: 18px;
                 .input-comment {
-                  width: 410px;
+                  width: calc(100% - 40px);
                   font-size: 14px;
                   line-height: 16px;
                   &:focus {
@@ -241,12 +297,8 @@ benji-ms-brainstorming-activity {
       }
     }
     .submitted-ideas {
-      padding: 0 0 0 16px;
+      padding: 8px 0 0 16px;
       overflow-y: auto;
-      // width: 100vw;
-      // max-width: 100vw;
-      // min-width: 99vw;
-      // height: calc(100vh - 300px);
       .uncategorized {
         margin-bottom: 16px;
         ngx-masonry {
@@ -266,22 +318,19 @@ benji-ms-brainstorming-activity {
           }
         }
       }
-      // .delete-icon mat-icon {
-      //   position: absolute;
-      //   right: 10px;
-      //   top: 8px;
-      //   z-index: 2;
-      //   background: transparent;
-      //   cursor: pointer;
-      //   transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
-      // }
       .column {
         border-radius: 5px;
+        &.medium {
+          width: 344px;
+        }
+        &.large {
+          width: 428px;
+        }
         .header {
           margin: 16px 0px;
           min-height: 40px;
           font-size: 24px;
-          max-width: 264px;
+          width: 100%;
           .grey-bg {
             background: #fff;
             border-radius: 8px;
@@ -309,7 +358,7 @@ benji-ms-brainstorming-activity {
             border-radius: 8px;
             padding: 8px;
             outline: 4px solid #f3f4f7;
-            width: 238px;
+            width: calc(100% - 26px);
             font-size: 16px;
             font-weight: 600;
             color: #37352f;
@@ -335,7 +384,6 @@ benji-ms-brainstorming-activity {
           }
         }
         .ideas {
-          max-width: 282px;
           .brainstorm-idea {
             margin-bottom: 16px;
           }
@@ -509,12 +557,22 @@ benji-ms-brainstorming-activity {
 }
 benji-categorized-ideas {
   .ideas-list-container {
-    width: 264px;
-    max-width: 264px;
-    overflow: hidden;
+    overflow: visible;
   }
   .submitted-ideas {
     min-height: 100%;
+    .column {
+      margin-right: 24px;
+      &.small {
+        width: 264px;
+      }
+      &.medium {
+        width: 344px;
+      }
+      &.large {
+        width: 428px;
+      }
+    }
   }
 }
 .cdk-drag-preview.brainstorm-idea,
@@ -522,7 +580,7 @@ benji-categorized-ideas {
 .brainstorm-idea {
   min-height: 50px;
   background-color: white;
-  border: 1px solid #e2e0df;
+  filter: drop-shadow(0px 0.5px 3px rgba(55, 53, 47, 0.2));
   border-radius: 16px;
   -moz-box-sizing: border-box;
   display: block;
@@ -531,12 +589,54 @@ benji-categorized-ideas {
   position: relative;
   color: #616161;
   overflow: hidden;
-  width: 264px;
-  max-width: 264px;
+  max-width: 428px;
   overflow-x: auto;
+  &.small {
+    width: 264px;
+    .card-header {
+      height: 40px;
+      padding: 0px 12px;
+    }
+  }
+  &.medium {
+    width: 344px;
+  }
+  &.large {
+    min-width: 428px;
+  }
+  &.medium,
+  &.large {
+    .card-header .user-name .name {
+      font-size: 16px;
+    }
+    .content {
+      &.no-image {
+        &.header-hidden {
+          padding: 16px;
+        }
+      }
+      &.no-image,
+      &.host-pinned {
+        padding: 4px 16px 16px 16px;
+      }
+      .title-description .title {
+        font-size: 20px;
+      }
+    }
+    .feedback {
+      padding: 0px 16px 16px 16px;
+      .heart,
+      .thought {
+        width: 20px;
+      }
+      .counts {
+        padding-top: 16px;
+      }
+    }
+  }
   .card-header {
-    height: 40px;
-    padding: 0 12px;
+    height: 56px;
+    padding: 0px 16px;
     .delete-icon {
       width: 24px;
       height: 24px;
@@ -627,7 +727,13 @@ benji-categorized-ideas {
         }
       }
     }
-    &.no-image, &.host-pinned {
+    &.no-image {
+      &.header-hidden {
+        padding: 12px;
+      }
+    }
+    &.no-image,
+    &.host-pinned {
       padding: 4px 12px 12px 12px;
     }
   }
@@ -670,7 +776,6 @@ benji-categorized-ideas {
           color: #37352f;
           font-weight: 400;
           word-wrap: break-word;
-          max-width: 190px;
         }
       }
       .delete-icon {
@@ -716,7 +821,7 @@ benji-categorized-ideas {
     color: #37352f;
     font-weight: 400;
     font-size: 12px;
-    width: 160px;
+    width: calc(100% - 32px);
     overflow: hidden;
     &.detailed {
       overflow: hidden;
@@ -778,7 +883,6 @@ benji-categorized-ideas {
   text-align: center;
   line-height: 0;
   img {
-    //max-height: 300px;
     width: 100%;
   }
 }
@@ -880,7 +984,7 @@ benji-ps-brainstorming-activity {
 .brainstorm-main {
   .head-wrapper {
     border-bottom: 1px solid #e7e7e7;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.9);
   }
   .brainstorm-header {
     padding: 24px 32px;
@@ -900,7 +1004,7 @@ benji-ps-brainstorming-activity {
       }
     }
     .brainstorm-h2 .title {
-      color: #37352F;
+      color: #37352f;
       box-shadow: none;
       width: 100%;
       font-weight: 700;
@@ -910,6 +1014,7 @@ benji-ps-brainstorming-activity {
       border: 0px;
       border-radius: 0px;
       margin-right: 10px;
+      background: unset;
       &:focus-visible {
         outline: 0px;
       }
@@ -965,11 +1070,13 @@ benji-ps-brainstorming-activity {
       }
       .options-buttons {
         width: 50%;
-        .brainstorm-image, .prompt-video {
+        .brainstorm-image,
+        .prompt-video {
           //width: 400px;
           width: auto;
           height: auto;
-          img, video {
+          img,
+          video {
             border-radius: 16px;
             max-height: 680px;
             max-width: 600px;
@@ -1001,11 +1108,12 @@ benji-ps-brainstorming-activity {
 
 @media (max-width: 1012px) {
   .brainstorm-main .brainstorm-header {
-
     &.with-media {
       .options-buttons {
-        .brainstorm-image, .prompt-video {
-          img, video {
+        .brainstorm-image,
+        .prompt-video {
+          img,
+          video {
             height: auto;
           }
         }
@@ -1018,7 +1126,8 @@ benji-ps-brainstorming-activity {
   .brainstorm-main .brainstorm-header {
     &.with-media {
       .options-buttons {
-        .brainstorm-image, .prompt-video {
+        .brainstorm-image,
+        .prompt-video {
           width: 280px;
         }
       }
@@ -1038,9 +1147,11 @@ benji-ps-brainstorming-activity {
       .options-buttons {
         width: 100%;
         margin-top: 24px;
-        .brainstorm-image, .prompt-video  {
+        .brainstorm-image,
+        .prompt-video {
           width: 100%;
-          img, video {
+          img,
+          video {
             height: auto;
             width: auto;
             max-width: 100%;
@@ -1053,15 +1164,17 @@ benji-ps-brainstorming-activity {
 
 @media (max-width: 414px) {
   .brainstorm-main .brainstorm-header {
-    padding: 24px; 
-    .brainstorm-h2  .title {
+    padding: 24px;
+    .brainstorm-h2 .title {
       font-size: 24px;
       line-height: 32px;
     }
     &.with-media {
       .options-buttons {
-        .brainstorm-image, .prompt-video  {
-          img, video {
+        .brainstorm-image,
+        .prompt-video {
+          img,
+          video {
             height: 100%;
             width: 100%;
           }
@@ -1173,12 +1286,13 @@ ng-dropdown-panel {
             width: calc(100vw - 32px);
             .brainstorm-idea {
               width: 100%;
+              min-width: 100%;
               max-width: unset;
               .heart,
               .thought {
                 width: 20px;
               }
-              .card-header { 
+              .card-header {
                 .pin {
                   width: 20px;
                 }
@@ -1202,6 +1316,11 @@ ng-dropdown-panel {
         .brainstorm-idea {
           min-width: calc(100vw - 32px);
           max-width: 100%;
+          &.small,
+          &.medium,
+          &.large {
+            min-width: calc(100vw - 32px);
+          }
         }
       }
       ul {
@@ -1216,7 +1335,7 @@ ng-dropdown-panel {
             .thought {
               width: 20px;
             }
-            .card-header { 
+            .card-header {
               .user-name .name {
                 font-size: 16px;
               }
@@ -1243,28 +1362,34 @@ ng-dropdown-panel {
           line-height: 1.5rem;
           letter-spacing: -0.011rem;
         }
-        ul>li {
+        ul > li {
           &::before {
             width: 6px;
             height: 6px;
             color: $black;
           }
         }
-        ol>li {
+        ol > li {
           &::before {
             color: $black;
             top: calc(0.7rem - 0.1785714rem);
             left: 0.5042857rem;
           }
         }
-        ul>li, ol>li {
+        ul > li,
+        ol > li {
           padding-left: 28px;
-          p, p:first-child, p:last-child {
+          p,
+          p:first-child,
+          p:last-child {
             margin-top: 4px;
             margin-bottom: 4px;
           }
         }
-        p, blockquote, ul, ol {
+        p,
+        blockquote,
+        ul,
+        ol {
           margin-bottom: 8px;
           margin-top: 8px;
           li {
@@ -1295,7 +1420,7 @@ ng-dropdown-panel {
       }
     }
     span.remove-access {
-      color: #FF1111;
+      color: #ff1111;
     }
   }
   button {
@@ -1312,7 +1437,7 @@ ng-dropdown-panel {
 .masonry-item {
   transition: top 0.4s ease-in-out, left 0.4s ease-in-out;
 }
-.prose ol>li::before {
+.prose ol > li::before {
   color: $black;
 }
 

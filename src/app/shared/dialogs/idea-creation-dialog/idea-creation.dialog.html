@@ -30,7 +30,9 @@
         </div>
         <div [ngClass]="{ 'image-selected': !isItemSelected() }">
           <benji-tiptap-editor
+            (sendMessage)="sendMessage.emit($event)"
             [defaultValue]="userIdeaText"
+            [lessonRunCode]="lessonRunCode"
             (textChanged)="descriptionTextChanged($event)">
           </benji-tiptap-editor>
         </div>

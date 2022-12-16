@@ -1,8 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
-
 import { CopyTemplateComponent, MainScreenLessonComponent } from 'src/app/pages';
 import { ParticipantJoinComponent } from '../pages/participant/join/participant-join.component';
-import { ParticipantLoginComponent } from '../pages/participant/login/participant-login.component';
 import { AuthGuard, WhiteLabelResolver } from '../services';
 import { LayoutComponent } from './layout.component';
 
@@ -11,13 +9,6 @@ const routes: Routes = [
   {
     path: 'screen/lesson/:roomCode',
     component: MainScreenLessonComponent,
-    resolve: {
-      labelInfo: WhiteLabelResolver,
-    },
-  },
-  {
-    path: 'participant/login',
-    component: ParticipantLoginComponent,
     resolve: {
       labelInfo: WhiteLabelResolver,
     },

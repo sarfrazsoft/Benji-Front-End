@@ -7,7 +7,7 @@
         padding: 14px;
         border-radius: 8px;
         background: #f3f4f7;
-        &:hover{
+        &:hover {
           background: #dedede;
         }
       }
@@ -48,7 +48,8 @@
   }
   .edit {
     .editing {
-      input, textarea {
+      input,
+      textarea {
         font-size: 16px;
         font-weight: 400;
         color: #616161;
@@ -71,16 +72,15 @@
     }
   }
   .board-status-dropdown {
+    &.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+      box-shadow: none;
+    }
     .ng-select-container {
       background: #f3f4f7;
       border-radius: 8px;
       height: 48px;
       border: unset;
       padding: 6px;
-      &:focus,
-      &:active {
-        outline: none;
-      }
       .ng-placeholder {
         font-size: 16px;
         color: #616161;
@@ -96,7 +96,8 @@
         .ng-option {
           padding: 8px 16px;
           line-height: 16px;
-          &.ng-option-selected, &.ng-option-marked {
+          &.ng-option-selected,
+          &.ng-option-marked {
             background-color: #e7f4fe;
           }
         }
@@ -113,6 +114,115 @@
       cursor: pointer;
       &.clear-board {
         color: #ef151b;
+      }
+    }
+  }
+  .background {
+    .posting-settings {
+      &.background-options {
+        &.bg-none {
+          border-radius: 8px;
+        }
+        .option {
+          width: 96px;
+          height: 72px;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 12px;
+          color: #828282;
+          border-radius: 8px;
+          &:hover {
+            background: #e6e9ef;
+          }
+          &.selected {
+            background: #ffffff;
+          }
+          &:hover,
+          &.selected {
+            color: #37352f;
+            .box {
+              border-color: #37352f;
+              &.color {
+                background: #8997b3;
+              }
+            }
+          }
+          &.bg-image {
+            img {
+              width: 32px;
+              opacity: 0.6;
+            }
+            &:hover,
+            &.selected {
+              img {
+                opacity: 1;
+              }
+            }
+          }
+          .box {
+            width: 32px;
+            height: 24px;
+            border: 2px solid #828282;
+            border-radius: 3px;
+            &.color {
+              box-sizing: border-box;
+              background: #cccccc;
+              box-shadow: inset 0px 0px 0px 1px #fff;
+            }
+          }
+        }
+      }
+      &.background-options {
+        margin-top: 4px;
+        padding: 4px 8px;
+        border-radius: 8px 8px 0px 0px;
+      }
+      &.background-controls {
+        padding-top: 20px;
+        border-radius: 0px 0px 8px 8px;
+        .pick-color {
+          cursor: pointer;
+          .code span {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid #adadb3;
+          }
+          color-picker {
+            hr {
+              border: 0;
+              border-top: 1px solid #eee;
+            }
+          }
+        }
+        .upload {
+          cursor: pointer;
+          .img-upload {
+            width: 34px;
+            height: 32px;
+            background: #fff;
+            border-radius: 4px 0px 0px 4px;
+            img {
+              width: 34px;
+              height: 32px;
+              border-radius: 4px 0px 0px 4px;
+            }
+          }
+          .select-img {
+            width: 19px;
+            height: 32px;
+            background: #c4c4c4;
+            border-radius: 0px 4px 4px 0px;
+          }
+          .mat-icon {
+            color: #fff;
+          }
+        }
+        .mat-icon {
+          font-size: 16px;
+          width: 16px;
+          height: 16px;
+        }
       }
     }
   }
@@ -168,6 +278,32 @@
   }
 }
 
+.close-boards-nav {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 306px;
+  cursor: pointer;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  color: #818181;
+  background: #ffffff;
+  border: 1px solid #e3e3e3;
+  border-radius: 50%;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.06));
+  &:hover {
+    color: #fff;
+  }
+  .mat-icon {
+    font-size: 18px;
+    width: 18px;
+    display: block;
+    margin: 0px auto;
+    margin-top: 4px;
+  }
+}
+
 .boards-navigation {
   padding: 16px 16px 0px 16px;
   border-right: 1px solid #e7e7e7;
@@ -184,7 +320,7 @@
       font-weight: 700;
       font-size: 20px;
       line-height: 24px;
-      color: #37352F;
+      color: #37352f;
     }
     .space-description {
       font-weight: 400;
@@ -193,7 +329,7 @@
       color: #616161;
       margin: 8px 0px 12px 0px;
       padding-bottom: 24px;
-      border-bottom: 1px solid #E2E6EC;
+      border-bottom: 1px solid #e2e6ec;
     }
   }
   .meeting-mode {
@@ -244,7 +380,7 @@
         // text-align: center;
         .wrapper {
           padding: 8px;
-          border: 1px solid #E7E7E7;
+          border: 1px solid #e7e7e7;
           border-radius: 8px;
           background: #fff;
           button {
@@ -254,7 +390,7 @@
             border-radius: 4px;
             transition: all 0.1s;
             &:hover {
-              background-color: #F3F4F7;
+              background-color: #f3f4f7;
               .icon-wrapper {
                 background: #fff;
               }
@@ -264,35 +400,35 @@
               .sub-title {
                 color: inherit;
               }
-
             }
             .icon-wrapper {
               width: 40px;
               height: 40px;
-              background: #F3F4F7;
+              background: #f3f4f7;
               border-radius: 4px;
             }
             .title {
-              color: #37352FE5;
+              color: #37352fe5;
               font-weight: 500;
               font-size: 14px;
             }
             .sub-title {
               font-weight: 400;
               font-size: 12px;
-              color: #868A8E;
+              color: #868a8e;
             }
           }
         }
       }
     }
-    border-top: 1px solid #E2E6EC;
+    border-top: 1px solid #e2e6ec;
     padding: 24px 0px;
     margin-top: 12px;
   }
   .boards-area {
     height: 100vh;
-    .mode-setting, .boards-list {
+    .mode-setting,
+    .boards-list {
       display: flex;
       width: 100%;
       height: 130px;
@@ -326,8 +462,9 @@
     border-radius: 4px;
     transition: all 0.2s;
     width: 100%;
-    &:hover, &.selected {
-      background: #F3F4F7;
+    &:hover,
+    &.selected {
+      background: #f3f4f7;
       button.three-dots {
         display: flex !important;
       }
@@ -362,7 +499,7 @@
       font-weight: 400;
       font-size: 14px;
       line-height: 16px;
-      color: #37352F;
+      color: #37352f;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;

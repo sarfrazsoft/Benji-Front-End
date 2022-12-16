@@ -17,6 +17,7 @@ mat-sidenav-container.mat-sidenav-container {
   mat-sidenav.mat-sidenav {
     //border-right: 1px solid #eeebdd;
     border-right: 0px;
+    overflow: visible;
   }
 
   .nav-container {
@@ -38,12 +39,14 @@ mat-sidenav-container.mat-sidenav-container {
         max-width: 152px;
       }
     }
-    .sections{
+    .sections {
       height: calc(100vh - 56px);
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      .nav-top, .nav-bottom, .folders-names {
+      .nav-top,
+      .nav-bottom,
+      .folders-names {
         display: flex;
         width: 100%;
         height: 42px;
@@ -62,7 +65,7 @@ mat-sidenav-container.mat-sidenav-container {
         margin: 0px 0px;
         .item {
           cursor: pointer;
-          color: #A4A4A4;
+          color: #a4a4a4;
           font-size: 14px;
           line-height: 16px;
           font-weight: 500;
@@ -76,15 +79,16 @@ mat-sidenav-container.mat-sidenav-container {
           margin-right: 8px;
           margin-left: 8px;
           border-radius: 8px;
-          &:hover, &.active {
-            color: #37352F;
+          &:hover,
+          &.active {
+            color: #37352f;
             background-color: #fff;
             .item-icon {
               opacity: 1;
             }
           }
           .item-name {
-           // color: #8F9094;
+            // color: #8F9094;
           }
           .item-icon {
             opacity: 0.42;
@@ -93,7 +97,7 @@ mat-sidenav-container.mat-sidenav-container {
       }
       .folders-header {
         margin: 22px 20px 8px 20px;
-        color: #8F9094;
+        color: #8f9094;
         font-weight: 400;
         font-size: 14px;
         .add {
@@ -108,7 +112,7 @@ mat-sidenav-container.mat-sidenav-container {
       }
       .folders {
         margin: 0px 8px 22px 8px;
-        color: #8F9094;
+        color: #8f9094;
         font-weight: 400;
         font-size: 14px;
         .folders-list {
@@ -119,8 +123,9 @@ mat-sidenav-container.mat-sidenav-container {
             margin-top: 4px;
             font-weight: 400;
             cursor: pointer;
-            &:hover, &.selected {
-              color: #37352F;
+            &:hover,
+            &.selected {
+              color: #37352f;
               background-color: #fff;
               .icon {
                 opacity: 1;

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CoverPhoto } from './backend/schema/course_details';
 import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import * as global from 'src/app/globals';
 
 @Injectable()
 export class LessonService {
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
   maxIdIndex: number;
   coverPhoto: string;
@@ -21,7 +23,6 @@ export class LessonService {
       const img = images[this.maxIdIndex]?.img;
 
       if (!image_url && !img) {
-        // this.coverPhoto = null;
         return null;
       }
 
@@ -29,6 +30,31 @@ export class LessonService {
     } else {
       return null;
     }
+  }
+
+  updateLessonRunImage(
+    lessonrunCode: number,
+    lessonImage: Blob,
+    lessonImageName: string,
+    imageUrl: string,
+    imageId: number
+  ) {
+    const url =
+      global.apiRoot + '/course_details/lesson_run/' + lessonrunCode + '/upload_image/?image_id=' + imageId;
+    const formData: FormData = new FormData();
+    if (lessonImage) {
+      formData.append('img', lessonImage, lessonImageName);
+    }
+    if (imageUrl) {
+      formData.append('image_url', imageUrl);
+    }
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', null);
+    headers.set('Accept', 'multipart/form-data');
+    const params = new HttpParams();
+    return this.httpClient.post(url, formData, { params, headers }).map((res: any) => {
+      return res;
+    });
   }
 
 }

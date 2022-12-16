@@ -1,5 +1,15 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, HostListener, Inject, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Inject,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { timer } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
@@ -55,6 +65,7 @@ export class IdeaCreationDialogComponent implements OnInit {
   meta;
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
+  @Output() sendMessage = new EventEmitter<any>();
 
   constructor(
     private dialogRef: MatDialogRef<IdeaCreationDialogComponent>,

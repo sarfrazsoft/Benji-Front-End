@@ -89,12 +89,14 @@
                 [joinSessionScreen]="true"
                 (forgotPasswordClicked)="loadForgotPasswordComponent()"
                 (signUpClicked)="loadSignUpComponent()"
+                (guestJoinClicked)="loadGuestJoin()"
                 (userSignedInSuccessfully)="joinSessionAsLoggedInUser()"
               ></benji-dashboard-login>
             </ng-container>
             <ng-container *ngIf="loadForgotPassword">
               <benji-forgot-password
                 [joinSession]="true"
+                (guestJoinClicked)="loadGuestJoin()"
                 (signInClicked)="loadLoginComponent()">
               </benji-forgot-password>
             </ng-container>
@@ -102,6 +104,7 @@
               <benji-dashboard-signup 
                 [joinSessionScreen]="true"
                 (signInClicked)="loadLoginComponent()"
+                (guestJoinClicked)="loadGuestJoin()"
                 (userSignedInSuccessfully)="joinSessionAsLoggedInUser()"
               ></benji-dashboard-signup>
             </ng-container>

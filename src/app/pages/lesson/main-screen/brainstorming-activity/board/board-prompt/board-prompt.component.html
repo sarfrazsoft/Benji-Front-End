@@ -26,6 +26,8 @@
         <div class="sub-header" [ngClass]="{'no-sub-instructions': !sub_instructions && !isHost}">
           <ng-container *ngxPermissionsOnly="'ADMIN'">
             <benji-tiptap-editor
+              (sendMessage)="sendMessage.emit($event)"
+              [lessonRunCode]="lessonRunCode"
               [editable]="true"
               [defaultValue]="sub_instructions"
               (textChanged)="descriptionTextChanged($event)">
@@ -33,6 +35,8 @@
           </ng-container>
           <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
             <benji-tiptap-editor
+              (sendMessage)="sendMessage.emit($event)"
+              [lessonRunCode]="lessonRunCode"
               [editable]="false"
               [defaultValue]="sub_instructions"
               (textChanged)="descriptionTextChanged($event)">

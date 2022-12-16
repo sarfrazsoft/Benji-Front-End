@@ -12,13 +12,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { differenceBy, find, findIndex, includes, remove } from 'lodash';
+import { cloneDeep, differenceBy, find, findIndex, includes, remove } from 'lodash';
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
-import { fadeAnimation, listAnimation } from 'src/app/pages/lesson/main-screen/shared/app.animations';
 import { BrainstormEventService, BrainstormService } from 'src/app/services';
 import {
   Board,
@@ -28,6 +27,7 @@ import {
   EventTypes,
   Idea,
   PostOrder,
+  PostSize,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { PostLayoutService } from 'src/app/services/post-layout.service';
@@ -38,7 +38,6 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'benji-thread-mode-ideas',
   templateUrl: './thread-mode.component.html',
-  // animations: [fadeAnimation, listAnimation],
   animations: [
     trigger('anim', [
       transition('* => void', [
@@ -123,6 +122,7 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
 
   public layoutConfig: GridOptions = null;
   grid: Grid;
+  postSize: PostSize;
 
   constructor(
     private dialog: MatDialog,
@@ -150,6 +150,9 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
   masonryPrepend: boolean;
 
   ngOnInit(): void {
+    if (this.board.post_size) {
+      this.postSize = this.board.post_size;
+    }
     this.postLayoutService.sendMessage$.subscribe((v) => {
       if (v) {
         this.sendMessage.emit(v);
@@ -194,6 +197,9 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
         this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, (val) => {});
         this.postLayoutService.sortGrid(this.board.sort, this.grid);
         this.postLayoutService.refreshGridLayout(this.grid, false);
+      } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
+        this.postSize = this.board.post_size;
+        this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (
         this.eventType === 'BrainstormRemoveSubmissionEvent' ||
         this.eventType === 'BrainstormClearBoardIdeaEvent'
@@ -223,7 +229,12 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
       ) {
         this.brainstormService.uncategorizedUpdateIdeasPin(this.board, this.ideas);
         this.postLayoutService.sortGrid(this.board.sort, this.grid);
-      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+        // for unknown reason this has to be called twice
+        setTimeout(() => {
+          this.brainstormService.uncategorizedUpdateIdeasPin(this.board, this.ideas);
+          this.postLayoutService.sortGrid(this.board.sort, this.grid);
+        }, 100);
+      } else if (this.eventType === EventTypes.brainstormToggleParticipantNameEvent) {
         this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (this.eventType === EventTypes.brainstormToggleMeetingMode) {
         if (this.act.meeting_mode) {
@@ -245,7 +256,7 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
           // do nothing
         }
       } else if (
-        this.eventType === 'BrainstormChangeBoardStatusEvent' ||
+        this.eventType === EventTypes.brainstormChangeBoardStatusEvent ||
         this.eventType === 'BrainstormToggleAllowCommentEvent'
       ) {
         this.postLayoutService.refreshGridLayout(this.grid, false);

@@ -1,17 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
-import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app';
 import {
   Board,
-  BoardMode,
   BoardSort,
   BoardStatus,
   BoardTypes,
   BrainstormBoardSortOrderEvent,
   BrainstormChangeBoardStatusEvent,
-  BrainstormChangeModeEvent,
   BrainstormClearBoardIdeaEvent,
   BrainstormToggleAllowCommentEvent,
   BrainstormToggleAllowHeartEvent,
@@ -56,24 +53,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
       name: 'Unsorted',
     },
   ];
-  boardStatusDropdown: Array<{ value: BoardStatus; name: string }> = [
-    {
-      value: 'open',
-      name: 'Open',
-    },
-    {
-      value: 'closed',
-      name: 'Hidden',
-    },
-    {
-      value: 'view_only',
-      name: 'View Only',
-    },
-    {
-      value: 'private',
-      name: 'Private',
-    },
-  ];
+
   defaultSort = 'newest_to_oldest';
   participants = [];
 
@@ -83,7 +63,6 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
   allowHearting: boolean;
   board: Board;
 
-  currentboardStatus: BoardStatus;
   selectedBoard: Board;
   boards: Array<Board> = [];
 
@@ -94,25 +73,20 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
 
   showBottom = true;
   settingTypes = SettingsTypes;
+  lessonRunCode: number;
 
   constructor(
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
-    private boardStatusService: BoardStatusService,
-    private permissionsService: NgxPermissionsService,
     private utilsService: UtilsService
   ) {}
 
   ngOnInit(): void {
+    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code;
+
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
       if (board) {
         this.selectedBoardChanged(board);
-      }
-    });
-
-    this.boardStatusService.boardStatus$.subscribe((status: BoardStatus) => {
-      if (status) {
-        this.currentboardStatus = status;
       }
     });
 
@@ -129,24 +103,17 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     }
   }
 
-  selectedBoardChanged(board) {
+  selectedBoardChanged(board: Board) {
     this.selectedBoard = board;
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
     this.allowCommenting = this.selectedBoard.allow_comment;
     this.allowHearting = this.selectedBoard.allow_heart;
-    this.currentboardStatus = board.status;
     if (board.sort) {
       this.defaultSort = board.sort;
     }
   }
 
   ngOnChanges(): void {
-    if (
-      this.activityState.eventType === 'BrainstormRemoveBoardEvent' ||
-      this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent'
-    ) {
-      this.resetBoards();
-    }
     if (this.navType === 'boards') {
       if (this.activityState.eventType === EventTypes.hostChangeBoardEvent) {
       }
@@ -170,13 +137,6 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     this.settingsNavClosed.emit();
   }
 
-  setBoardStatus() {
-    const selected = this.currentboardStatus;
-    this.sendMessage.emit(
-      new BrainstormChangeBoardStatusEvent(this.currentboardStatus, this.selectedBoard.id)
-    );
-  }
-
   duplicateBoard() {}
 
   toggleMeetingMode($event) {
@@ -197,12 +157,6 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
 
   copyLink() {
     this.utilsService.copyToClipboard(this.hostname + this.activityState.lesson_run.lessonrun_code);
-  }
-
-  resetBoards() {
-    this.boardsCount = 0;
-    this.boards = this.boards.filter((board) => board.removed === false);
-    this.boardsCount = this.boards.length;
   }
 
   setMenuBoard(board: Board) {

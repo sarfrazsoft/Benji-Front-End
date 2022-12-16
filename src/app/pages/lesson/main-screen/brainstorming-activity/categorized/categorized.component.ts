@@ -84,6 +84,7 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
 
   // @ViewChildren(NgxMasonryComponent) masonryComponents: QueryList<NgxMasonryComponent>;
   masonryPrepend: boolean;
+  columnSize: string;
 
   constructor(
     private dialog: MatDialog,
@@ -98,6 +99,10 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
   }
 
   ngOnInit(): void {
+    if (this.board.post_size) {
+      this.columnSize = this.board.post_size;
+    }
+
     this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
       // Add the comment to the card
       if (this.board.id === v.board_id) {
@@ -120,6 +125,8 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
         this.brainstormService.addIdeaToCategory(this.board, this.columns, (changedCategory: Category) => {
           console.log(changedCategory);
         });
+      } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
+        this.columnSize = this.board.post_size;
       } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
         this.brainstormService.ideaCommented(this.board, this.columns, () => {
           this.refreshMasonryLayout();
@@ -165,7 +172,7 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
         this.brainstormService.updateIdeasPin(this.board, this.columns, () => {
           this.brainstormService.sortIdeas(this.board, this.columns);
         });
-      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+      } else if (this.eventType === EventTypes.brainstormToggleParticipantNameEvent) {
         this.refreshMasonryLayout();
       } else if (this.eventType === 'BrainstormToggleMeetingMode') {
         if (this.act.meeting_mode) {

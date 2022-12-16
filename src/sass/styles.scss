@@ -1461,6 +1461,13 @@ input[type='number'] {
 benji-main-screen-lesson {
   .mat-drawer-container {
     background-color: #f3f4f7;
+    background-size: cover;
+    background-position: center;
+    &.board-bg-blur {
+      mat-sidenav-content {
+        backdrop-filter: blur(8px);
+      }
+    }
   }
 }
 
@@ -1540,7 +1547,7 @@ a {
 
 b,
 strong {
-  font-weight: bolder
+  font-weight: bolder;
 }
 
 .ProseMirror .is-empty::before {
@@ -1552,11 +1559,11 @@ strong {
 }
 
 [data-headingtype] > .blockContent.isEmpty div::before {
-  content: "Heading";
+  content: 'Heading';
 }
 
 [data-listtype] > .blockContent.isEmpty div::before {
-  content: "List";
+  content: 'List';
 }
 
 // code,
@@ -1685,7 +1692,7 @@ ol,
 ul {
   list-style: none;
   margin: 0;
-  padding: 0
+  padding: 0;
 }
 
 // textarea {
@@ -1788,11 +1795,11 @@ ul {
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 

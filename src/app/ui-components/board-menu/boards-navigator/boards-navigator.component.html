@@ -1,92 +1,109 @@
-<div 
-  *ngIf="navType=='boards'" 
-  class="boards-navigation" 
-  fxLayout="column">
+<div
+  *ngIf="navType == 'boards'"
+  class="boards-navigation"
+  fxLayout="column"
+  (mouseover)="boardsNavHovered = true"
+  (mouseout)="boardsNavHovered = false"
+>
   <div class="top-area">
     <div class="header-area" fxLayout="column" fxLayoutGap="24px">
       <div class="space-info" fxLayout="column" fxLayoutGap="8px">
-        <div class="space-title"> {{ lessonName }} </div>
-        <div class="space-description"> {{ lessonDescription }} </div>
+        <div class="space-title">{{ lessonName }}</div>
+        <div class="space-description">{{ lessonDescription }}</div>
       </div>
     </div>
   </div>
+  <div
+    [ngStyle]="{ display: boardsNavHovered || closeBoardsNavHovered ? 'block' : 'none' }"
+    class="close-boards-nav"
+    [class.bg-primary-color]="closeBoardsNavHovered"
+    (click)="toggleBoardsNavigator.emit()"
+    (mouseover)="closeBoardsNavHovered = true"
+    (mouseout)="closeBoardsNavHovered = false"
+  >
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </div>
   <div class="boards-area" fxLayout="column">
-    <div 
+    <div
       cdkDropList
       [cdkDropListData]="boards"
       (cdkDropListDropped)="drop($event)"
       [cdkDropListDisabled]="isParticipant"
       class="boards-container boards-list"
       fxLayout="column"
-      fxLayoutGap="4px">
+      fxLayoutGap="4px"
+    >
       <div
         cdkDrag
         [cdkDragData]="getDragData(board)"
         *ngFor="let board of boards; let j = index"
-        class="board-container">
-          <div
-            fxLayout="row" 
-            class="board"
-            [ngClass]="{
-              'selected': selectedBoard?.id === board?.id, 
-              'closed': board.status === 'closed',
-              'hidden': board.status === 'closed' && isParticipant
-            }"
-            (click)="navigateToBoard(board)"
-            fxLayoutAlign="space-between center"
-            (mouseover)="!boardHovered">
-            <ng-container>
-              <div class="title">
-                {{ board?.board_activity.instructions 
-                  ? board?.board_activity.instructions : 'Untitled' 
-                }}
-              </div>
-              <ng-container *ngIf="board.status === 'closed'">
-                <img class="closed-eye" src="../../../assets/img/side-nav/closed-board.svg"/>
-              </ng-container>
-              <ng-container *ngxPermissionsOnly="'ADMIN'">
-                <button
-                  [matMenuTriggerFor]="menu"
-                  benji-click-stop-propagation
-                  disableRipple
-                  (click)="setMenuBoard(board)" 
-                  class="three-dots"
-                  fxLayoutAlign="center center">
-                  <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
-                </button>
-              </ng-container>
+        class="board-container"
+      >
+        <div
+          fxLayout="row"
+          class="board"
+          [ngClass]="{
+            selected: selectedBoard?.id === board?.id,
+            closed: board.status === 'closed',
+            hidden: board.status === 'closed' && isParticipant
+          }"
+          (click)="navigateToBoard(board)"
+          fxLayoutAlign="space-between center"
+          (mouseover)="(!boardHovered)"
+        >
+          <ng-container>
+            <div class="title">
+              {{ board?.board_activity.instructions ? board?.board_activity.instructions : 'Untitled' }}
+            </div>
+            <ng-container *ngIf="board.status === 'closed'">
+              <img class="closed-eye" src="../../../assets/img/side-nav/closed-board.svg" />
             </ng-container>
-          </div>
+            <ng-container *ngxPermissionsOnly="'ADMIN'">
+              <button
+                [matMenuTriggerFor]="menu"
+                benji-click-stop-propagation
+                disableRipple
+                (click)="setMenuBoard(board)"
+                class="three-dots"
+                fxLayoutAlign="center center"
+              >
+                <img class="dots" src="../../../assets/img/side-nav/three-dots.svg" />
+              </button>
+            </ng-container>
+          </ng-container>
+        </div>
       </div>
     </div>
   </div>
   <benji-add-controls
     [activityState]="activityState"
     [boards]="boards"
-    (sendMessage)="sendMessage.emit($event)">
+    (sendMessage)="sendMessage.emit($event)"
+  >
   </benji-add-controls>
 </div>
 
 <mat-menu #menu="matMenu" class="board-duplicate-delete" xPosition="before">
-  <button 
-    mat-menu-item 
-    (click)="duplicateBoard()" 
-    fxLayout="row" 
-    fxLayoutGap="8px" 
-    fxLayoutAlign="start center">
-    <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
-    <span>Duplicate</span>
-  </button>
-  <button 
-    mat-menu-item 
-    [disabled]="boardsCount==1 ? 'disabled': null"
-    [ngClass]="{'disabled': boardsCount==1}"
-    (click)="openDeleteDialog()" 
-    fxLayout="row" 
-    fxLayoutGap="8px" 
+  <button
+    mat-menu-item
+    (click)="duplicateBoard()"
+    fxLayout="row"
+    fxLayoutGap="8px"
     fxLayoutAlign="start center"
   >
-    <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
+    <img class="dots" src="../../../assets/img/side-nav/duplicate.svg" />
+    <span>Duplicate</span>
+  </button>
+  <button
+    mat-menu-item
+    [disabled]="boardsCount == 1 ? 'disabled' : null"
+    [ngClass]="{ disabled: boardsCount == 1 }"
+    (click)="openDeleteDialog()"
+    fxLayout="row"
+    fxLayoutGap="8px"
+    fxLayoutAlign="start center"
+  >
+    <img class="dots" src="../../../assets/img/side-nav/delete.svg" />
     <span>Delete</span>
   </button>
 </mat-menu>

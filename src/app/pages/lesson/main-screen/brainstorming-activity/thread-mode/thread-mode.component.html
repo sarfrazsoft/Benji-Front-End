@@ -1,9 +1,11 @@
 <div class="submitted-ideas">
-  <div 
+  <div
     class="ideas-list-container benji-muuri-grid"
     muuriGrid
     (gridCreated)="onGridCreated($event)"
-    [config]="layoutConfig">
+    [config]="layoutConfig"
+    [ngClass]="postSize"
+  >
     <ng-container *ngFor="let idea of ideas; let i = index">
       <ng-container *ngIf="canViewIdea(idea)">
         <div
@@ -12,31 +14,31 @@
           [attr.data-likes]="idea.hearts.length"
           (mouseenter)="idea.showClose = true"
           (mouseleave)="idea.showClose = false"
-          style="position: absolute;" 
-          [attr.order]="i" 
+          style="position: absolute"
+          [attr.order]="i"
           [id]="idea.id"
           [attr.time]="idea.time"
           [attr.hearts]="idea.hearts.length"
           [attr.pin]="idea.pinned ? '0' : '1'">
-            <benji-brainstorm-card
-              [board]="board"
-              [item]="idea"
-              [act]="act"
-              [activityState]="activityState"
-              [participantCode]="participantCode"
-              (deleteIdea)="delete($event)"
-              (ideaDetailedDialogOpened)="ideaDetailedDialogOpened($event)"
-              (ideaDetailedDialogClosed)="ideaDetailedDialogClosed($event)"
-              [ideaDetailedDialogOpen]="ideaDetailedDialogOpen"
-              (viewChanged)="refreshGridLayout()"
-              [sendMessage]="sendMessage"
-              [isColumnsLayout]="isColumnsLayout"
-              [myGroup]="myGroup"
-              [avatarSize]="'medium'"
-              [eventType]="eventType"
-              [userRole]="getUserRole(item)">
-            </benji-brainstorm-card>
-          <div class="16px-spacer" style="height: 16px;"></div>
+          <benji-brainstorm-card
+            [board]="board"
+            [item]="idea"
+            [act]="act"
+            [activityState]="activityState"
+            [participantCode]="participantCode"
+            (deleteIdea)="delete($event)"
+            (ideaDetailedDialogOpened)="ideaDetailedDialogOpened($event)"
+            (ideaDetailedDialogClosed)="ideaDetailedDialogClosed($event)"
+            [ideaDetailedDialogOpen]="ideaDetailedDialogOpen"
+            (viewChanged)="refreshGridLayout()"
+            [sendMessage]="sendMessage"
+            [isColumnsLayout]="isColumnsLayout"
+            [myGroup]="myGroup"
+            [avatarSize]="'medium'"
+            [eventType]="eventType"
+            [userRole]="getUserRole(item)">
+          </benji-brainstorm-card>
+          <div class="16px-spacer" style="height: 16px"></div>
         </div>
       </ng-container>
     </ng-container>

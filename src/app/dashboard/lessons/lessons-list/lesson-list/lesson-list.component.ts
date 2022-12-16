@@ -5,6 +5,7 @@ import { ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { TeamUser } from 'src/app/services/backend/schema/user';
 import { UtilsService } from 'src/app/services/utils.service';
+import { environment } from 'src/environments/environment';
 export interface TableRowInformation {
   index: number;
   lessonRunCode: number;
@@ -55,13 +56,14 @@ export class LessonListComponent implements OnChanges {
   selectedCategory = 'Open';
 
   hostname = window.location.host + '/participant/join?link=';
+  hostLocation = environment.web_protocol + '://' + environment.host;
   maxIdIndex: any;
   folderLessonsIDs: Array<number> = [];
 
   constructor(
     private router: Router,
     private utilsService: UtilsService,
-    private contextService: ContextService,
+    private contextService: ContextService
   ) {}
 
   ngOnChanges() {
@@ -72,7 +74,7 @@ export class LessonListComponent implements OnChanges {
     this.dataSource = [];
     const slicedArray = this.lessonRuns;
     slicedArray.forEach((val: any, index: number) => {
-      const ids = val.lessonrun_images.map((object) => {
+      const ids = val.lessonrun_images?.map((object) => {
         return object.id;
       });
       const max = Math.max(...ids);
@@ -83,13 +85,15 @@ export class LessonListComponent implements OnChanges {
         lessonId: val.lesson.id,
         lessonTitle: val.lesson.lesson_name,
         lessonDescription: val.lesson.lesson_description,
-        host: val.host.first_name + ' ' + val.host.last_name,
+        host: val.host.name,
         hostId: val.host.id,
         boards: val.board_count,
-        participants: val.participant_set.length,
+        participants: val.participant_count,
         startDate: moment(val.start_time).format('MMM D, YYYY'),
         lessonImageId: val.lessonrun_images[this.maxIdIndex]?.id,
-        lessonImage: val.lessonrun_images[this.maxIdIndex]?.img,
+        lessonImage: val.lessonrun_images[this.maxIdIndex]?.img
+          ? this.hostLocation + val.lessonrun_images[this.maxIdIndex].img
+          : null,
         imageUrl: val.lessonrun_images[this.maxIdIndex]?.image_url,
         lessonFolders: val.lesson.lesson_folders,
       });
@@ -131,6 +135,6 @@ export class LessonListComponent implements OnChanges {
   }
 
   updateLessonName(name: string, code: number): void {
-    this.dataSource.find(item => item.lessonRunCode == code).lessonTitle = name;
+    this.dataSource.find((item) => item.lessonRunCode === code).lessonTitle = name;
   }
 }

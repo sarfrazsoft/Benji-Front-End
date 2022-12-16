@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { combineLatest, defer } from 'rxjs';
 import { ActivityTypes } from 'src/app/globals';
 import {
   AuthService,
@@ -13,6 +14,8 @@ import {
   GroupingToolService,
   SharingToolService,
 } from 'src/app/services';
+import { BoardBackgroundType } from 'src/app/services/backend/schema';
+import { BoardBackgroundService } from 'src/app/services/board-background.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { MainScreenToolbarComponent } from 'src/app/ui-components/main-screen-toolbar/main-screen-toolbar.component';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
@@ -34,6 +37,10 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   sideNavMode: 'side' | 'over';
   public innerWidth: any;
   boardsMenuClosed = true;
+  boardBgType: BoardBackgroundType;
+  boardBgColor: string;
+  boardBgImage: string;
+  blurBgImage: boolean;
 
   constructor(
     protected deviceDetectorService: DeviceDetectorService,
@@ -47,7 +54,8 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
     protected ref: ChangeDetectorRef,
     protected matSnackBar: MatSnackBar,
     protected sharingToolService: SharingToolService,
-    protected groupingToolService: GroupingToolService
+    protected groupingToolService: GroupingToolService,
+    protected boardBackgroundService: BoardBackgroundService
   ) {
     super(
       deviceDetectorService,
@@ -62,6 +70,30 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
       ref,
       matSnackBar
     );
+
+    this.boardBackgroundService.boardBackgroundType$.subscribe((val: any) => {
+      this.boardBgType = val;
+      if (this.boardBgType === 'none') {
+        this.boardBgColor = null;
+        this.boardBgImage = null;
+        this.blurBgImage = false;
+      } else if (this.boardBgType === 'color') {
+        this.boardBackgroundService.boardBackgroundColor$.subscribe((val: any) => {
+          this.boardBgColor = val;
+          this.boardBgImage = null;
+          this.blurBgImage = false;
+        });
+      } else if (this.boardBgType === 'image') {
+        this.boardBackgroundService.boardBackgroundImage$.subscribe((val: any) => {
+          this.boardBgColor = null;
+          this.boardBgImage = val;
+        });
+
+        this.boardBackgroundService.blurBackgroundImage$.subscribe((val: any) => {
+          this.blurBgImage = val;
+        });
+      }
+    });
   }
 
   at: typeof ActivityTypes = ActivityTypes;
@@ -83,6 +115,14 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
 
   ngAfterViewInit() {
     this.innerWidth = window.innerWidth;
+
+    const participantObservable$ = defer(() => this.permissionsService.hasPermission('PARTICIPANT'));
+    const combined = combineLatest([participantObservable$, this.contextService.boardsCount$]);
+    combined.subscribe((val: Array<boolean | number>) => {
+      if (val[0] && val[1] > 1) {
+        this.toggleBoardsMenu();
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -134,5 +174,4 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
       this.contextService.sideNavAction = 'closed';
     }
   }
-
 }

@@ -316,6 +316,7 @@ export interface Board {
   removed: boolean;
   status: BoardStatus;
   sort: BoardSort;
+  post_size: PostSize;
   brainstormcategory_set: Array<Category>;
   prompt_video: any;
   allow_comment: boolean;
@@ -357,11 +358,18 @@ export type BoardStatus = 'open' | 'view_only' | 'closed' | 'private';
 
 export type BoardSort = 'newest_to_oldest' | 'oldest_to_newest' | 'likes' | 'unsorted';
 
+export type PostSize = 'small' | 'medium' | 'large';
+
 export interface BoardParticipants {
   [boardID: string]: Array<number>;
 }
 
 export interface BoardInfo {
+  background_type: BoardBackgroundType;
+  blur_image: boolean;
+  color: string;
+  image_upload: string;
+  image_url: string;
   instructions: string;
   sub_instructions: string;
   max_participant_submissions: number;
@@ -387,6 +395,7 @@ export interface BoardInfo {
 export type BoardMode = 'columns' | 'thread' | 'grid';
 
 // export type BoardType = 'page' | 'posts';
+export type BoardBackgroundType = 'none' | 'color' | 'image';
 
 export enum NotificationTypes {
   DUPLICATE = 'duplicate',
@@ -408,7 +417,6 @@ export enum SettingsTypes {
 }
 
 export interface Category {
-  status: string;
   id: number;
   brainstormidea_set: Array<Idea>;
   category_name: string;
@@ -428,7 +436,7 @@ export interface Idea {
   editing?: boolean;
   addingIdea?: boolean;
   comments: Array<IdeaComment>;
-  hearts: Array<{ id: number; participant: number }>;
+  hearts: Array<IdeaHeart>;
   version: number;
   time: string;
   idea_document: IdeaDocument;
@@ -436,7 +444,12 @@ export interface Idea {
   meta: any;
 }
 
-export class IdeaComment {
+export interface IdeaHeart {
+  id: number;
+  participant: number;
+}
+
+export interface IdeaComment {
   comment: string;
   comment_hearts: Array<number>;
   id: number;
@@ -446,10 +459,12 @@ export class IdeaComment {
 export interface IdeaDocument {
   id: number;
   document: string;
-  document_type: 'video' | 'document' | 'image';
+  document_type: IdeaDocumentType;
   document_url: string;
   document_url_converted: string;
 }
+
+export type IdeaDocumentType = 'video' | 'document' | 'image';
 
 export interface ParticipantCode {
   participant_code: number;

@@ -14,12 +14,13 @@ import { PostLayoutService } from './post-layout.service';
 import { SharingToolService } from './sharing-tool.service';
 import { TopicMediaService } from './topic-media.service';
 import { UtilsService } from './utils.service';
-import { VideoStateService } from './video-state.service';
 import { WhiteLabelResolver } from './white-label.resolver';
 
 import { ActivitiesServices } from './activities';
 import { LessonGroupService } from './lesson-group.service';
+
 import { LessonService } from './lesson.service';
+import { BoardBackgroundService } from './board-background.service';
 
 export * from './activities';
 export { AuthGuard } from './auth/auth.guard';
@@ -30,12 +31,12 @@ export {
   BackendSocketService,
   ContextService,
   EmojiLookupService,
-  VideoStateService,
   PastSessionsService,
   SharingToolService,
   GroupingToolService,
   PostLayoutService,
   NotificationService,
+  LessonService,
 };
 
 export const ServicesProviders = [
@@ -53,9 +54,10 @@ export const ServicesProviders = [
   GroupingToolService,
   BoardStatusService,
   TopicMediaService,
+  BoardBackgroundService,
   LessonGroupService,
-  LessonService,
   PostLayoutService,
   NotificationService,
+  LessonService,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 ];

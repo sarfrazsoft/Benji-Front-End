@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   @Output() signUpClicked = new EventEmitter();
   @Output() forgotPasswordClicked = new EventEmitter();
   @Output() userSignedInSuccessfully = new EventEmitter();
+  @Output() guestJoinClicked = new EventEmitter();
   form: FormGroup;
   isLoginClicked = false;
   emailPasswordError = false;
@@ -126,8 +127,8 @@ export class LoginComponent implements OnInit {
                 this.deviceDetectorService.isMobile()
                   ? this.router.navigate(['/participant/join'])
                   : this.joinSessionScreen
-                  ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
-                  : this.router.navigate(['/dashboard']);
+                    ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
+                    : this.router.navigate(['/dashboard']);
               }
             }
           }
@@ -158,5 +159,9 @@ export class LoginComponent implements OnInit {
 
   forgotPasswordClick() {
     this.joinSessionScreen ? this.forgotPasswordClicked.emit() : this.router.navigate(['/forgot-password']);
+  }
+
+  guestJoinClick() {
+    this.guestJoinClicked.emit();
   }
 }

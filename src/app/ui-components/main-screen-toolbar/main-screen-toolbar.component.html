@@ -20,19 +20,10 @@
         [ngClass]="{'has-name': lessonName}" 
         class="logo"
         (click)="logoClicked()"/>
-      <ng-container *ngxPermissionsOnly="'ADMIN'">
-        <div 
-          class="session-title admin"
-          (click)="openSessionSettings()"
-          >
-            {{ lessonName }}
-        </div>
-      </ng-container>
-      <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
-        <div class="session-title">
-            {{ lessonName }}
-        </div>
-      </ng-container>
+      <benji-lesson-name
+        [activityState]="_activityState"
+        (socketMessage)="socketMessage.emit($event)">  
+      </benji-lesson-name>
     </div>
     <ng-container>
       <div>

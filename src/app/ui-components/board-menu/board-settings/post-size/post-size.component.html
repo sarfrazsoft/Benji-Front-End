@@ -1,0 +1,21 @@
+
+    <div class="title">Posts Size</div>
+    <div class="board-status">
+      <ng-select
+        class="board-status-dropdown"
+        appearance="outline" 
+        placeholder="Status"
+        [clearable]="false"
+        [searchable]="false"
+        [clearable]="false"
+        [items]="postSizeDropdown"
+        bindValue="value"
+        bindLabel="name"
+        dropdownPosition="bottom"
+        (change)="changePostSize($event)"
+        [(ngModel)]="defaultSize">
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+          <span> {{ item.name }} </span>
+        </ng-template>
+      </ng-select>
+    </div>

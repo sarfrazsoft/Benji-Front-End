@@ -1,4 +1,5 @@
 import {
+  Board,
   BoardMetaData,
   ColsCategoryChangeIdeaOrderInfo,
   ColsIdeaOrderInfo,
@@ -31,6 +32,33 @@ import {
   WhereDoYouStandChoice,
 } from './activities';
 import { Lesson, LessonRun, RunningTools } from './course_details';
+import { BrainstormBoardBackgroundResponse } from './event-responses';
+import { ToggleBlurBackgroundImageResponse } from './event-responses';
+import { ChangeBoardBackgroundTypeResponse } from './event-responses';
+import {
+  BrainstormAddBoardResponse,
+  BrainstormAddRemoveIdeaPinResponse,
+  BrainstormBoardPostSizeResponse,
+  BrainstormBoardSortOrderResponse,
+  BrainstormChangeBoardStatusResponse,
+  BrainstormChangeModeResponse,
+  BrainstormCreateCategoryResponse,
+  BrainstormRemoveBoardResponse,
+  BrainstormRemoveCategoryResponse,
+  BrainstormRemoveIdeaCommentResponse,
+  BrainstormRemoveIdeaHeartResponse,
+  BrainstormRemoveSubmitResponse,
+  BrainstormRenameCategoryResponse,
+  BrainstormSubmitIdeaCommentResponse,
+  BrainstormSubmitIdeaHeartResponse,
+  BrainstormSubmitResponse,
+  BrainstormToggleAllowCommentResponse,
+  BrainstormToggleAllowHeartResponse,
+  BrainstormToggleParticipantNameResponse,
+  HostChangeBoardEventResponse,
+  ParticipantChangeBoardResponse,
+  RemoveIdeaDocumentResponse,
+} from './event-responses';
 import { EventType, EventTypes } from './events';
 import { LessonRunNotification, Notification } from './notification';
 import { User } from './user';
@@ -70,10 +98,7 @@ export interface UpdateMessage {
   wheredoyoustandactivity?: WhereDoYouStandActivity;
   triadgroupingactivity?: TriadGroupingActivity;
 
-  event_msg?:
-    | BrainstormSubmitIdeaCommentResponse
-    | ParticipantChangeBoardResponse
-    | HostChangeBoardEventResponse;
+  event_msg?: EventResponseTypes;
 }
 
 export interface ClientError {
@@ -94,6 +119,35 @@ export interface ServerNotification {
   detail: any;
 }
 
+export type EventResponseTypes =
+  | BrainstormSubmitIdeaCommentResponse
+  | ParticipantChangeBoardResponse
+  | HostChangeBoardEventResponse
+  | BrainstormToggleParticipantNameResponse
+  | BrainstormRemoveIdeaCommentResponse
+  | BrainstormBoardSortOrderResponse
+  | BrainstormChangeBoardStatusResponse
+  | BrainstormToggleAllowCommentResponse
+  | BrainstormChangeModeResponse
+  | BrainstormSubmitIdeaHeartResponse
+  | BrainstormToggleParticipantNameResponse
+  | BrainstormRemoveIdeaHeartResponse
+  | BrainstormToggleAllowHeartResponse
+  | BrainstormRemoveSubmitResponse
+  | BrainstormSubmitResponse
+  | RemoveIdeaDocumentResponse
+  | BrainstormCreateCategoryResponse
+  | BrainstormRemoveCategoryResponse
+  | BrainstormRenameCategoryResponse
+  | BrainstormAddBoardResponse
+  | Board
+  | BrainstormRemoveBoardResponse
+  | BrainstormAddRemoveIdeaPinResponse
+  | BrainstormBoardPostSizeResponse
+  | BrainstormBoardBackgroundResponse
+  | ChangeBoardBackgroundTypeResponse
+  | ToggleBlurBackgroundImageResponse;
+
 export interface ServerMessage {
   messagetime: number;
   updatemessage?: UpdateMessage;
@@ -102,10 +156,7 @@ export interface ServerMessage {
   servernotification?: ServerNotification;
   notifications?: Array<LessonRunNotification>;
   eventtype: string | 'NotificationEvent';
-  event_msg?:
-    | BrainstormSubmitIdeaCommentResponse
-    | ParticipantChangeBoardResponse
-    | HostChangeBoardEventResponse;
+  event_msg?: EventResponseTypes;
 }
 
 export interface QueryParamsObject {
@@ -567,21 +618,6 @@ export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {
   }
 }
 
-// export class BrainstormImageSubmitEvent extends ActivityEvent {
-//   event_name = 'BrainstormSubmitEvent';
-
-//   constructor(text: string, title: string, category: number, groupId: number, image_path?: string) {
-//     super();
-//     this.extra_args = {
-//       idea: text,
-//       title: title,
-//       category: category,
-//       group_id: groupId,
-//       image_path: image_path,
-//     };
-//   }
-// }
-
 export class BrainstormSubmitIdeaCommentEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitIdeaCommentEvent';
 
@@ -593,22 +629,6 @@ export class BrainstormSubmitIdeaCommentEvent extends ActivityEvent {
     };
   }
 }
-
-export class BrainstormSubmitIdeaCommentResponse {
-  board_id: number;
-  brainstormidea_id: number;
-  comment: string;
-  id: number;
-  participant: any;
-}
-export class ParticipantChangeBoardResponse {
-  board_id: number;
-  participant_code: number;
-}
-export class HostChangeBoardEventResponse {
-  host_board: number;
-}
-
 export class BrainstormRemoveIdeaCommentEvent extends ActivityEvent {
   event_name = 'BrainstormRemoveIdeaCommentEvent';
 
@@ -1110,6 +1130,27 @@ export class BrainstormChangeModeEvent extends ActivityEvent {
     this.extra_args = { mode: val, board: id };
   }
 }
+export class ChangeBoardBackgroundTypeEvent extends ActivityEvent {
+  event_name = EventTypes.changeBoardBackgroundTypeEvent;
+  constructor(boardId: number, backgroundType: string) {
+    super();
+    this.extra_args = { board: boardId, background_type: backgroundType };
+  }
+}
+export class BrainstormBoardBackgroudEvent extends ActivityEvent {
+  event_name = EventTypes.brainstormBoardBackgroudEvent;
+  constructor(boardId: number, imgUpload: string, imgUrl: string, bgColor: string) {
+    super();
+    this.extra_args = { board: boardId, image_upload: imgUpload, image_url: imgUrl, color: bgColor };
+  }
+}
+export class ToggleBlurBackgroundImageEvent extends ActivityEvent {
+  event_name = EventTypes.toggleBlurBackgroundImageEvent;
+  constructor(id: number) {
+    super();
+    this.extra_args = { board: id };
+  }
+}
 export class BrainstormClearBoardIdeaEvent extends ActivityEvent {
   event_name = 'BrainstormClearBoardIdeaEvent';
   constructor(id: number) {
@@ -1122,6 +1163,13 @@ export class BrainstormBoardSortOrderEvent extends ActivityEvent {
   constructor(sort: string, board: number) {
     super();
     this.extra_args = { sort: sort, board: board };
+  }
+}
+export class BrainstormBoardPostSizeEvent extends ActivityEvent {
+  event_name = 'BrainstormBoardPostSizeEvent';
+  constructor(postSize: string, boardId: number) {
+    super();
+    this.extra_args = { post_size: postSize, board: boardId };
   }
 }
 export class UpdatePromptVideoEvent extends ActivityEvent {

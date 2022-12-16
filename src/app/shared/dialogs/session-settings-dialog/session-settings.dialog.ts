@@ -53,9 +53,7 @@ export class SessionSettingsDialogComponent implements OnInit {
     this.createSession = this.data.createSession;
 
     if (this.data.lessonImage || this.data.imageUrl) {
-      this.coverPhoto = this.data.lessonImage
-        ? this.hostLocation + this.data.lessonImage
-        : this.data.imageUrl;
+      this.coverPhoto = this.data.lessonImage ?? this.data.imageUrl;
     }
   }
 

@@ -7,6 +7,7 @@ import {
   Board,
   BoardStatus,
   BrainstormActivity,
+  BrainstormRemoveIdeaCommentResponse,
   BrainstormSubmitIdeaCommentResponse,
   Category,
   ColsCategoryChangeIdeaOrderInfo,
@@ -387,6 +388,7 @@ export class BrainstormService {
                 correspondingExistingIdea.idea_document = newIdea.idea_document;
                 correspondingExistingIdea.idea_image = newIdea.idea_image;
                 correspondingExistingIdea.idea_video = newIdea.idea_video;
+                correspondingExistingIdea.meta = newIdea.meta;
               }
             });
           }

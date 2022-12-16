@@ -26,19 +26,25 @@ import {
   BoardMode,
   BoardStatus,
   BrainstormActivity,
-  BrainstormSubmitIdeaCommentResponse,
   EventTypes,
   Group,
   HostChangeBoardEvent,
-  HostChangeBoardEventResponse,
   Idea,
   ParticipantChangeBoardEvent,
-  ParticipantChangeBoardResponse,
   QueryParamsObject,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import {
+  BrainstormRemoveIdeaCommentResponse,
+  BrainstormSubmitIdeaCommentResponse,
+  BrainstormToggleParticipantNameResponse,
+  HostChangeBoardEventResponse,
+  ParticipantChangeBoardResponse,
+} from 'src/app/services/backend/schema/event-responses';
+import { BoardBackgroundService } from 'src/app/services/board-background.service';
 import { BoardStatusService } from 'src/app/services/board-status.service';
+import { LessonService } from 'src/app/services/lesson.service';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -46,7 +52,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-brainstorming-activity',
   templateUrl: './brainstorming-activity.component.html',
-  styleUrls: ['./brainstorming-activity.component.scss'],
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
@@ -65,13 +70,14 @@ export class MainScreenBrainstormingActivityComponent
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private contextService: ContextService,
-    private sharingToolService: SharingToolService,
+    private lessonService: LessonService,
     private brainstormService: BrainstormService,
     private brainstormEventService: BrainstormEventService,
     private permissionsService: NgxPermissionsService,
     private boardStatusService: BoardStatusService,
     private topicMediaService: TopicMediaService,
-    private title: Title
+    private title: Title,
+    private boardBackgroundService: BoardBackgroundService
   ) {
     super();
     iframely.load();
@@ -151,8 +157,22 @@ export class MainScreenBrainstormingActivityComponent
       }
     });
 
+    this.brainstormService.selectedBoard$.subscribe((val: Board) => {
+      if (val) {
+        this.updateBackgroundInService(val);
+      }
+    });
+
     this.changeBoardStatus();
     this.title.setTitle(this.activityState?.lesson_run?.lesson?.lesson_name ?? 'Benji');
+  }
+
+  updateBackgroundInService(board: Board) {
+    this.boardBackgroundService.boardBackgroundType = board.board_activity.background_type;
+    this.boardBackgroundService.boardBackgroundColor = board.board_activity.color;
+    this.boardBackgroundService.boardBackgroundImage =
+      board.board_activity.image_upload ?? board.board_activity.image_url;
+    this.boardBackgroundService.blurBackgroundImage = board.board_activity.blur_image;
   }
 
   ngAfterViewInit(): void {
@@ -176,9 +196,7 @@ export class MainScreenBrainstormingActivityComponent
     const currentEventType = this.getEventType();
     if (
       currentEventType !== EventTypes.brainstormSubmitIdeaCommentEvent &&
-      currentEventType !== EventTypes.notificationEvent &&
-      currentEventType !== EventTypes.hostChangeBoardEvent &&
-      currentEventType !== EventTypes.participantChangeBoardEvent
+      currentEventType !== EventTypes.notificationEvent
     ) {
       // prevent changes down the tree when it is BrainstormSubmitIdeaCommentEvent
       this.eventType = currentEventType;
@@ -215,7 +233,7 @@ export class MainScreenBrainstormingActivityComponent
         this.boardMode = mode;
         this.brainstormService.boardMode = this.boardMode;
       });
-    } else if (currentEventType === 'BrainstormChangeBoardStatusEvent') {
+    } else if (currentEventType === EventTypes.brainstormChangeBoardStatusEvent) {
       this.changeBoardStatus();
       this.selectUserBoard();
     } else if (currentEventType === 'BrainstormAddBoardEventBaseEvent') {
@@ -233,6 +251,14 @@ export class MainScreenBrainstormingActivityComponent
       this.updateLessonInfo();
     } else if (this.activityState.eventType === EventTypes.notificationEvent) {
       this.updateNotifications();
+    } else if (
+      currentEventType === EventTypes.brainstormBoardBackgroudEvent ||
+      currentEventType === EventTypes.changeBoardBackgroundTypeEvent ||
+      currentEventType === EventTypes.toggleBlurBackgroundImageEvent
+    ) {
+      this.getUserBoard((b: Board) => {
+        this.updateBackgroundInService(b);
+      });
     } else {
       this.selectUserBoard();
     }
@@ -283,7 +309,9 @@ export class MainScreenBrainstormingActivityComponent
   updateLessonInfo() {
     this.brainstormService.lessonName = this.activityState.lesson_run.lesson.lesson_name;
     this.brainstormService.lessonDescription = this.activityState.lesson_run.lesson.lesson_description;
-    // this.brainstormService.lessonImage = this.activityState.lesson_run.lessonrun_images;
+    this.brainstormService.lessonImage = this.lessonService.setCoverPhoto(
+      this.activityState.lesson_run.lessonrun_images
+    );
   }
 
   updateNotifications() {
@@ -291,11 +319,9 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   hostChangedBoard() {
-    const eventMessage = this.activityState.event_msg as HostChangeBoardEventResponse;
-    this._activityState.brainstormactivity.host_board = eventMessage.host_board;
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
-        this.brainstormEventService.hostBoardId = eventMessage.host_board;
+        this.brainstormEventService.hostBoardId = this.act.host_board;
         this.selectedBoard = this.getAdminBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
         this.boardChangingQueryParams(this.selectedBoard.id);
@@ -305,7 +331,7 @@ export class MainScreenBrainstormingActivityComponent
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         if (this._activityState.brainstormactivity.meeting_mode) {
-          this.brainstormEventService.participantBoardId = eventMessage.host_board;
+          this.brainstormEventService.participantBoardId = this.act.host_board;
           this.selectedBoard = this.getAdminBoard();
           this.brainstormService.selectedBoard = this.selectedBoard;
           this.boardChangingQueryParams(this.selectedBoard.id);
@@ -320,22 +346,18 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   participantChangedBoard() {
-    const eventMessage = this.activityState.event_msg as ParticipantChangeBoardResponse;
-    if (this.participantCode === eventMessage.participant_code) {
-      this.brainstormEventService.participantBoardId = eventMessage.board_id;
-      this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-        if (val) {
-          this.selectedBoard = this.brainstormService.getParticipantBoardFromList(
-            this._activityState.brainstormactivity.boards,
-            eventMessage.board_id
-          );
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.selectedBoard = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
 
-          this.brainstormService.selectedBoard = this.selectedBoard;
-          this.boardChangingQueryParams(this.selectedBoard.id);
-          this.updateBoardStatus(this.selectedBoard.status);
-        }
-      });
-    }
+        this.brainstormService.selectedBoard = this.selectedBoard;
+        this.boardChangingQueryParams(this.selectedBoard.id);
+        this.updateBoardStatus(this.selectedBoard.status);
+      }
+    });
   }
 
   updatePromptMedia() {
@@ -348,18 +370,10 @@ export class MainScreenBrainstormingActivityComponent
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         let board: Board;
-        if (this._activityState.brainstormactivity) {
-          board = this.brainstormService.getParticipantBoard(
-            this._activityState.brainstormactivity,
-            this.participantCode
-          );
-        } else {
-          // get participant board id from event service
-          board = this.brainstormService.getParticipantBoardFromList(
-            this._activityState.brainstormactivity.boards,
-            this.brainstormEventService.participantBoardId
-          );
-        }
+        board = this.brainstormService.getParticipantBoard(
+          this.activityState.brainstormactivity,
+          this.participantCode
+        );
         this.topicMediaService.topicMedia = board.prompt_video;
       }
     });
@@ -403,7 +417,7 @@ export class MainScreenBrainstormingActivityComponent
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         const selectedBoard = this.brainstormService.getParticipantBoard(
-          this._activityState.brainstormactivity,
+          this.activityState.brainstormactivity,
           this.participantCode
         );
         if (selectedBoard) {
@@ -411,6 +425,24 @@ export class MainScreenBrainstormingActivityComponent
           this.brainstormService.selectedBoard = this.selectedBoard;
           this.boardChangingQueryParams(this.selectedBoard.id);
         }
+      }
+    });
+  }
+
+  getUserBoard(callback) {
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        const c = this.getAdminBoard();
+        callback(c);
+      }
+    });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        const selectedBoard = this.brainstormService.getParticipantBoard(
+          this.activityState.brainstormactivity,
+          this.participantCode
+        );
+        callback(selectedBoard);
       }
     });
   }
@@ -459,7 +491,7 @@ export class MainScreenBrainstormingActivityComponent
     let selectedBoard: Board;
     const hostBoardID = this._activityState.brainstormactivity.host_board;
     if (hostBoardID) {
-      this._activityState.brainstormactivity.boards.forEach((v) => {
+      this.activityState.brainstormactivity.boards.forEach((v) => {
         if (hostBoardID === v.id) {
           selectedBoard = v;
         }
@@ -535,4 +567,6 @@ export class MainScreenBrainstormingActivityComponent
   sendSocketMessage($event) {
     this.sendMessage.emit($event);
   }
+
+  getBoard() {}
 }

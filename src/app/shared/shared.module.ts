@@ -108,6 +108,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { NgxTiptapModule } from 'ngx-tiptap';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   imports: [
@@ -126,6 +127,7 @@ import { NgxTiptapModule } from 'ngx-tiptap';
     UppyAngularProgressBarModule,
     UppyAngularDashboardModalModule,
     NgxTiptapModule,
+    ColorPickerModule,
   ],
   declarations: [...Components, ...RegistrationEntryComponents],
   entryComponents: [...EntryComponents],
