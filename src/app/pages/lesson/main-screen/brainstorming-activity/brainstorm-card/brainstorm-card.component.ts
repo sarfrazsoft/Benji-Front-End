@@ -163,16 +163,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
 
   ngOnInit(): void {
     // get parameters
-    if (this.eventType !== 'BrainstormSetCategoryEvent') {
-      this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((p: QueryParamsObject) => {
-        if (p.post && !this.ideaDetailedDialogOpen) {
-          // tslint:disable-next-line:radix
-          if (parseInt(p.post) === this.item.id) {
-            this.showDetailedIdea(this.item);
-          }
+    this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((p: QueryParamsObject) => {
+      if (p.post && !this.ideaDetailedDialogOpen) {
+        // tslint:disable-next-line:radix
+        if (parseInt(p.post) === this.item.id) {
+          this.showDetailedIdea(this.item);
         }
-      });
-    }
+      }
+    });
 
     this.lessonRunCode = this.activityState?.lesson_run?.lessonrun_code;
 

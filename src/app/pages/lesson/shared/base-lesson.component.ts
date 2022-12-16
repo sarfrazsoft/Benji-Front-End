@@ -511,6 +511,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         isHost: this.clientType === 'participant' ? false : true,
       };
       this.oldServerMessage = cloneDeep(this.serverMessage);
+      console.log(this.oldServerMessage);
     }
     if (msg.clienterror !== null && msg.clienterror !== undefined) {
       // console.log(msg);
