@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { BrainstormService } from 'src/app';
 import { Board, UpdateMessage, UpdatePromptVideoEvent } from 'src/app/services/backend/schema';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
-import { UtilsService } from 'src/app/services/utils.service';
-import { FileProgress } from 'src/app/shared/components/uploadcare-widget/uploadcare-widget.component';
+import { FileProgress, UploadcareWidgetComponent } from 'src/app/shared/components/uploadcare-widget/uploadcare-widget.component';
+import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 
 @Component({
   selector: 'benji-topic-media',
@@ -24,7 +25,14 @@ export class TopicMediaComponent implements OnInit {
   convertedUrl;
   originalUrl;
 
-  constructor(private brainstormService: BrainstormService, private topicMediaService: TopicMediaService) {}
+  uploadFile: ElementRef<UploadcareWidgetComponent>;
+  imageDialogRef: any;
+
+  constructor(
+    private brainstormService: BrainstormService,
+    private topicMediaService: TopicMediaService,
+    private matDialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
@@ -72,6 +80,7 @@ export class TopicMediaComponent implements OnInit {
     this.uploadingTopicMedia = false;
     this.uploadedTopicMedia = true;
     if (media.isImage) {
+      console.log(media);
       this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, media));
     } else if (!media.isImage) {
       this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, media));
@@ -87,5 +96,23 @@ export class TopicMediaComponent implements OnInit {
     this.fileProgress = fileProgress;
     this.uploadedTopicMedia = false;
     this.uploadingTopicMedia = true;
+  }
+
+  openImagePickerDialog() {
+    this.imageDialogRef = this.matDialog
+      .open(ImagePickerDialogComponent, {
+        disableClose: false,
+        panelClass: ['dashboard-dialog', 'image-picker-dialog'],
+        data: {
+          'onlyUnsplash': true
+        }
+
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, res.data));
+        }
+      })
   }
 }

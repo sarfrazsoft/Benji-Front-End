@@ -9,6 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { MatMenuItem } from '@angular/material/menu';
 import { timer } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { distinctUntilChanged, skipWhile, switchMap, takeWhile, tap } from 'rxjs/operators';
@@ -58,8 +59,10 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
   @Input() icon: string;
   @Input() mediaSelected;
   @Input() tabs: string;
+  @Input() isHidden: boolean;
   @Input() uploadDocumentToBenji = true;
   @Input() ucWidgetId;
+  @Input() widgetText;
   @Output() mediaUploaded = new EventEmitter<IdeaDocument | IncompleteFileInfo | any>();
   @Output() mediaUploading = new EventEmitter<FileProgress>();
   @Output() noFileSelected = new EventEmitter<void>();

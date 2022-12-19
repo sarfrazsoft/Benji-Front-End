@@ -146,6 +146,25 @@
     @media #{$small-and-down} {
       min-width: 300px;
     }
+    .only-unsplash {
+      .header {
+        border-bottom: 1px solid #e4e4e4;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        padding-bottom: 4px;
+        img {
+          height: 16px;
+        }
+        .title {
+          font-weight: 600;
+        }
+      }
+      benji-unsplash-picker {
+        .image-selector-container {
+          margin-top: 0px;
+        }
+      }
+    }
     .close {
       height: 48px;
       position: absolute;

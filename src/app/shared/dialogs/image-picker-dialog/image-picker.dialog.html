@@ -1,30 +1,42 @@
-<div class="image" fxLayout="column">
-  <div class="" fxLayout="row">
-    <mat-tab-group dynamicHeight [disableRipple]="true">
-      <mat-tab label="Activity">
-        <ng-template mat-tab-label>
-          <div fxLayout="row" fxLayoutGap="8px">
-            <img src="./assets/img/unsplashLogo.svg" alt="">
-            <div>
-              Unsplash
-            </div> 
-          </div>
-        </ng-template>
-        <benji-unsplash-picker (imageSelected)="unsplashImageSelected($event)"></benji-unsplash-picker>
-      </mat-tab>
-      <mat-tab label="Upload">
-        <ng-template mat-tab-label class="cutomize-label">
-          <span class="tab-label">Upload</span>
-        </ng-template>
-        <benji-upload-image-picker
-          (imageSelected)="uploadImageSelected($event)">
-        </benji-upload-image-picker>
-      </mat-tab>
-    </mat-tab-group>
+<div *ngIf="onlyUnsplash" class="only-unsplash" fxLayout="column">
+  <div class="header" fxLayout="row" fxLayoutAlign="space-between">
+    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+      <img src="./assets/img/unsplashLogo.svg" alt="" />
+      <div class="title">Unsplash</div>
+    </div>
+    <button class="close-button" matDialogClose>
+      <mat-icon class="">clear</mat-icon>
+    </button>
   </div>
+  <benji-unsplash-picker (imageSelected)="unsplashImageSelected($event)"></benji-unsplash-picker>
 </div>
-<div class="close" style="" fxLayoutAlign="center">
-  <button class="close-button" matDialogClose>
-    <mat-icon class="">clear</mat-icon>
-  </button>
-</div>
+
+<ng-container *ngIf="!onlyUnsplash">
+  <div class="image" fxLayout="column">
+    <div fxLayout="row">
+      <mat-tab-group dynamicHeight [disableRipple]="true">
+        <mat-tab label="Activity">
+          <ng-template mat-tab-label>
+            <div fxLayout="row" fxLayoutGap="8px">
+              <img src="./assets/img/unsplashLogo.svg" alt="" />
+              <div>Unsplash</div>
+            </div>
+          </ng-template>
+          <benji-unsplash-picker (imageSelected)="unsplashImageSelected($event)"></benji-unsplash-picker>
+        </mat-tab>
+        <mat-tab label="Upload">
+          <ng-template mat-tab-label class="cutomize-label">
+            <span class="tab-label">Upload</span>
+          </ng-template>
+          <benji-upload-image-picker (imageSelected)="uploadImageSelected($event)">
+          </benji-upload-image-picker>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+  <div class="close" style="" fxLayoutAlign="center">
+    <button class="close-button" matDialogClose>
+      <mat-icon class="">clear</mat-icon>
+    </button>
+  </div>
+</ng-container>
