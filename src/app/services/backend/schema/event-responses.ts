@@ -182,7 +182,7 @@ export interface MoveBrainstormIdeaResponse {
 }
 // BrainstormMoveIdeaBoardEvent;
 export interface BrainstormBoardBackgroundResponse {
-  board: 3230;
+  board_id: number;
   color: string;
   image_upload: string;
   image_url: string;

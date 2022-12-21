@@ -248,17 +248,16 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
-      console.log(this.serverMessage);
     } else if (msg.eventtype === EventTypes.hostChangeBoardEvent) {
-      this.serverMessage = {
-        event_msg: msg.event_msg,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
       this.contextService.changeHostBoardInActivityState(
         msg.event_msg as HostChangeBoardEventResponse,
         this.oldServerMessage
       );
+      this.serverMessage = {
+        ...this.oldServerMessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
     } else if (msg.eventtype === EventTypes.brainstormSubmitIdeaCommentEvent) {
       this.serverMessage = {
         event_msg: msg.event_msg,
@@ -503,7 +502,18 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         isHost: this.clientType === 'participant' ? false : true,
       };
       this.oldServerMessage = cloneDeep(this.serverMessage);
-    } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
+    } else {
+      this.participantCode = this.setParticipantCode();
+      this.facilitatorConnected = true;
+      this.serverMessage = {
+        ...msg.updatemessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
+      this.oldServerMessage = cloneDeep(this.serverMessage);
+      console.log(this.oldServerMessage);
+    }
+    if (msg.clienterror !== null && msg.clienterror !== undefined) {
       // console.log(msg);
       const obj = msg.clienterror.error_detail;
       if (typeof obj === 'string') {

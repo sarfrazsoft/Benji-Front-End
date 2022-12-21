@@ -671,7 +671,7 @@ export class ContextService {
 
   brainstormBoardBackground(res: BrainstormBoardBackgroundResponse, oldActivityState: UpdateMessage) {
     const board = this.boardsNavigationService.getBoard(
-      res.board,
+      res.board_id,
       oldActivityState.brainstormactivity.boards
     );
 
