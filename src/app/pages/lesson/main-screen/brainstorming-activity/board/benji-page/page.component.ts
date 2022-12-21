@@ -6,7 +6,9 @@ import {
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
   EventTypes,
+  TopicMedia,
 } from 'src/app/services/backend/schema';
+import { TopicMediaService } from 'src/app/services/topic-media.service';
 
 @Component({
   selector: 'benji-page',
@@ -21,8 +23,17 @@ export class PageComponent implements OnInit, OnChanges {
 
   sub_instructions: string;
   myObservable = new Subject<string>();
+  hasMedia: boolean;
+  imageSrc: string;
+  hasImage: boolean;
+  hasVideo: boolean;
+  video: any;
+  convertedUrl: any;
+  originalUrl: any;
 
-  constructor() {}
+  constructor(
+    private topicMediaService: TopicMediaService
+  ) {}
 
   ngOnInit() {
     const sub_instructions = this.board.board_activity?.sub_instructions;
@@ -35,6 +46,18 @@ export class PageComponent implements OnInit, OnChanges {
       }
       this.sendMessage.emit(new BrainstormEditSubInstructionEvent(val, this.board.id));
     });
+
+
+    if (this.board.prompt_video) {
+      this.getTopicMedia(this.board.prompt_video);
+    }
+
+    this.topicMediaService.topicMedia$.subscribe((val: any) => {
+      if (val) {
+        this.getTopicMedia(val);
+      }
+    });
+
   }
 
   ngOnChanges() {
@@ -67,5 +90,38 @@ export class PageComponent implements OnInit, OnChanges {
     const parser = new DOMParser();
     const document = parser.parseFromString(val, 'text/html');
     return document.getElementsByTagName('h1')[0]?.innerHTML ?? '';
+  }
+
+  getTopicMedia(val: TopicMedia) {
+    if (val.uploadcare) {
+      if (Object.keys(val.uploadcare).length) {
+        this.hasMedia = true;
+        if (val.uploadcare.isImage) {
+          this.imageSrc = val.uploadcare.cdnUrl;
+          this.hasImage = true;
+          this.hasVideo = false;
+          this.video = null;
+        } else {
+          this.hasImage = false;
+          this.imageSrc = null;
+          this.hasVideo = true;
+          this.video = val.uploadcare;
+          this.convertedUrl = this.video.converted_file;
+          this.originalUrl = this.video.original_file;
+        }
+      }
+    } else if (val.unsplash) {
+      this.imageSrc = val.unsplash.image_path;
+      this.hasImage = true;
+      this.hasMedia = true;
+      this.hasVideo = false;
+      this.video = null;
+    } else {
+      this.imageSrc = null;
+      this.video = false;
+      this.convertedUrl = '';
+      this.originalUrl = '';
+      this.hasMedia = false;
+    }
   }
 }

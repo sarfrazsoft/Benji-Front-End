@@ -1,12 +1,32 @@
 <div class="benji-page-container">
   <div class="benji-page">
+    <ng-container *ngIf="hasMedia">
+      <div class="brainstorm-image" *ngIf="hasImage" fxLayoutAlign="center center">
+        <img [src]="imageSrc" alt="" />
+      </div>
+      <div class="prompt-video" *ngIf="hasVideo">
+        <video
+          style="margin: 0 auto"
+          width="100%"
+          #player
+          controls
+          preload="metadata"
+          [src]="convertedUrl"
+          type="video/mp4"
+          (loadeddata)="videoLoaded()"
+        >
+          <p>Your browser cannot play the provided video file.</p>
+        </video>
+      </div>
+    </ng-container>
     <benji-tiptap-editor
       (sendMessage)="sendMessage.emit($event)"
       [lessonRunCode]="lessonRunCode"
       [benjiPages]="true"
       (textChanged)="pageTextUpdated($event)"
       [defaultValue]="sub_instructions"
-      [editable]="isHost">
+      [editable]="isHost"
+    >
     </benji-tiptap-editor>
   </div>
 </div>

@@ -26,7 +26,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     SettingsTypes.ADMIN,
   ];
 
-  pageSetttings = [SettingsTypes.BOARD_STATUS, SettingsTypes.ADMIN];
+  pageSetttings = [SettingsTypes.TOPIC_MEDIA, SettingsTypes.BOARD_STATUS, SettingsTypes.ADMIN];
 
   selectedBoard: Board;
 

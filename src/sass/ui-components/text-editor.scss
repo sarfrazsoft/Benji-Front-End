@@ -279,6 +279,12 @@ pre.callout-container {
     border-radius: 16px;
     color: #37352f;
     box-sizing: border-box;
+    .brainstorm-image {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+      border-radius: 16px 16px 0px 0px;
+    }
     tiptap-editor {
       .ProseMirror {
         width: 100%;
