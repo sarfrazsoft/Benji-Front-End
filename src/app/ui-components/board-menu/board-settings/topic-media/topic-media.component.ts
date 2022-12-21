@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BrainstormService } from 'src/app';
-import { Board, UpdateMessage, UpdatePromptVideoEvent } from 'src/app/services/backend/schema';
+import { Board, TopicMedia, UpdateMessage, UpdatePromptVideoEvent, UploadcareMedia } from 'src/app/services/backend/schema';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
 import { FileProgress, UploadcareWidgetComponent } from 'src/app/shared/components/uploadcare-widget/uploadcare-widget.component';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
@@ -27,6 +27,9 @@ export class TopicMediaComponent implements OnInit {
 
   uploadFile: ElementRef<UploadcareWidgetComponent>;
   imageDialogRef: any;
+  hasImage: boolean;
+  hasVideo: boolean;
+  topicMedia: TopicMedia;
 
   constructor(
     private brainstormService: BrainstormService,
@@ -41,8 +44,9 @@ export class TopicMediaComponent implements OnInit {
       }
     });
 
-    this.topicMediaService.topicMedia$.subscribe((val: any) => {
+    this.topicMediaService.topicMedia$.subscribe((val: TopicMedia) => {
       if (val) {
+        this.topicMedia = val;
         this.getTopicMedia(val);
       }
     });
@@ -52,39 +56,53 @@ export class TopicMediaComponent implements OnInit {
     }
   }
 
-  getTopicMedia(val) {
-    this.uploadingTopicMedia = false;
-    if (Object.keys(val).length) {
-      this.hasMedia = true;
-      if (val.isImage) {
-        this.image = val;
-        this.video = false;
+  getTopicMedia(val: TopicMedia) {
+    if (val.uploadcare) {
+      this.uploadingTopicMedia = false;
+      if (Object.keys(val.uploadcare).length) {
+        this.hasMedia = true;
+        if (val.uploadcare.isImage) {
+          this.hasImage = true;
+          this.image = val.uploadcare;
+          this.hasVideo = false;
+          this.video = null;
+        } else {
+          this.hasImage = false;
+          this.image = null;
+          this.hasVideo = true;
+          this.video = val.uploadcare;
+          this.convertedUrl = this.video.converted_file;
+          this.originalUrl = this.video.original_file;
+        }
       } else {
-        this.image = false;
-        this.video = val;
-        this.convertedUrl = this.video.converted_file;
-        this.originalUrl = this.video.original_file;
+        // object is empty. no media has been selected or it
+        // has been removed
+        this.hasMedia = false;
       }
-    } else {
-      // object is empty. no media has been selected or it
-      // has been removed
-      this.hasMedia = false;
     }
+    // console.log(this.image)
   }
 
   selectedBoardChanged(board) {
     this.selectedBoard = board;
   }
 
-  mediaUploaded(media: any) {
+  mediaUploaded(media: UploadcareMedia) {
+    this.topicMedia = {
+      uploadcare: media,
+      unsplash: {
+        image_path: null
+      }
+    }
+    this.topicMedia.unsplash = null;
     this.uploadingTopicMedia = false;
     this.uploadedTopicMedia = true;
     if (media.isImage) {
-      console.log(media);
-      this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, media));
+      this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, this.topicMedia));
     } else if (!media.isImage) {
-      this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, media));
+      this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, this.topicMedia));
     }
+
   }
 
   removeMedia() {
@@ -111,7 +129,13 @@ export class TopicMediaComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
-          this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, res.data));
+          this.topicMedia = {
+            uploadcare: null,
+            unsplash: {
+              image_path: res.data
+            }
+          }
+          this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, this.topicMedia));
         }
       })
   }

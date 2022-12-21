@@ -2,10 +2,10 @@
   <div class="uploadcare-widgets">
     <div class="media-container" *ngIf="hasMedia">
       <div>
-        <div class="brainstorm-image" *ngIf="image">
-          <img [src]="image.cdnUrl" alt="" />
+        <div class="brainstorm-image" *ngIf="hasImage">
+          <img [src]="image.cdnUrl" />
         </div>
-        <div class="prompt-video" *ngIf="video">
+        <div class="prompt-video" *ngIf="hasVideo">
           <video
             style="margin: 0 auto"
             width="100%"

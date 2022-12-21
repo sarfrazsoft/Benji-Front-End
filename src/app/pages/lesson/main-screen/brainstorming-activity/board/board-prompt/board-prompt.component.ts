@@ -26,6 +26,7 @@ import {
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
   EventTypes,
+  TopicMedia,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
@@ -66,6 +67,8 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output() sendMessage = new EventEmitter<any>();
   @Output() postIdeaEventEmitter = new EventEmitter<any>();
+  hasImage: boolean;
+  hasVideo: boolean;
 
   constructor(
     private permissionsService: NgxPermissionsService,
@@ -130,24 +133,30 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  getTopicMedia(val) {
-    if (Object.keys(val).length) {
-      this.hasMedia = true;
-      if (val.isImage) {
-        this.image = val;
-        this.video = false;
+  getTopicMedia(val: TopicMedia) {
+    if (val.uploadcare) {
+      if (Object.keys(val.uploadcare).length) {
+        this.hasMedia = true;
+        if (val.uploadcare.isImage) {
+          this.image = val.uploadcare;
+          this.hasImage = true;
+          this.hasVideo = false;
+          this.video = null;
+        } else {
+          this.hasImage = false;
+          this.image = null;
+          this.hasVideo = true;
+          this.video = val.uploadcare;
+          this.convertedUrl = this.video.converted_file;
+          this.originalUrl = this.video.original_file;
+        }
       } else {
         this.image = false;
-        this.video = val;
-        this.convertedUrl = this.video.converted_file;
-        this.originalUrl = this.video.original_file;
+        this.video = false;
+        this.convertedUrl = '';
+        this.originalUrl = '';
+        this.hasMedia = false;
       }
-    } else {
-      this.hasMedia = false;
-      this.image = false;
-      this.video = false;
-      this.convertedUrl = '';
-      this.originalUrl = '';
     }
   }
 
