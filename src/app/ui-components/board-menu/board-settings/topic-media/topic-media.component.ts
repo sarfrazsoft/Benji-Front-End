@@ -19,7 +19,7 @@ export class TopicMediaComponent implements OnInit {
   uploadedTopicMedia: boolean;
   fileProgress: FileProgress;
 
-  image;
+  imageSrc;
   video;
   hasMedia = false;
   convertedUrl;
@@ -63,24 +63,29 @@ export class TopicMediaComponent implements OnInit {
         this.hasMedia = true;
         if (val.uploadcare.isImage) {
           this.hasImage = true;
-          this.image = val.uploadcare;
+          this.imageSrc = val.uploadcare.cdnUrl;
           this.hasVideo = false;
           this.video = null;
         } else {
           this.hasImage = false;
-          this.image = null;
+          this.imageSrc = null;
           this.hasVideo = true;
           this.video = val.uploadcare;
           this.convertedUrl = this.video.converted_file;
           this.originalUrl = this.video.original_file;
         }
-      } else {
-        // object is empty. no media has been selected or it
-        // has been removed
-        this.hasMedia = false;
       }
+    } else if (val.unsplash) {
+      this.imageSrc = val.unsplash.image_path;
+      this.hasImage = true;
+      this.hasMedia = true;
+      this.hasVideo = false;
+      this.video = null;
+    } else {
+      // object is empty. no media has been selected or it
+      // has been removed
+      this.hasMedia = false;
     }
-    // console.log(this.image)
   }
 
   selectedBoardChanged(board) {
@@ -135,6 +140,7 @@ export class TopicMediaComponent implements OnInit {
               image_path: res.data
             }
           }
+          this.getTopicMedia(this.topicMedia);
           this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, this.topicMedia));
         }
       })

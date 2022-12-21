@@ -59,7 +59,7 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   hasMedia = true;
   private typingTimer;
   myObservable = new Subject<string>();
-  image;
+  imageSrc;
   video;
 
   convertedUrl;
@@ -138,25 +138,31 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
       if (Object.keys(val.uploadcare).length) {
         this.hasMedia = true;
         if (val.uploadcare.isImage) {
-          this.image = val.uploadcare;
+          this.imageSrc = val.uploadcare.cdnUrl;
           this.hasImage = true;
           this.hasVideo = false;
           this.video = null;
         } else {
           this.hasImage = false;
-          this.image = null;
+          this.imageSrc = null;
           this.hasVideo = true;
           this.video = val.uploadcare;
           this.convertedUrl = this.video.converted_file;
           this.originalUrl = this.video.original_file;
         }
-      } else {
-        this.image = false;
-        this.video = false;
-        this.convertedUrl = '';
-        this.originalUrl = '';
-        this.hasMedia = false;
       }
+    } else if (val.unsplash) {
+      this.imageSrc = val.unsplash.image_path;
+      this.hasImage = true;
+      this.hasMedia = true;
+      this.hasVideo = false;
+      this.video = null;
+    } else {
+      this.imageSrc = null;
+      this.video = false;
+      this.convertedUrl = '';
+      this.originalUrl = '';
+      this.hasMedia = false;
     }
   }
 

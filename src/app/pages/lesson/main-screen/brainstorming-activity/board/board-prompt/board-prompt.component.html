@@ -68,7 +68,7 @@
   >
     <ng-container *ngIf="hasMedia">
       <div class="brainstorm-image" *ngIf="hasImage">
-        <img [src]="image.cdnUrl" alt="" />
+        <img [src]="imageSrc" alt="" />
       </div>
       <div class="prompt-video" *ngIf="hasVideo">
         <video

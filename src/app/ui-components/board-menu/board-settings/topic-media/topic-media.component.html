@@ -3,7 +3,7 @@
     <div class="media-container" *ngIf="hasMedia">
       <div>
         <div class="brainstorm-image" *ngIf="hasImage">
-          <img [src]="image.cdnUrl" />
+          <img [src]="imageSrc" />
         </div>
         <div class="prompt-video" *ngIf="hasVideo">
           <video
