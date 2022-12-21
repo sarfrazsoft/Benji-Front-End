@@ -453,6 +453,15 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       // } else if (msg.eventtype === EventTypes.brainstormRearrangeBoardEvent) {
       // } else if (msg.eventtype === EventTypes.brainstormMoveIdeaBoardEvent) {
       // } else if (msg.eventtype === EventTypes.moveBrainstormIdeaEvent) {
+    } else if (msg.eventtype === EventTypes.brainstormSubmitReplyReviewCommentEvent) {
+      this.serverMessage = {
+        ...msg.event_msg,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
+      // } else if (msg.eventtype === EventTypes.brainstormSubmitCommentHeartEvent) {
+      // } else if (msg.eventtype === EventTypes.brainstormRemoveReplyReviewCommentEvent) {
+      // } else if (msg.eventtype === EventTypes.brainstormRemoveCommentHeartEvent) {
     } else if (msg.eventtype === EventTypes.brainstormBoardBackgroudEvent) {
       this.contextService.brainstormBoardBackground(
         msg.event_msg as BrainstormBoardBackgroundResponse,

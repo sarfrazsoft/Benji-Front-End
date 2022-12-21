@@ -238,10 +238,70 @@
                 ></benji-profile-pictures>
               </div>
             </div>
-            <div class="grey-bg" fxLayout="column" fxLayoutAlign="start start">
+            <!-- <div class="grey-bg" fxLayout="column" fxLayoutAlign="start start">
               <div class="name">{{ getParticipantName(comment.participant) }}</div>
               <div class="comment">{{ comment.comment }}</div>
+            </div> -->
+            <div 
+            class="comments" 
+            fxLayout="column" 
+            fxLayoutGap="4px">
+            <div class="grey-bg" fxLayout="column" fxLayoutAlign="start start">
+              <div
+                class="name-delete"
+                fxLayout="row"
+                fxLayoutAlign="space-between start">
+                <div class="name">
+                  {{ getParticipantName(comment.participant) }}
+                </div>
+                <img [matMenuTriggerFor]="menu" src="/assets/img/cards/hori-dots.svg" alt="">
+              </div>
+              <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
+                <button mat-menu-item (click)="edit(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                  <img class="dots" src="../../../assets/img/side-nav/edit.svg"/>
+                  <span>Edit</span>
+                </button>
+                <!-- <button mat-menu-item (click)="duplicate(lesson, $event)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                  <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
+                  <span>Duplicate</span>
+                </button> -->
+                <button mat-menu-item (click)="delete(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                  <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+              <div class="comment">{{ comment.comment }}</div>
             </div>
+            <div 
+              class="like-reply"
+              fxLayout="row"
+              fxLayoutGap="8px"
+              fxLayoutAlign="start center">
+              <div 
+                *ngIf="!hasParticipantHearted(item)"
+                class="like"
+                benji-click-stop-propagation
+                (click)="setHeart(item)"
+                >Like</div>
+              <div 
+                *ngIf="hasParticipantHearted(item)"
+                class="like active"
+                benji-click-stop-propagation
+                (click)="removeHeart(item)"
+                >Like</div>
+              <div
+                *ngIf="item.hearts.length" 
+                class="likes-count"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="2px">
+                <img src="/assets/img/cards/circle-heart.svg">
+                <span class="count">{{ item.hearts.length }}</span>
+              </div>
+              <div class="separater"></div>
+              <div class="reply">Reply</div>
+            </div>
+          </div> 
             <mat-icon
               *ngIf="canDeleteComment(comment.participant) || isAdmin"
               class="delete-icon"

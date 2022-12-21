@@ -496,6 +496,27 @@ benji-ms-brainstorming-activity {
         }
       }
     }
+
+    .like-reply {
+      height: 14px;
+      line-height: 12px;
+      margin-left: 24px;
+      .like, .reply {
+        font-size: 12px;
+      }
+      .likes-count {
+        img {
+          width: 12px;
+          height: 12px;
+        }
+        span {
+          font-size: 10px;
+        }
+      }
+      .separater {
+        height: 14px;
+      }
+    }
   }
 
   .votes {
