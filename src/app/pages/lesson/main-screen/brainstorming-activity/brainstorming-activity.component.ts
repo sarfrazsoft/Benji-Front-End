@@ -489,7 +489,7 @@ export class MainScreenBrainstormingActivityComponent
 
   getAdminBoard() {
     let selectedBoard: Board;
-    const hostBoardID = this._activityState.brainstormactivity.host_board;
+    const hostBoardID = this.activityState.brainstormactivity.host_board;
     if (hostBoardID) {
       this.activityState.brainstormactivity.boards.forEach((v) => {
         if (hostBoardID === v.id) {

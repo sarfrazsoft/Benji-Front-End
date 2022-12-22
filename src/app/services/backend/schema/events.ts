@@ -38,6 +38,7 @@ export type EventType =
   | 'BrainstormSubmitCommentHeartEvent'
   | 'BrainstormRemoveReplyReviewCommentEvent'
   | 'BrainstormRemoveCommentHeartEvent'
+  | 'BrainstormSetCategoryEvent'
   | string;
 
 export enum EventTypes {
@@ -84,4 +85,6 @@ export enum EventTypes {
   brainstormSubmitCommentHeartEvent = 'BrainstormSubmitCommentHeartEvent',
   brainstormRemoveReplyReviewCommentEvent = 'BrainstormRemoveReplyReviewCommentEvent',
   brainstormRemoveCommentHeartEvent = 'BrainstormRemoveCommentHeartEvent',
+
+  brainstormSetCategoryEvent = 'BrainstormSetCategoryEvent',
 }

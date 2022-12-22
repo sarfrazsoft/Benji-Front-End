@@ -197,3 +197,10 @@ export interface ToggleBlurBackgroundImageResponse {
   blur_image: boolean;
   board_id: number;
 }
+
+export interface BrainstormSetCategoryResponse {
+  board: number;
+  category: number;
+  brainstormidea_id: number;
+  participant: number;
+}

@@ -649,7 +649,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       return true;
     }
     return false;
-    // !isColumnsLayout && (userRole !== 'owner')
   }
 
   calculateTimeStamp(): void {
