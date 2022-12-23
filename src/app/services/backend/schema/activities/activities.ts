@@ -318,10 +318,44 @@ export interface Board {
   sort: BoardSort;
   post_size: PostSize;
   brainstormcategory_set: Array<Category>;
-  prompt_video: any;
+  prompt_video: TopicMedia;
   allow_comment: boolean;
   allow_heart: boolean;
   meta: BoardMetaData;
+}
+
+export interface TopicMedia {
+  unsplash: {
+    image_path: string;
+  };
+  uploadcare: UploadcareMedia;
+}
+
+export interface UploadcareMedia {
+  uuid: string;
+  name: string;
+  size: number;
+  isStored: boolean;
+  isImage: boolean;
+  originalImageInfo: {
+    dpi: any;
+    width: number;
+    format: string;
+    height: number;
+    sequence: boolean;
+    color_mode: string;
+    orientation: any;
+    geo_location: any;
+    datetime_original: any
+  };
+  mimeType: string;
+  originalUrl: string;
+  cdnUrl: string;
+  cdnUrlModifiers: any;
+  sourceInfo: {
+    source: string;
+    file: {}
+  }
 }
 
 export interface BoardMetaData {
@@ -348,10 +382,6 @@ export interface ColsIdeaOrderInfo {
   container: string;
   previousIndex: number;
   currentIndex: number;
-}
-
-export interface TopicMedia {
-  media: any;
 }
 
 export type BoardStatus = 'open' | 'view_only' | 'closed' | 'private';

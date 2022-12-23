@@ -26,6 +26,7 @@ import {
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
   EventTypes,
+  TopicMedia,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
@@ -58,7 +59,7 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   hasMedia = true;
   private typingTimer;
   myObservable = new Subject<string>();
-  image;
+  imageSrc;
   video;
 
   convertedUrl;
@@ -66,6 +67,8 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output() sendMessage = new EventEmitter<any>();
   @Output() postIdeaEventEmitter = new EventEmitter<any>();
+  hasImage: boolean;
+  hasVideo: boolean;
 
   constructor(
     private permissionsService: NgxPermissionsService,
@@ -130,24 +133,36 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  getTopicMedia(val) {
-    if (Object.keys(val).length) {
-      this.hasMedia = true;
-      if (val.isImage) {
-        this.image = val;
-        this.video = false;
-      } else {
-        this.image = false;
-        this.video = val;
-        this.convertedUrl = this.video.converted_file;
-        this.originalUrl = this.video.original_file;
+  getTopicMedia(val: TopicMedia) {
+    if (val.uploadcare) {
+      if (Object.keys(val.uploadcare).length) {
+        this.hasMedia = true;
+        if (val.uploadcare.isImage) {
+          this.imageSrc = val.uploadcare.cdnUrl;
+          this.hasImage = true;
+          this.hasVideo = false;
+          this.video = null;
+        } else {
+          this.hasImage = false;
+          this.imageSrc = null;
+          this.hasVideo = true;
+          this.video = val.uploadcare;
+          this.convertedUrl = this.video.converted_file;
+          this.originalUrl = this.video.original_file;
+        }
       }
+    } else if (val.unsplash) {
+      this.imageSrc = val.unsplash.image_path;
+      this.hasImage = true;
+      this.hasMedia = true;
+      this.hasVideo = false;
+      this.video = null;
     } else {
-      this.hasMedia = false;
-      this.image = false;
+      this.imageSrc = null;
       this.video = false;
       this.convertedUrl = '';
       this.originalUrl = '';
+      this.hasMedia = false;
     }
   }
 

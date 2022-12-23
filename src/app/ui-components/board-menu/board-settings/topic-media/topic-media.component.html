@@ -2,60 +2,116 @@
   <div class="uploadcare-widgets">
     <div class="media-container" *ngIf="hasMedia">
       <div>
-        <div class="brainstorm-image" *ngIf="image">
-          <img [src]="image.cdnUrl" alt="" />
+        <div class="brainstorm-image" *ngIf="hasImage">
+          <img [src]="imageSrc" />
         </div>
-        <div class="prompt-video" *ngIf="video">
-          <video 
-            style="margin: 0 auto;" width="100%" 
-            #player 
+        <div class="prompt-video" *ngIf="hasVideo">
+          <video
+            style="margin: 0 auto"
+            width="100%"
+            #player
             controls
             preload="metadata"
-            [src]="convertedUrl" type="video/mp4">
+            [src]="convertedUrl"
+            type="video/mp4"
+          >
             <p>Your browser cannot play the provided video file.</p>
           </video>
         </div>
       </div>
-      <button class="remove-button" (click)="removeMedia()">
-        Remove
-      </button>
+      <button class="remove-button" (click)="removeMedia()">Remove</button>
     </div>
     <div fxLayout="column" fxLayoutAlign="center center">
       <ng-container *ngIf="uploadingTopicMedia">
-        <benji-progress-bar
-          [percent]="fileProgress?.progress">
-        </benji-progress-bar>
+        <benji-progress-bar [percent]="fileProgress?.progress"> </benji-progress-bar>
       </ng-container>
     </div>
     <ng-container *ngIf="!hasMedia">
-      <div 
-        class="options" 
-        fxLayout="row" 
-        fxLayoutGap="9px" 
+      <div
+        class="options"
+        fxLayout="row"
+        fxLayoutGap="9px"
         [ngClass]="{
           hideAndShrink: uploadingTopicMedia
-        }">
-        <div class="uploadcare-container" fxLayoutAlign="center center">
-          <benji-uploadcare-widget
-            [tabs]="'file_topicmedia'"
-            [uploadDocumentToBenji]="false"
-            [lessonRunCode]="lessonRunCode"
-            (mediaUploaded)="mediaUploaded($event)"
-            (mediaUploading)="mediaUploadProgress($event)"
-            [icon]="'/assets/img/side-nav/image.svg'">
-          </benji-uploadcare-widget>
-        </div>
-        <div class="uploadcare-container" fxLayoutAlign="center center">
-          <benji-uploadcare-widget
-            [tabs]="'camera_topicmedia'"
-            [uploadDocumentToBenji]="false"
-            [lessonRunCode]="lessonRunCode"
-            (mediaUploaded)="mediaUploaded($event)"
-            (mediaUploading)="mediaUploadProgress($event)"
-            [icon]="'/assets/img/side-nav/camera.svg'">
-          </benji-uploadcare-widget>
+        }"
+      >
+        <div
+          class="upload-button"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          fxLayoutGap="12px"
+          [matMenuTriggerFor]="menu"
+        >
+          <img src="/assets/img/side-nav/image.svg" />
+          <div class="label">Add media to prompt bar</div>
         </div>
       </div>
     </ng-container>
   </div>
 </div>
+
+<div class="uploadcare-container" fxLayoutAlign="center center">
+  <benji-uploadcare-widget
+    [tabs]="'file_topicmedia'"
+    [uploadDocumentToBenji]="false"
+    [lessonRunCode]="lessonRunCode"
+    [isHidden]="true"
+    (mediaUploaded)="mediaUploaded($event)"
+    (mediaUploading)="mediaUploadProgress($event)"
+    [icon]="'/assets/img/side-nav/image.svg'"
+  >
+  </benji-uploadcare-widget>
+</div>
+<div class="uploadcare-container" fxLayoutAlign="center center">
+  <benji-uploadcare-widget
+    [tabs]="'camera_topicmedia'"
+    [uploadDocumentToBenji]="false"
+    [lessonRunCode]="lessonRunCode"
+    [isHidden]="true"
+    (mediaUploaded)="mediaUploaded($event)"
+    (mediaUploading)="mediaUploadProgress($event)"
+    [icon]="'/assets/img/side-nav/camera.svg'"
+  >
+  </benji-uploadcare-widget>
+</div>
+
+<mat-menu #menu="matMenu" class="topic-media-menu" xPosition="before">
+  <button
+    mat-menu-item
+    class="unsplash-button"
+    (click)="openImagePickerDialog()"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+  >
+    <div class="icon-image unsplash-icon" fxLayoutAlign="center center">
+      <img src="/assets/img/unsplashLogo.svg" />
+    </div>
+    <span>Choose from Unsplash</span>
+  </button>
+  <button mat-menu-item>
+    <benji-uploadcare-widget
+      [tabs]="'file_topicmedia'"
+      [uploadDocumentToBenji]="false"
+      [lessonRunCode]="lessonRunCode"
+      [widgetText]="'Upload file'"
+      [isHidden]="false"
+      (mediaUploaded)="mediaUploaded($event)"
+      (mediaUploading)="mediaUploadProgress($event)"
+      [icon]="'/assets/img/upload-file.svg'"
+    >
+    </benji-uploadcare-widget>
+  </button>
+  <button mat-menu-item>
+    <benji-uploadcare-widget
+      [tabs]="'camera_topicmedia'"
+      [uploadDocumentToBenji]="false"
+      [lessonRunCode]="lessonRunCode"
+      [widgetText]="'Capture from camera'"
+      [isHidden]="false"
+      (mediaUploaded)="mediaUploaded($event)"
+      (mediaUploading)="mediaUploadProgress($event)"
+      [icon]="'/assets/img/side-nav/camera.svg'"
+    >
+    </benji-uploadcare-widget>
+  </button>
+</mat-menu>

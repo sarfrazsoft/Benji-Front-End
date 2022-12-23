@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { BoardStatus, TopicMedia, UpdateMessage } from './backend/schema';
+import { TopicMedia } from './backend/schema';
 
 @Injectable()
 export class TopicMediaService {

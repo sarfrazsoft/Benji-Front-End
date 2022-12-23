@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -21,8 +21,14 @@ export class ImagePickerDialogComponent implements OnInit {
   eventsSubject: Subject<void> = new Subject<void>();
   images;
   typingTimer;
-  constructor(private dialogRef: MatDialogRef<ImagePickerDialogComponent>, private builder: FormBuilder) {}
+  onlyUnsplash: boolean;
   selectedSession;
+
+  constructor(
+    private dialogRef: MatDialogRef<ImagePickerDialogComponent>,
+    private builder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit() {
     this.form = this.builder.group({
@@ -31,6 +37,8 @@ export class ImagePickerDialogComponent implements OnInit {
     });
 
     this.form.setValue({ title: 'e', description: 'this.data.description' });
+
+    this.onlyUnsplash = this.data.onlyUnsplash;
   }
 
   editPhoto($event) {

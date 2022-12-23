@@ -10,7 +10,7 @@
   </div>
 
   <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.TOPIC_MEDIA)">
-    <div class="title">Topic Media</div>
+    <div class="title">{{ boardType === 'page' ? 'Cover Photo' : 'Topic Media' }}</div>
     <div class="topic-media">
       <!-- Topic media -->
       <benji-topic-media

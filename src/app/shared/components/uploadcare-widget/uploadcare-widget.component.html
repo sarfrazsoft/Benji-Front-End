@@ -1,8 +1,16 @@
-<img 
-  (click)="mediaSelected ? null : openDialog()" 
-  [ngClass]="{'inactive': mediaSelected}"
-  class="close" 
-  src="{{ icon }}">
+<div
+  *ngIf="!isHidden"
+  class="widget-area"
+  fxLayout="row"
+  fxLayoutAlign="start center"
+  fxLayoutGap="12px"
+  (click)="mediaSelected ? null : openDialog()"
+>
+  <div class="icon-image" fxLayoutAlign="center center">
+    <img [ngClass]="{ inactive: mediaSelected }" class="close" src="{{ icon }}" />
+  </div>
+  <div *ngIf="widgetText" class="widget-text">{{ widgetText }}</div>
+</div>
 
 <!-- used by uploadcare -->
-<input #uploadcarewidget type="hidden" name="{{ tabs }}"/>
+<input #uploadcarewidget type="hidden" name="{{ tabs }}" />

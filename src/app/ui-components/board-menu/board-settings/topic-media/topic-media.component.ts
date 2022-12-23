@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { BrainstormService } from 'src/app';
-import { Board, UpdateMessage, UpdatePromptVideoEvent } from 'src/app/services/backend/schema';
+import { Board, TopicMedia, UpdateMessage, UpdatePromptVideoEvent, UploadcareMedia } from 'src/app/services/backend/schema';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
-import { UtilsService } from 'src/app/services/utils.service';
-import { FileProgress } from 'src/app/shared/components/uploadcare-widget/uploadcare-widget.component';
+import { FileProgress, UploadcareWidgetComponent } from 'src/app/shared/components/uploadcare-widget/uploadcare-widget.component';
+import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 
 @Component({
   selector: 'benji-topic-media',
@@ -18,13 +19,23 @@ export class TopicMediaComponent implements OnInit {
   uploadedTopicMedia: boolean;
   fileProgress: FileProgress;
 
-  image;
+  imageSrc;
   video;
   hasMedia = false;
   convertedUrl;
   originalUrl;
 
-  constructor(private brainstormService: BrainstormService, private topicMediaService: TopicMediaService) {}
+  uploadFile: ElementRef<UploadcareWidgetComponent>;
+  imageDialogRef: any;
+  hasImage: boolean;
+  hasVideo: boolean;
+  topicMedia: TopicMedia;
+
+  constructor(
+    private brainstormService: BrainstormService,
+    private topicMediaService: TopicMediaService,
+    private matDialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
@@ -33,8 +44,9 @@ export class TopicMediaComponent implements OnInit {
       }
     });
 
-    this.topicMediaService.topicMedia$.subscribe((val: any) => {
+    this.topicMediaService.topicMedia$.subscribe((val: TopicMedia) => {
       if (val) {
+        this.topicMedia = val;
         this.getTopicMedia(val);
       }
     });
@@ -44,19 +56,31 @@ export class TopicMediaComponent implements OnInit {
     }
   }
 
-  getTopicMedia(val) {
-    this.uploadingTopicMedia = false;
-    if (Object.keys(val).length) {
-      this.hasMedia = true;
-      if (val.isImage) {
-        this.image = val;
-        this.video = false;
-      } else {
-        this.image = false;
-        this.video = val;
-        this.convertedUrl = this.video.converted_file;
-        this.originalUrl = this.video.original_file;
+  getTopicMedia(val: TopicMedia) {
+    if (val.uploadcare) {
+      this.uploadingTopicMedia = false;
+      if (Object.keys(val.uploadcare).length) {
+        this.hasMedia = true;
+        if (val.uploadcare.isImage) {
+          this.hasImage = true;
+          this.imageSrc = val.uploadcare.cdnUrl;
+          this.hasVideo = false;
+          this.video = null;
+        } else {
+          this.hasImage = false;
+          this.imageSrc = null;
+          this.hasVideo = true;
+          this.video = val.uploadcare;
+          this.convertedUrl = this.video.converted_file;
+          this.originalUrl = this.video.original_file;
+        }
       }
+    } else if (val.unsplash) {
+      this.imageSrc = val.unsplash.image_path;
+      this.hasImage = true;
+      this.hasMedia = true;
+      this.hasVideo = false;
+      this.video = null;
     } else {
       // object is empty. no media has been selected or it
       // has been removed
@@ -68,14 +92,22 @@ export class TopicMediaComponent implements OnInit {
     this.selectedBoard = board;
   }
 
-  mediaUploaded(media: any) {
+  mediaUploaded(media: UploadcareMedia) {
+    this.topicMedia = {
+      uploadcare: media,
+      unsplash: {
+        image_path: null
+      }
+    }
+    this.topicMedia.unsplash = null;
     this.uploadingTopicMedia = false;
     this.uploadedTopicMedia = true;
     if (media.isImage) {
-      this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, media));
+      this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, this.topicMedia));
     } else if (!media.isImage) {
-      this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, media));
+      this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, this.topicMedia));
     }
+
   }
 
   removeMedia() {
@@ -87,5 +119,30 @@ export class TopicMediaComponent implements OnInit {
     this.fileProgress = fileProgress;
     this.uploadedTopicMedia = false;
     this.uploadingTopicMedia = true;
+  }
+
+  openImagePickerDialog() {
+    this.imageDialogRef = this.matDialog
+      .open(ImagePickerDialogComponent, {
+        disableClose: false,
+        panelClass: ['dashboard-dialog', 'image-picker-dialog'],
+        data: {
+          'onlyUnsplash': true
+        }
+
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.topicMedia = {
+            uploadcare: null,
+            unsplash: {
+              image_path: res.data
+            }
+          }
+          this.getTopicMedia(this.topicMedia);
+          this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, this.topicMedia));
+        }
+      })
   }
 }
