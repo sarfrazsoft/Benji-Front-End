@@ -18,6 +18,7 @@ import {
   BrainstormRemoveIdeaHeartResponse,
   BrainstormRemoveSubmitResponse,
   BrainstormRenameCategoryResponse,
+  BrainstormSetCategoryResponse,
   BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartResponse,
   BrainstormSubmitResponse,
@@ -701,6 +702,29 @@ export class ContextService {
       const existingIdea = find(existingCategory.brainstormidea_set, { id: id });
       if (existingIdea) {
         return existingIdea;
+      }
+    }
+  }
+
+  setPostCategory(res: BrainstormSetCategoryResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board,
+      oldActivityState.brainstormactivity.boards
+    );
+
+    let idea: Idea;
+    for (let j = 0; j < board.brainstormcategory_set.length; j++) {
+      const categoryIdeas = board.brainstormcategory_set[j].brainstormidea_set;
+      const tempIdea = find(categoryIdeas, { id: res.brainstormidea_id });
+      if (tempIdea) {
+        idea = tempIdea;
+        remove(categoryIdeas, { id: res.brainstormidea_id });
+      }
+    }
+    for (let j = 0; j < board.brainstormcategory_set.length; j++) {
+      const categoryIdeas = board.brainstormcategory_set[j].brainstormidea_set;
+      if (board.brainstormcategory_set[j].id === res.category) {
+        categoryIdeas.push(idea);
       }
     }
   }

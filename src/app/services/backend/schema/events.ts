@@ -34,6 +34,11 @@ export type EventType =
   | 'BrainstormRearrangeBoardEvent'
   | 'BrainstormMoveIdeaBoardEvent'
   | 'MoveBrainstormIdeaEvent'
+  | 'BrainstormSubmitReplyReviewCommentEvent'
+  | 'BrainstormSubmitCommentHeartEvent'
+  | 'BrainstormRemoveReplyReviewCommentEvent'
+  | 'BrainstormRemoveCommentHeartEvent'
+  | 'BrainstormSetCategoryEvent'
   | string;
 
 export enum EventTypes {
@@ -75,4 +80,11 @@ export enum EventTypes {
   changeBoardBackgroundTypeEvent = 'ChangeBoardBackgroundTypeEvent',
   brainstormBoardBackgroudEvent = 'BrainstormBoardBackgroudEvent',
   toggleBlurBackgroundImageEvent = 'ToggleBlurBackgroundImageEvent',
+
+  brainstormSubmitReplyReviewCommentEvent = 'BrainstormSubmitReplyReviewCommentEvent',
+  brainstormSubmitCommentHeartEvent = 'BrainstormSubmitCommentHeartEvent',
+  brainstormRemoveReplyReviewCommentEvent = 'BrainstormRemoveReplyReviewCommentEvent',
+  brainstormRemoveCommentHeartEvent = 'BrainstormRemoveCommentHeartEvent',
+
+  brainstormSetCategoryEvent = 'BrainstormSetCategoryEvent',
 }

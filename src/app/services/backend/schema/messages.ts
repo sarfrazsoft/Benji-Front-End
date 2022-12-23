@@ -32,7 +32,7 @@ import {
   WhereDoYouStandChoice,
 } from './activities';
 import { Lesson, LessonRun, RunningTools } from './course_details';
-import { BrainstormBoardBackgroundResponse } from './event-responses';
+import { BrainstormBoardBackgroundResponse, BrainstormSetCategoryResponse } from './event-responses';
 import { ToggleBlurBackgroundImageResponse } from './event-responses';
 import { ChangeBoardBackgroundTypeResponse } from './event-responses';
 import {
@@ -146,7 +146,12 @@ export type EventResponseTypes =
   | BrainstormBoardPostSizeResponse
   | BrainstormBoardBackgroundResponse
   | ChangeBoardBackgroundTypeResponse
-  | ToggleBlurBackgroundImageResponse;
+  | ToggleBlurBackgroundImageResponse
+  | BrainstormSubmitIdeaCommentResponse
+  | BrainstormSubmitIdeaCommentResponse
+  | BrainstormRemoveIdeaCommentResponse
+  | BrainstormRemoveIdeaCommentResponse
+  | BrainstormSetCategoryResponse;
 
 export interface ServerMessage {
   messagetime: number;

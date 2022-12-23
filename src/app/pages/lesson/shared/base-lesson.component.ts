@@ -37,6 +37,7 @@ import {
   BrainstormRemoveIdeaHeartResponse,
   BrainstormRemoveSubmitResponse,
   BrainstormRenameCategoryResponse,
+  BrainstormSetCategoryResponse,
   BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartResponse,
   BrainstormSubmitResponse,
@@ -453,6 +454,25 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       // } else if (msg.eventtype === EventTypes.brainstormRearrangeBoardEvent) {
       // } else if (msg.eventtype === EventTypes.brainstormMoveIdeaBoardEvent) {
       // } else if (msg.eventtype === EventTypes.moveBrainstormIdeaEvent) {
+    } else if (msg.eventtype === EventTypes.brainstormSubmitReplyReviewCommentEvent) {
+      this.serverMessage = {
+        ...msg.event_msg,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
+      // } else if (msg.eventtype === EventTypes.brainstormSubmitCommentHeartEvent) {
+      // } else if (msg.eventtype === EventTypes.brainstormRemoveReplyReviewCommentEvent) {
+      // } else if (msg.eventtype === EventTypes.brainstormRemoveCommentHeartEvent) {
+    } else if (msg.eventtype === EventTypes.brainstormSetCategoryEvent) {
+      this.contextService.setPostCategory(
+        msg.event_msg as BrainstormSetCategoryResponse,
+        this.oldServerMessage
+      );
+      this.serverMessage = {
+        ...this.oldServerMessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
     } else if (msg.eventtype === EventTypes.brainstormBoardBackgroudEvent) {
       this.contextService.brainstormBoardBackground(
         msg.event_msg as BrainstormBoardBackgroundResponse,
