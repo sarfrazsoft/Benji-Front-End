@@ -2,6 +2,7 @@ import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output } f
 import { Editor } from '@tiptap/core';
 import { findParentNode } from '@tiptap/core';
 import Document from '@tiptap/extension-document';
+import { HorizontalRule } from '@tiptap/extension-horizontal-rule';
 import { Image } from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -99,6 +100,11 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
         },
         openOnClick: false,
       }),
+      HorizontalRule.configure({
+        HTMLAttributes: {
+          class: 'benji-horizontal-rule',
+        },
+      }),
     ];
     if (this.benjiPages) {
       return [
@@ -109,7 +115,7 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
         TaskItem.configure({
           nested: true,
         }),
-        StarterKit.configure({ document: false }),
+        StarterKit.configure({ document: false, horizontalRule: false }),
         GetPlaceholderExtension(),
         CounterComponentExtension(this.injector),
         ImageComponentExtension(this.injector),
@@ -120,7 +126,7 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
     } else {
       return [
         ...defaultExtensions,
-        StarterKit,
+        StarterKit.configure({ horizontalRule: false }),
         Placeholder.configure({
           emptyEditorClass: 'is-editor-empty',
           placeholder: 'Description...',

@@ -78,6 +78,28 @@
       </div>
     </button>
 
+    <button (click)="editor.chain().focus().toggleTaskList().run()">
+      <div>
+        <img
+          src="{{
+            editor.isActive('tasklist') ?
+              '/assets/img/floating-menu/todo-list.svg'
+              : '/assets/img/floating-menu/todo-list.svg'}}">
+      </div>
+    </button>
+    
+    <!-- <button (click)="editor.chain().focus().setHorizontalRule().run()">
+      <div>
+        <img
+          src="{{
+            editor.isActive('horizontalrule') ?
+              '/assets/img/floating-menu/horizontal-rule.svg'
+              : '/assets/img/floating-menu/horizontal-rule.svg'}}">
+      </div>
+    </button> -->
+
+
+
     <!-- <button (click)="addImageTemplate()">
       <div>
         <img

@@ -110,6 +110,19 @@ export const defaultCommands: Array<Array<SlashMenuItem>> = [
       'todo-list.svg',
       'Used to display an unordered list'
     ),
+
+    // Command for creating a horizontal rule
+    // editor.chain().focus().setHorizontalRule().run()
+    new SlashMenuItem(
+      'Horizontal Rule',
+      SlashMenuGroups.BASIC_BLOCKS,
+      (editor: any, range) => {
+        return editor.chain().focus().deleteRange(range).setHorizontalRule().run();
+      },
+      [],
+      'horizontal-rule.svg',
+      'Used to display a horizontal rule'
+    ),
   ],
   // Command for creating a paragraph (pretty useless)
   // paragraph: new SlashMenuItem(
