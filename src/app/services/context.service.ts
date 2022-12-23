@@ -658,7 +658,12 @@ export class ContextService {
       oldActivityState.brainstormactivity.boards
     );
 
-    board.board_activity.blur_image = res.blur_image;
+    if (board) {
+      board.board_activity = {
+        ...board.board_activity,
+        blur_image: res.blur_image,
+      };
+    }
   }
 
   changeBoardBackgroundType(res: ChangeBoardBackgroundTypeResponse, oldActivityState: UpdateMessage) {
@@ -667,6 +672,12 @@ export class ContextService {
       oldActivityState.brainstormactivity.boards
     );
     board.board_activity.background_type = res.background_type;
+    if (board) {
+      board.board_activity = {
+        ...board.board_activity,
+        background_type: res.background_type,
+      };
+    }
   }
 
   brainstormBoardBackground(res: BrainstormBoardBackgroundResponse, oldActivityState: UpdateMessage) {
@@ -674,10 +685,14 @@ export class ContextService {
       res.board_id,
       oldActivityState.brainstormactivity.boards
     );
-
-    board.board_activity.color = res.color;
-    board.board_activity.image_upload = res.image_upload;
-    board.board_activity.image_url = res.image_url;
+    if (board) {
+      board.board_activity = {
+        ...board.board_activity,
+        color: res.color,
+        image_upload: res.image_upload,
+        image_url: res.image_url,
+      };
+    }
   }
 
   getIdea(id: number, categorySet: Array<Category>): Idea {
