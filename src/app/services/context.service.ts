@@ -548,7 +548,15 @@ export class ContextService {
     );
     previousBoard.next_board = res.id;
     oldActivityState.brainstormactivity.boards.push({
-      board_activity: { instructions: res.instructions, sub_instructions: res.sub_instructions } as BoardInfo,
+      board_activity: {
+        instructions: res.instructions,
+        sub_instructions: res.sub_instructions,
+        background_type: 'none',
+        blur_image: false,
+        color: null,
+        image_upload: null,
+        image_url: null,
+      } as BoardInfo,
       id: res.id,
       meta: res.meta,
       name: res.name,

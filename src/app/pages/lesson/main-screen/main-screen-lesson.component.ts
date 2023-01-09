@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { combineLatest, defer } from 'rxjs';
+import { combineLatest, defer, Subscription } from 'rxjs';
 import { ActivityTypes } from 'src/app/globals';
 import {
   AuthService,
@@ -37,6 +37,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   sideNavMode: 'side' | 'over';
   public innerWidth: any;
   boardsMenuClosed = true;
+
   boardBgType: BoardBackgroundType;
   boardBgColor: string;
   boardBgImage: string;
@@ -77,22 +78,26 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
         this.boardBgColor = null;
         this.boardBgImage = null;
         this.blurBgImage = false;
-      } else if (this.boardBgType === 'color') {
-        this.boardBackgroundService.boardBackgroundColor$.subscribe((val: any) => {
-          this.boardBgColor = val;
-          this.boardBgImage = null;
-          this.blurBgImage = false;
-        });
-      } else if (this.boardBgType === 'image') {
-        this.boardBackgroundService.boardBackgroundImage$.subscribe((val: any) => {
-          this.boardBgColor = null;
-          this.boardBgImage = val;
-        });
-
-        this.boardBackgroundService.blurBackgroundImage$.subscribe((val: any) => {
-          this.blurBgImage = val;
-        });
       }
+    });
+
+    this.boardBackgroundService.boardBackgroundColor$.subscribe((val: any) => {
+      if (val) {
+        this.boardBgColor = val;
+        this.boardBgImage = null;
+        this.blurBgImage = false;
+      }
+    });
+
+    this.boardBackgroundService.boardBackgroundImage$.subscribe((val: any) => {
+      if (val) {
+        this.boardBgImage = val;
+        this.boardBgColor = null;
+      }
+    });
+
+    this.boardBackgroundService.blurBackgroundImage$.subscribe((val: any) => {
+      this.blurBgImage = val;
     });
   }
 

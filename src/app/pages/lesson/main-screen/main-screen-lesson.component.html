@@ -11,7 +11,7 @@
 
 <mat-sidenav-container
   [style.background-color]="boardBgColor"
-  [style.background-image]="'url(' + boardBgImage + ')'"
+  [style.background-image]="boardBgImage ? 'url(' + boardBgImage + ')' : null"
   [ngClass]="{ 'board-bg-blur': blurBgImage }"
   class="example-container"
   (backdropClick)="closeAndResetNav()"
