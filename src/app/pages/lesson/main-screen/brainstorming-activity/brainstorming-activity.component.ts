@@ -55,7 +55,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit
+{
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
@@ -489,7 +490,7 @@ export class MainScreenBrainstormingActivityComponent
 
   getAdminBoard() {
     let selectedBoard: Board;
-    const hostBoardID = this._activityState.brainstormactivity.host_board;
+    const hostBoardID = this.activityState.brainstormactivity.host_board;
     if (hostBoardID) {
       this.activityState.brainstormactivity.boards.forEach((v) => {
         if (hostBoardID === v.id) {

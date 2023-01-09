@@ -503,12 +503,20 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       };
       this.oldServerMessage = cloneDeep(this.serverMessage);
     } else {
+      // if that event is not optimized
+      if (msg.updatemessage) {
+        this.serverMessage = {
+          ...msg.updatemessage,
+          eventType: msg.eventtype,
+          isHost: this.clientType === 'participant' ? false : true,
+        };
+        this.oldServerMessage = cloneDeep(this.serverMessage);
+      }
       this.participantCode = this.setParticipantCode();
       this.facilitatorConnected = true;
     }
 
     if (msg.clienterror !== null && msg.clienterror !== undefined) {
-      // console.log(msg);
       const obj = msg.clienterror.error_detail;
       if (typeof obj === 'string') {
       } else {
