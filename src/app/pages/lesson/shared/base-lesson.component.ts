@@ -534,6 +534,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         if (notify_type === 'no_facilitator') {
           console.log('facilitator not connected');
           this.facilitatorConnected = false;
+          this.socketService.restartLesson(this.lessonRun.id);
         }
       }
     } else if (msg.updatemessage !== null && msg.updatemessage !== undefined) {

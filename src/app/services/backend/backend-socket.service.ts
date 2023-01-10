@@ -29,18 +29,13 @@ export class BackendSocketService {
       url: uri,
       deserializer: ({ data }) => {
         clearTimeout(this.typingTimer);
-        // console.log('line 31' + data);
         return JSON.parse(data);
       },
       openObserver: {
         next: (val: any) => {
           this.typingTimer = setTimeout(() => {
             LogRocket.error('Facilitator not awake. retrying');
-            this.httpClient
-              .get<any[]>(global.apiRoot + `/course_details/lesson/${lessonRun.id}/restart_lesson/`)
-              .subscribe((v) => {
-                // console.log('line 40' + v);
-              });
+            this.restartLesson(lessonRun.id);
           }, 3000);
           // console.log('opened');
         },
@@ -68,6 +63,12 @@ export class BackendSocketService {
     //   )
     // );
     return w;
+  }
+
+  restartLesson(lessonRunId) {
+    this.httpClient
+      .get<any[]>(global.apiRoot + `/course_details/lesson/${lessonRunId}/restart_lesson/`)
+      .subscribe((v) => {});
   }
 
   connect(sessionrunID) {
