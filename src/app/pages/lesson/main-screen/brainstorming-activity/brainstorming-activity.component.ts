@@ -55,8 +55,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
@@ -170,10 +169,14 @@ export class MainScreenBrainstormingActivityComponent
 
   updateBackgroundInService(board: Board) {
     this.boardBackgroundService.boardBackgroundType = board.board_activity.background_type;
-    this.boardBackgroundService.boardBackgroundColor = board.board_activity.color;
-    this.boardBackgroundService.boardBackgroundImage =
-      board.board_activity.image_upload ?? board.board_activity.image_url;
-    this.boardBackgroundService.blurBackgroundImage = board.board_activity.blur_image;
+    if (board?.board_activity?.background_type === 'none') {
+    } else if (board.board_activity.background_type === 'color') {
+      this.boardBackgroundService.boardBackgroundColor = board.board_activity.color;
+    } else if (board.board_activity.background_type === 'image') {
+      this.boardBackgroundService.boardBackgroundImage =
+        board.board_activity.image_upload ?? board.board_activity.image_url;
+      this.boardBackgroundService.blurBackgroundImage = board.board_activity.blur_image;
+    }
   }
 
   ngAfterViewInit(): void {
@@ -195,10 +198,7 @@ export class MainScreenBrainstormingActivityComponent
   onChanges() {
     this.isHost = this.activityState.isHost;
     const currentEventType = this.getEventType();
-    if (
-      currentEventType !== EventTypes.brainstormSubmitIdeaCommentEvent &&
-      currentEventType !== EventTypes.notificationEvent
-    ) {
+    if (currentEventType !== EventTypes.notificationEvent) {
       // prevent changes down the tree when it is BrainstormSubmitIdeaCommentEvent
       this.eventType = currentEventType;
       this._activityState = this.activityState;
@@ -241,11 +241,13 @@ export class MainScreenBrainstormingActivityComponent
       if (this.isHost) {
         this.navigateToNewlyAddedBoard();
       }
-    } else if (currentEventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
-      // update the data in service. no children components will fire ngonchanges
-      this.brainstormEventService.ideaCommentEvent = this.activityState
-        .event_msg as BrainstormSubmitIdeaCommentResponse;
-    } else if (currentEventType === EventTypes.brainstormToggleMeetingMode) {
+    }
+    // else if (currentEventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
+    // update the data in service. no children components will fire ngonchanges
+    // this.brainstormEventService.ideaCommentEvent = this.activityState
+    // console.log(this.activityState.event_msg);
+    // }
+    else if (currentEventType === EventTypes.brainstormToggleMeetingMode) {
       this.updateMeetingMode();
       this.bringUsersToHostBoard();
     } else if (this.activityState.eventType === EventTypes.getUpdatedLessonDetailEvent) {
@@ -365,7 +367,7 @@ export class MainScreenBrainstormingActivityComponent
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         const board = this.getAdminBoard();
-        this.topicMediaService.topicMedia = board.prompt_video;
+        this.topicMediaService.topicMedia = board?.prompt_video;
       }
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
@@ -375,7 +377,7 @@ export class MainScreenBrainstormingActivityComponent
           this.activityState.brainstormactivity,
           this.participantCode
         );
-        this.topicMediaService.topicMedia = board.prompt_video;
+        this.topicMediaService.topicMedia = board?.prompt_video;
       }
     });
   }

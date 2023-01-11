@@ -259,15 +259,15 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         isHost: this.clientType === 'participant' ? false : true,
       };
     } else if (msg.eventtype === EventTypes.brainstormSubmitIdeaCommentEvent) {
-      this.serverMessage = {
-        event_msg: msg.event_msg,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
       this.contextService.addCommentToActivityState(
         msg.event_msg as BrainstormSubmitIdeaCommentResponse,
         this.oldServerMessage
       );
+      this.serverMessage = {
+        ...this.oldServerMessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
     } else if (msg.eventtype === EventTypes.brainstormRemoveIdeaCommentEvent) {
       this.contextService.removeCommentFromActivityState(
         msg.event_msg as BrainstormRemoveIdeaCommentResponse,
