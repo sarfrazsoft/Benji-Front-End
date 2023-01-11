@@ -220,10 +220,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       this.oldVideo = this.item.idea_video.id;
     }
 
-    this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
-      // Add the comment to the card
-      this.addComment();
-    });
+    // this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
+    //   // Add the comment to the card
+    //   // this.addComment();
+    // });
 
     if (this.board.post_size) {
       this.postSize = this.board.post_size;
@@ -273,13 +273,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
         // video did not exist and probably added now
         this.videoAvailable = true;
       }
+    } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
+      this.addComment();
     } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
       this.postSize = this.board.post_size;
       this.hostAvatarSize = this.postSize === 'small' ? 'small' : 'medium';
-    } else if (
-      this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent &&
-      this.activityState.eventType !== EventTypes.notificationEvent
-    ) {
+    } else if (this.activityState.eventType !== EventTypes.notificationEvent) {
       this.localActivityState = this.activityState;
     }
   }

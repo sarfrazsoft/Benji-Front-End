@@ -93,14 +93,14 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
       }
     });
 
-    this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
-      // Add the comment to the card
-      if (this.board.id === v.board_id) {
-        // the comment was added in the board
-        this.brainstormService.uncategorizedIdeaCommentAdded(this.ideas, v);
-        this.postLayoutService.refreshGridLayout(this.grid, false);
-      }
-    });
+    // this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
+    //   // Add the comment to the card
+    //   if (this.board.id === v.board_id) {
+    //     // the comment was added in the board
+    //     // this.brainstormService.uncategorizedIdeaCommentAdded(this.ideas, v);
+    //     this.postLayoutService.refreshGridLayout(this.grid, false);
+    //   }
+    // });
   }
 
   ngOnChanges($event: SimpleChanges) {
@@ -123,7 +123,10 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
         });
       } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
         this.postLayoutService.refreshGridLayout(this.grid, false);
-      } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
+      } else if (
+        this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaCommentEvent'
+      ) {
         this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
         this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (

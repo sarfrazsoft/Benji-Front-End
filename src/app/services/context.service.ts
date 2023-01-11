@@ -682,10 +682,28 @@ export class ContextService {
     );
     board.board_activity.background_type = res.background_type;
     if (board) {
-      board.board_activity = {
-        ...board.board_activity,
-        background_type: res.background_type,
-      };
+      if (res.background_type === 'none') {
+        board.board_activity = {
+          ...board.board_activity,
+          background_type: res.background_type,
+          color: null,
+          image_upload: null,
+          image_url: null,
+        };
+      } else if (res.background_type === 'color') {
+        board.board_activity = {
+          ...board.board_activity,
+          background_type: res.background_type,
+          image_upload: null,
+          image_url: null,
+        };
+      } else if (res.background_type === 'image') {
+        board.board_activity = {
+          ...board.board_activity,
+          background_type: res.background_type,
+          color: null,
+        };
+      }
     }
   }
 

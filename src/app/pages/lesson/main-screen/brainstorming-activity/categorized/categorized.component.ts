@@ -103,13 +103,13 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
       this.columnSize = this.board.post_size;
     }
 
-    this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
-      // Add the comment to the card
-      if (this.board.id === v.board_id) {
-        // the comment was added in the board
-        this.brainstormService.categorizedIdeaCommentAdded(v, this.columns);
-      }
-    });
+    // this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
+    // Add the comment to the card
+    // if (this.board.id === v.board_id) {
+    // the comment was added in the board
+    // this.brainstormService.categorizedIdeaCommentAdded(v, this.columns);
+    // }
+    // });
   }
 
   ngOnChanges($event: SimpleChanges) {
@@ -127,6 +127,10 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
         });
       } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
         this.columnSize = this.board.post_size;
+      } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
+        this.brainstormService.ideaCommented(this.board, this.columns, () => {
+          // this.refreshMasonryLayout();
+        });
       } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
         this.brainstormService.ideaCommented(this.board, this.columns, () => {
           this.refreshMasonryLayout();
