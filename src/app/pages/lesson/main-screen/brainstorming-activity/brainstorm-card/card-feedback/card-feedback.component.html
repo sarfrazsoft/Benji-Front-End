@@ -1,0 +1,57 @@
+<ng-container *ngFor="let comment of item.comments; let i = index">
+  <benji-posted-comment
+    [comment]="comment"
+    [item]="item"
+    [board]="board"
+    [participantCode]="participantCode"
+    [activityState]="activityState"
+    [allowReply]="true"
+    [isAdmin]="isAdmin"
+    [eventType]="eventType"
+    [avatarSize]="avatarSize"
+    [commentIndex]="i"
+    (sendMessage)="sendMessage.emit($event)"
+    (viewChanged)="viewChanged.emit()">
+  </benji-posted-comment>
+</ng-container>
+
+<div class="post-comment" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
+  <benji-profile-pictures
+    [activityState]="activityState"
+    [participantCodes]="[participantCode]"
+    [showTooltip]="false"
+    [size]="avatarSize"
+  ></benji-profile-pictures>
+  <div
+    class="comment-input-container"
+    fxFlex="row"
+    fxLayoutAlign="start center"
+    [ngClass]="{ grey: classGrey, greyed: commentModel.length }"
+  >
+    <!-- <div *ngIf="userSubmittedComment && !userSubmittedSuccesfully">submitting</div> -->
+    <textarea
+      matInput
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="5000"
+      placeholder="Add a comment"
+      class="input-comment"
+      [(ngModel)]="commentModel"
+      (ngModelChange)="commentTyped()"
+      [ngClass]="{ active: commentModel.length }"
+      (focus)="onCommentFocus()"
+      (blur)="onCommentBlur()"
+      (keydown.enter)="submitComment(item.id, commentModel)"
+      [disabled]="userSubmittedComment && !userSubmittedSuccesfully"
+    >
+    </textarea>
+    <div
+      class="send-comment primary-color"
+      (click)="submitComment(item.id, commentModel)"
+      [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'"
+    >
+      Send
+    </div>
+  </div>
+</div>
+

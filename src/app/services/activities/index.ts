@@ -2,6 +2,7 @@ import { ActivitiesService } from './activities.service';
 import { ActivitySettingsService } from './activity-settings.service';
 import { BoardsNavigationService } from './boards-navigation.service';
 import { BrainstormEventService } from './brainstorm-event.service';
+import { BrainstormPostService } from './brainstorm-post.service';
 import { BrainstormService } from './brainstorm.service';
 import { BuildAPitchService } from './build-a-pitch.service';
 
@@ -12,6 +13,7 @@ export {
   BrainstormService,
   ActivitiesService,
   BoardsNavigationService,
+  BrainstormPostService,
 };
 
 export const ActivitiesServices = [
@@ -21,4 +23,5 @@ export const ActivitiesServices = [
   BrainstormService,
   BrainstormEventService,
   BoardsNavigationService,
+  BrainstormPostService,
 ];

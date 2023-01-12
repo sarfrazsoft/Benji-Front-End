@@ -33,6 +33,7 @@ import {
   BrainstormEditResponse,
   BrainstormRemoveBoardResponse,
   BrainstormRemoveCategoryResponse,
+  BrainstormRemoveCommentHeartResponse,
   BrainstormRemoveIdeaCommentResponse,
   BrainstormRemoveIdeaHeartResponse,
   BrainstormRemoveSubmitResponse,
@@ -455,14 +456,49 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       // } else if (msg.eventtype === EventTypes.brainstormMoveIdeaBoardEvent) {
       // } else if (msg.eventtype === EventTypes.moveBrainstormIdeaEvent) {
     } else if (msg.eventtype === EventTypes.brainstormSubmitReplyReviewCommentEvent) {
+      this.contextService.brainstormSubmitReplyReviewComment(
+        msg.event_msg as BrainstormSubmitIdeaCommentResponse,
+        this.oldServerMessage
+      );
+
       this.serverMessage = {
-        ...msg.event_msg,
+        ...this.oldServerMessage,
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
-      // } else if (msg.eventtype === EventTypes.brainstormSubmitCommentHeartEvent) {
-      // } else if (msg.eventtype === EventTypes.brainstormRemoveReplyReviewCommentEvent) {
-      // } else if (msg.eventtype === EventTypes.brainstormRemoveCommentHeartEvent) {
+    } else if (msg.eventtype === EventTypes.brainstormSubmitCommentHeartEvent) {
+      this.contextService.brainstormAddCommentHeart(
+        msg.event_msg as BrainstormSubmitIdeaHeartResponse,
+        this.oldServerMessage
+      );
+
+      this.serverMessage = {
+        ...this.oldServerMessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
+    } else if (msg.eventtype === EventTypes.brainstormRemoveReplyReviewCommentEvent) {
+      this.contextService.brainstormRemoveReplyReviewComment(
+        msg.event_msg as BrainstormRemoveIdeaCommentResponse,
+        this.oldServerMessage
+      );
+
+      this.serverMessage = {
+        ...this.oldServerMessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
+    } else if (msg.eventtype === EventTypes.brainstormRemoveCommentHeartEvent) {
+      this.contextService.brainstormRemoveCommentHeart(
+        msg.event_msg as BrainstormRemoveCommentHeartResponse,
+        this.oldServerMessage
+      );
+
+      this.serverMessage = {
+        ...this.oldServerMessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
     } else if (msg.eventtype === EventTypes.brainstormSetCategoryEvent) {
       this.contextService.setPostCategory(
         msg.event_msg as BrainstormSetCategoryResponse,

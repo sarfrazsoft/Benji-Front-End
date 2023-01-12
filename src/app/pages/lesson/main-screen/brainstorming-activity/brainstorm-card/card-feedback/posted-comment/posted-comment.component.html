@@ -1,0 +1,128 @@
+
+<div class="user-feed" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start">
+  <div class="initials {{ 'color' + (commentIndex % 10) }}" fxLayout="column" fxLayoutAlign="center center">
+    <div>
+      <benji-profile-pictures
+        [activityState]="activityState"
+        [participantCodes]="[comment.participant]"
+        [showTooltip]="false"
+        [size]="avatarSize"
+      ></benji-profile-pictures>
+    </div>
+  </div>
+  <div 
+    class="comments" 
+    fxLayout="column" 
+    fxLayoutGap="4px">
+    <div class="comment" fxLayout="row">
+      <div class="grey-bg" fxLayout="column" fxLayoutAlign="start start">
+        <div
+          class="name-delete"
+          fxLayout="row"
+          fxLayoutAlign="space-between start">
+          <div class="name">
+            {{ getParticipantName(comment.participant) }}
+          </div>
+        </div>
+        <div class="comment">{{ comment.comment }}</div>
+      </div>
+      <mat-icon
+        *ngIf="canDeleteComment(comment.participant) || isAdmin"
+        class="delete-icon"
+        (click)="removeComment(comment.id, item.id)">
+        clear
+      </mat-icon>
+    </div>
+    
+    <!-- Like and Reply buttons -->
+    <div 
+      class="like-reply"
+      fxLayout="row"
+      fxLayoutGap="8px"
+      fxLayoutAlign="start center">
+      <!-- Like -->
+      <div
+        fxLayout="row"
+        fxLayoutGap="8px">
+        <div 
+          class="like"
+          benji-click-stop-propagation
+          (click)="likeClicked(comment)">
+          Like
+        </div>
+        <div
+          *ngIf="comment.comment_hearts.length" 
+          class="likes-count"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          fxLayoutGap="2px">
+          <img src="/assets/img/cards/liked.svg">
+          <span class="count">{{ comment.comment_hearts.length }}</span>
+        </div>
+        <div
+          *ngIf="!comment.comment_hearts.length" 
+          class="likes-count"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          fxLayoutGap="2px">
+          <img src="/assets/img/cards/like.svg">
+        </div>
+      </div>
+      <div class="separater"></div>
+      <!-- Reply -->
+      <div
+        *ngIf="allowReply"
+        class="reply" 
+        (click)="addReplyToCommentUI(comment)">
+        Reply
+      </div>
+    </div>
+    <div class="child-comments">
+      <ng-container *ngFor="let childComment of comment.reply_comments">
+        <benji-posted-comment
+          [comment]="childComment"
+          [item]="item"
+          [board]="board"
+          [isAdmin]="isAdmin"
+          [participantCode]="participantCode"
+          [activityState]="activityState"
+          [allowReply]="false"
+          [avatarSize]="avatarSize"
+          (sendMessage)="sendMessage.emit($event)">
+        </benji-posted-comment>
+      </ng-container>
+    </div>
+    <div *ngIf="comment['addingReply']">
+      <benji-comment-reply
+        [comment]="comment"
+        (viewChanged)="viewChanged.emit()"
+        (sendMessage)="sendMessage.emit($event)">
+      </benji-comment-reply>
+    </div>
+  </div> 
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
+  <button mat-menu-item (click)="edit(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+    <img class="dots" src="../../../assets/img/side-nav/edit.svg"/>
+    <span>Edit</span>
+  </button>
+   <button mat-menu-item (click)="duplicate(lesson, $event)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+    <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
+    <span>Duplicate</span>
+  </button>
+  <button mat-menu-item (click)="delete(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+    <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
+    <span>Delete</span>
+  </button>
+</mat-menu>
+<div class="comment">{{ comment.comment }}</div> -->

@@ -14,6 +14,7 @@ import {
   BrainstormEditResponse,
   BrainstormRemoveBoardResponse,
   BrainstormRemoveCategoryResponse,
+  BrainstormRemoveCommentHeartResponse,
   BrainstormRemoveIdeaCommentResponse,
   BrainstormRemoveIdeaHeartResponse,
   BrainstormRemoveSubmitResponse,
@@ -30,6 +31,7 @@ import {
   RemoveIdeaDocumentResponse,
 } from 'src/app/services/backend/schema/event-responses';
 import { BoardsNavigationService } from './activities/boards-navigation.service';
+import { BrainstormEventService } from './activities/brainstorm-event.service';
 import {
   Board,
   BoardInfo,
@@ -54,7 +56,8 @@ export class ContextService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private boardsNavigationService: BoardsNavigationService
+    private boardsNavigationService: BoardsNavigationService,
+    private brainstormEventService: BrainstormEventService
   ) {}
   set boardsCount(count: number) {
     this.boardsCount$.next(count);
@@ -730,6 +733,137 @@ export class ContextService {
         return existingIdea;
       }
     }
+  }
+
+  brainstormSubmitReplyReviewComment(
+    res: BrainstormSubmitIdeaCommentResponse,
+    oldActivityState: UpdateMessage
+  ) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board_id,
+      oldActivityState.brainstormactivity.boards
+    );
+
+    if (board) {
+      const existingIdea = this.getIdea(res.brainstormidea_id, board.brainstormcategory_set);
+      if (existingIdea) {
+        const existingComment = find(existingIdea.comments, { id: res.parent_comment });
+        if (existingComment) {
+          existingComment.reply_comments.push({
+            id: res.id,
+            comment: res.comment,
+            comment_hearts: [],
+            participant: res.participant,
+          });
+        }
+      }
+    }
+    // notify the service that a comment has a reply
+    this.brainstormEventService.ideaCommentReplyEvent = res as BrainstormSubmitIdeaCommentResponse;
+    this.brainstormEventService.activityState = oldActivityState;
+  }
+
+  brainstormAddCommentHeart(res: BrainstormSubmitIdeaHeartResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board_id,
+      oldActivityState.brainstormactivity.boards
+    );
+    console.log(res);
+
+    // liking a comment
+    // brainstormidea_id: 6106
+    // heart: true
+    // id: 55
+    // parent: null
+    // parent_comment: 2395
+    // participant: null
+
+    if (board) {
+      const existingIdea = this.getIdea(res.brainstormidea_id, board.brainstormcategory_set);
+      if (existingIdea) {
+        if (res.parent_comment && res.parent) {
+          // child comment was liked
+          const existingComment = find(existingIdea.comments, { id: res.parent_comment });
+
+          const childComment = find(existingComment?.reply_comments, { id: res.parent });
+          if (childComment) {
+            childComment.comment_hearts.push({
+              id: res.id,
+              participant: res.participant,
+            });
+          }
+        } else if (res.parent_comment) {
+          const existingComment = find(existingIdea.comments, { id: res.parent_comment });
+          if (existingComment) {
+            existingComment.comment_hearts.push({
+              id: res.id,
+              participant: res.participant,
+            });
+          }
+        }
+      }
+    }
+
+    // notify the service that a comment has a heart
+    this.brainstormEventService.ideaCommentAddHeartEvent = res as BrainstormSubmitIdeaHeartResponse;
+    this.brainstormEventService.activityState = oldActivityState;
+  }
+
+  brainstormRemoveCommentHeart(res: BrainstormRemoveCommentHeartResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board_id,
+      oldActivityState.brainstormactivity.boards
+    );
+
+    // liking a comment
+    // brainstormidea_id: 6106
+    // heart: true
+    // id: 55
+    // parent: null
+    // parent_comment: 2395
+    // participant: null
+
+    if (board) {
+      const existingIdea = this.getIdea(res.brainstormidea_id, board.brainstormcategory_set);
+      if (existingIdea) {
+        let h;
+        for (let i = 0; i < existingIdea.comments.length && !h; i++) {
+          const comment = existingIdea.comments[i];
+          h = find(comment.comment_hearts, { id: res.heart_id });
+          if (h) {
+            remove(comment.comment_hearts, { id: res.heart_id });
+          }
+        }
+      }
+    }
+
+    // notify the service that a comment has a heart
+    this.brainstormEventService.ideaCommentRemoveHeartEvent = res as BrainstormRemoveCommentHeartResponse;
+    this.brainstormEventService.activityState = oldActivityState;
+  }
+
+  brainstormRemoveReplyReviewComment(
+    res: BrainstormRemoveIdeaCommentResponse,
+    oldActivityState: UpdateMessage
+  ) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board_id,
+      oldActivityState.brainstormactivity.boards
+    );
+
+    if (board) {
+      const existingIdea = this.getIdea(res.brainstormidea_id, board.brainstormcategory_set);
+      if (existingIdea) {
+        const existingComment = find(existingIdea.comments, { id: res.parent_comment });
+        if (existingComment) {
+          remove(existingComment.reply_comments, { id: res.comment_id });
+        }
+      }
+    }
+
+    // notify the service that a comment has a reply
+    this.brainstormEventService.ideaRemoveCommentReplyEvent = res as BrainstormRemoveIdeaCommentResponse;
+    this.brainstormEventService.activityState = oldActivityState;
   }
 
   setPostCategory(res: BrainstormSetCategoryResponse, oldActivityState: UpdateMessage) {

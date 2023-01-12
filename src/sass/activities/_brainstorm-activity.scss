@@ -503,9 +503,14 @@ benji-ms-brainstorming-activity {
     .like-reply {
       height: 14px;
       line-height: 12px;
-      margin-left: 24px;
+      margin-left: 10px;
       .like, .reply {
         font-size: 12px;
+        color: #828282;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        line-height: 12px;
       }
       .likes-count {
         img {
@@ -513,7 +518,7 @@ benji-ms-brainstorming-activity {
           height: 12px;
         }
         span {
-          font-size: 10px;
+          font-size: 12px;
         }
       }
       .separater {
@@ -783,34 +788,75 @@ benji-categorized-ideas {
       margin-bottom: 8px;
       position: relative;
       overflow: hidden;
-      .grey-bg {
-        background: #f3f4f7;
-        border-radius: 8px;
-        padding: 8px;
-        .name {
-          font-size: 12px;
-          color: #37352f;
-          font-weight: 500;
-          margin-bottom: 4px;
-          text-transform: capitalize;
-        }
+      .comments {
+        max-width: calc(100% - 32px);
+        word-break: break-all;
         .comment {
-          font-size: 12px;
-          line-height: 16px;
-          color: #37352f;
-          font-weight: 400;
-          word-wrap: break-word;
+          .grey-bg {
+            background: #f3f4f7;
+            border-radius: 8px;
+            padding: 8px;
+            width: fit-content;
+            .name {
+              font-size: 12px;
+              color: #37352f;
+              font-weight: 500;
+              margin-bottom: 4px;
+              text-transform: capitalize;
+            }
+            .comment {
+              font-size: 12px;
+              line-height: 16px;
+              color: #37352f;
+              font-weight: 400;
+              word-wrap: break-word;
+            }
+          }
+          .delete-icon {
+            opacity: 0;
+            height: 18px;
+            width: 18px;
+            font-size: 18px;
+          }
+          &:hover {
+            .delete-icon {
+              opacity: 1;
+            }
+          }
         }
-      }
-      .delete-icon {
-        opacity: 0;
-        height: 18px;
-        width: 18px;
-        font-size: 18px;
-      }
-      &:hover {
-        .delete-icon {
-          opacity: 1;
+        .comment-reply {
+          margin-bottom: 8px;
+          .textarea-wrapper {
+            border: 1px solid #E7E7E7;
+            border-radius: 8px;
+            padding: 8px 12px;
+            transition: 0.2s;
+            &:focus-within {
+              border-color: #555BEA;
+            }
+            textarea {
+              padding: 0px;
+              border: 0px;
+              outline: none !important;
+              width: 100%;
+              overflow: hidden;
+              &:focus {
+                border: 0px;
+              }
+            }
+          }
+        }
+
+        .reply-controls {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 16px;
+          padding: 6px 12px;
+          border-radius: 8px;
+          &.cancel {
+            color: #37352F;
+            background-color: #F3F4F7;
+          }
         }
       }
     }
@@ -894,6 +940,8 @@ benji-categorized-ideas {
     }
   }
 }
+
+
 
 .user-name {
   .name {

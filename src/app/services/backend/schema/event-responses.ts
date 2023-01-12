@@ -13,11 +13,13 @@ import {
 } from './activities';
 
 export interface BrainstormSubmitIdeaCommentResponse {
+  id: number;
   board_id: number;
   brainstormidea_id: number;
   comment: string;
-  id: number;
-  participant: any;
+  parent_comment?: number;
+  participant: number;
+  parent?: number;
 }
 
 export interface BrainstormSubmitIdeaHeartResponse {
@@ -25,22 +27,35 @@ export interface BrainstormSubmitIdeaHeartResponse {
   brainstormidea_id: number;
   heart: boolean;
   id: number;
-  participant: any;
+  participant: number;
+
+  parent_comment: number;
+  parent: number;
 }
 
 export interface BrainstormRemoveIdeaHeartResponse {
   board_id: number;
   brainstormidea_id: number;
   heart_id: number;
-  participant: any;
+  participant: number;
+}
+
+export interface BrainstormRemoveCommentHeartResponse {
+  board_id: number;
+  brainstormidea_id: number;
+  heart_id: number;
+  participant: number;
 }
 
 export interface BrainstormRemoveIdeaCommentResponse {
   board_id: number;
   brainstormidea_id: number;
-  comment_id: string;
+  comment_id: number;
   id: number;
-  participant: any;
+  participant: number;
+
+  parent_comment: number;
+  parent: number;
 }
 
 export interface ParticipantChangeBoardResponse {

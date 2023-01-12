@@ -104,11 +104,12 @@
       </div>
     </ng-container>
     <div
-      class="card-header"
+      class="card-header muuriDragHandle"
       (mousedown)="mouseDownEvent($event)"
       (mouseup)="mouseUpEvent($event, item)"
       [ngClass]="{ hidden: !item.pinned && !showUserName, 'host-pinned': !showUserName && item.pinned }"
       fxLayoutAlign="space-between center"
+      cdkDragHandle
     >
       <div *ngIf="showUserName" class="user-name">
         <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
@@ -165,7 +166,8 @@
       </mat-icon> -->
     </div>
     <div
-      class="content"
+      cdkDragHandle
+      class="content muuriDragHandle"
       [ngClass]="{
         'no-image': (!item.idea_video && !item.idea_document && !item.idea_image) || showUserName,
         'host-pinned':
@@ -194,7 +196,8 @@
     </div>
     <div class="feedback" *ngIf="areCommentsAllowed() || areHeartsAllowed()">
       <div
-        class="counts"
+        cdkDragHandle
+        class="counts muuriDragHandle"
         fxLayout="row"
         fxLayoutAlign="space-between center"
         (mousedown)="mouseDownEvent($event)"
@@ -225,131 +228,19 @@
         </div>
       </div>
       <ng-container *ngIf="areCommentsAllowed()">
-        <ng-container *ngFor="let comment of item.comments; let i = index">
-          <div class="user-feed" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start">
-            <!-- <img class="dp" src="/assets/img/placeholder.png"> -->
-            <div class="initials {{ 'color' + (i % 10) }}" fxLayout="column" fxLayoutAlign="center center">
-              <div>
-                <benji-profile-pictures
-                  [activityState]="localActivityState"
-                  [participantCodes]="[comment.participant]"
-                  [showTooltip]="false"
-                  [size]="avatarSize"
-                ></benji-profile-pictures>
-              </div>
-            </div>
-            <!-- <div class="grey-bg" fxLayout="column" fxLayoutAlign="start start">
-              <div class="name">{{ getParticipantName(comment.participant) }}</div>
-              <div class="comment">{{ comment.comment }}</div>
-            </div> -->
-            <div 
-            class="comments" 
-            fxLayout="column" 
-            fxLayoutGap="4px">
-            <div class="grey-bg" fxLayout="column" fxLayoutAlign="start start">
-              <div
-                class="name-delete"
-                fxLayout="row"
-                fxLayoutAlign="space-between start">
-                <div class="name">
-                  {{ getParticipantName(comment.participant) }}
-                </div>
-                <img [matMenuTriggerFor]="menu" src="/assets/img/cards/hori-dots.svg" alt="">
-              </div>
-              <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
-                <button mat-menu-item (click)="edit(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                  <img class="dots" src="../../../assets/img/side-nav/edit.svg"/>
-                  <span>Edit</span>
-                </button>
-                <!-- <button mat-menu-item (click)="duplicate(lesson, $event)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                  <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
-                  <span>Duplicate</span>
-                </button> -->
-                <button mat-menu-item (click)="delete(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                  <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
-                  <span>Delete</span>
-                </button>
-              </mat-menu>
-              <div class="comment">{{ comment.comment }}</div>
-            </div>
-            <div 
-              class="like-reply"
-              fxLayout="row"
-              fxLayoutGap="8px"
-              fxLayoutAlign="start center">
-              <div 
-                *ngIf="!hasParticipantHearted(item)"
-                class="like"
-                benji-click-stop-propagation
-                (click)="setHeart(item)"
-                >Like</div>
-              <div 
-                *ngIf="hasParticipantHearted(item)"
-                class="like active"
-                benji-click-stop-propagation
-                (click)="removeHeart(item)"
-                >Like</div>
-              <div
-                *ngIf="item.hearts.length" 
-                class="likes-count"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                fxLayoutGap="2px">
-                <img src="/assets/img/cards/circle-heart.svg">
-                <span class="count">{{ item.hearts.length }}</span>
-              </div>
-              <div class="separater"></div>
-              <div class="reply">Reply</div>
-            </div>
-          </div> 
-            <mat-icon
-              *ngIf="canDeleteComment(comment.participant) || isAdmin"
-              class="delete-icon"
-              (click)="removeComment(comment.id, item.id)"
-            >
-              clear
-            </mat-icon>
-          </div>
-        </ng-container>
-        <div class="post-comment" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
-          <benji-profile-pictures
-            [activityState]="activityState"
-            [participantCodes]="[participantCode]"
-            [showTooltip]="false"
-            [size]="avatarSize"
-          ></benji-profile-pictures>
-          <div
-            class="comment-input-container"
-            fxFlex="row"
-            fxLayoutAlign="start center"
-            [ngClass]="{ grey: classGrey, greyed: commentModel.length }"
-          >
-            <!-- <div *ngIf="userSubmittedComment && !userSubmittedSuccesfully">submitting</div> -->
-            <textarea
-              matInput
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="1"
-              cdkAutosizeMaxRows="5000"
-              placeholder="Add a comment"
-              class="input-comment"
-              [(ngModel)]="commentModel"
-              (ngModelChange)="commentTyped()"
-              [ngClass]="{ active: commentModel.length }"
-              (focus)="onCommentFocus()"
-              (blur)="onCommentBlur()"
-              (keydown.enter)="submitComment(item.id, commentModel)"
-              [disabled]="userSubmittedComment && !userSubmittedSuccesfully"
-            >
-            </textarea>
-            <div
-              class="send-comment primary-color"
-              (click)="submitComment(item.id, commentModel)"
-              [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'"
-            >
-              Send
-            </div>
-          </div>
-        </div>
+        <benji-card-feedback
+          #cardFeedback
+          [board]="board"
+          [item]="item"
+          [isAdmin]="isAdmin"
+          [participantCode]="participantCode"
+          [eventType]="eventType"
+          [activityState]="activityState"
+          [ideaDetailedDialogRef]="ideaDetailedDialogRef"
+          [avatarSize]="avatarSize"
+          (sendMessage)="sendMessage.emit($event)"
+          (viewChanged)="viewChanged.emit()">
+        </benji-card-feedback>
       </ng-container>
     </div>
   </div>

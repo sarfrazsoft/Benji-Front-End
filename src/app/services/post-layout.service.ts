@@ -25,10 +25,22 @@ export class PostLayoutService {
       alignBottom: false,
       rounding: true,
     },
-    dragStartPredicate: {
-      distance: 10,
-      delay: 100,
+    // dragStartPredicate: {
+    //   distance: 10,
+    //   delay: 100,
+    // },
+    dragStartPredicate: function (item, e) {
+      // Start moving the item after the item has been dragged for one second.
+      // if (e.deltaTime > 1000) {
+      //   return true;
+      // }
+      if (e.target.classList.contains('muuriDragHandle')) {
+        return true;
+      } else {
+        return false;
+      }
     },
+    dragHandle: '.muuriDragHandle',
   };
 
   constructor() {}

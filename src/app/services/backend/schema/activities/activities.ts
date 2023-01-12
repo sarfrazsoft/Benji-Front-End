@@ -346,7 +346,7 @@ export interface UploadcareMedia {
     color_mode: string;
     orientation: any;
     geo_location: any;
-    datetime_original: any
+    datetime_original: any;
   };
   mimeType: string;
   originalUrl: string;
@@ -354,8 +354,8 @@ export interface UploadcareMedia {
   cdnUrlModifiers: any;
   sourceInfo: {
     source: string;
-    file: {}
-  }
+    file: {};
+  };
 }
 
 export interface BoardMetaData {
@@ -481,10 +481,12 @@ export interface IdeaHeart {
 
 export interface IdeaComment {
   comment: string;
-  comment_hearts: Array<number>;
+  comment_hearts: Array<CommentHeart>;
   id: number;
   participant: number;
   reply_comments?: Array<IdeaComment>;
+
+  parent_comment?: number;
 }
 export interface IdeaDocument {
   id: number;
@@ -492,6 +494,11 @@ export interface IdeaDocument {
   document_type: IdeaDocumentType;
   document_url: string;
   document_url_converted: string;
+}
+
+export interface CommentHeart {
+  id: number;
+  participant: number;
 }
 
 export type IdeaDocumentType = 'video' | 'document' | 'image';

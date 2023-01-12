@@ -25,6 +25,7 @@ import {
   ActivitiesService,
   BoardsNavigationService,
   BrainstormEventService,
+  BrainstormPostService,
   BrainstormService,
 } from 'src/app/services/activities';
 import {
@@ -54,32 +55,12 @@ import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-d
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 import { environment } from 'src/environments/environment';
+import { CardFeedbackComponent } from './card-feedback/card-feedback.component';
 
 @UntilDestroy()
 @Component({
   selector: 'benji-brainstorm-card',
   templateUrl: './brainstorm-card.component.html',
-  animations: [
-    trigger('enableDisable', [
-      // ...
-      state(
-        'enabled',
-        style({
-          opacity: 1,
-          display: 'block',
-        })
-      ),
-      state(
-        'disabled',
-        style({
-          opacity: 0,
-          display: 'none',
-        })
-      ),
-      transition('enabled => disabled', [animate('0.1s')]),
-      transition('disabled => enabled', [animate('0.1s')]),
-    ]),
-  ],
 })
 export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() board: Board;
@@ -93,7 +74,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   @Input() sendMessage;
   @Input() joinedUsers;
   showUserName;
-  @Input() participantCode;
+  @Input() participantCode: number;
   @Input() eventType;
   @Input() isColumnsLayout;
   @Input() myGroup;
@@ -110,8 +91,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   @Output() ideaDetailedDialogOpened = new EventEmitter<any>();
   @Output() ideaDetailedDialogClosed = new EventEmitter<any>();
 
-  commentModel = '';
-  submittingUser = undefined;
   submitting_participant;
 
   deactivateHearting = false;
@@ -140,6 +119,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   localActivityState: UpdateMessage;
 
   @ViewChild('iframeContainer') iframeContainer: ElementRef;
+  @ViewChild('cardFeedback') cardFeedbackComponent: CardFeedbackComponent;
   hostAvatarSize: string;
   lessonRunCode;
   boardIds;
@@ -152,6 +132,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     private brainstormService: BrainstormService,
     private brainstormEventService: BrainstormEventService,
     private boardsNavigationService: BoardsNavigationService,
+    private brainstormPostService: BrainstormPostService,
     private deviceService: DeviceDetectorService,
     private _ngZone: NgZone,
     private ngxPermissionsService: NgxPermissionsService,
@@ -173,27 +154,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     });
 
     this.lessonRunCode = this.activityState?.lesson_run?.lessonrun_code;
-
-    if (this.item && this.item.submitting_participant) {
-      this.submittingUser = this.item.submitting_participant.participant_code;
-      this.commentKey = 'comment_' + this.item.id + this.submittingUser;
-    } else {
-      // it is host's idea
-      if (this.participantCode) {
-        // a participant is viewing it
-        this.commentKey = 'comment_' + this.item.id + 'host';
-      }
-    }
-
-    if (this.participantCode) {
-    } else {
-      this.commentKey = 'comment_' + this.item?.id + 'host';
-    }
-
-    const draftComment = this.brainstormService.getDraftComment(this.commentKey);
-    if (draftComment) {
-      this.commentModel = draftComment;
-    }
 
     this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
@@ -219,11 +179,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       this.videoAvailable = true;
       this.oldVideo = this.item.idea_video.id;
     }
-
-    // this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
-    //   // Add the comment to the card
-    //   // this.addComment();
-    // });
 
     if (this.board.post_size) {
       this.postSize = this.board.post_size;
@@ -273,47 +228,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
         // video did not exist and probably added now
         this.videoAvailable = true;
       }
-    } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-      this.addComment();
     } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
       this.postSize = this.board.post_size;
       this.hostAvatarSize = this.postSize === 'small' ? 'small' : 'medium';
     } else if (this.activityState.eventType !== EventTypes.notificationEvent) {
       this.localActivityState = this.activityState;
-    }
-  }
-
-  addComment() {
-    if (this.ideaDetailedDialogRef) {
-      this.ideaDetailedDialogRef.componentInstance.brainstormSubmitIdeaCommentEvent();
-    }
-    if (this.userSubmittedComment) {
-      let existingComment = '';
-      if (this.ideaDetailedDialogRef) {
-        existingComment = this.brainstormService.getDraftComment(this.commentKey);
-        existingComment = existingComment.trim();
-      } else {
-        existingComment = this.commentModel;
-        existingComment = existingComment.trim();
-      }
-      this.item.comments.forEach((c) => {
-        existingComment = existingComment.trim();
-        if (
-          c.comment === existingComment &&
-          (c.participant === this.participantCode || !this.participantCode) &&
-          !this.userSubmittedSuccesfully
-        ) {
-          // there is a comment by this participant in the comments that is identical to commentModal
-          // safe to assume the comment is submitted
-          this.userSubmittedSuccesfully = true;
-          this.userSubmittedComment = false;
-          this.removeDraftComment();
-
-          if (this.ideaDetailedDialogRef) {
-            this.ideaDetailedDialogRef.componentInstance.ideaCommentSuccessfullySubmitted();
-          }
-        }
-      });
     }
   }
 
@@ -374,88 +293,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
 
   getParticipantName(code: number) {
     return this.activitiesService.getParticipantName(this.localActivityState, code);
-  }
-
-  submitComment(ideaId, val) {
-    this.userSubmittedComment = true;
-    this.userSubmittedSuccesfully = false;
-    this.commentModel = val;
-    this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
-  }
-
-  removeDraftComment() {
-    this.commentModel = '';
-    this.brainstormService.removeDraftComment(this.commentKey);
-  }
-
-  onCommentFocus() {
-    this.classGrey = true;
-  }
-  onCommentBlur() {
-    this.classGrey = false;
-  }
-
-  commentTyped() {
-    this.viewChanged.emit();
-    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
-  }
-
-  removeComment(commentId, ideaId) {
-    this.sendMessage.emit(new BrainstormRemoveIdeaCommentEvent(commentId, ideaId));
-  }
-
-  canDeleteComment(participantCode) {
-    if (this.participantCode && this.participantCode === participantCode) {
-      return true;
-    }
-    return false;
-  }
-
-  hasParticipantHearted(item: Idea) {
-    let hearted = false;
-    item.hearts.forEach((element) => {
-      if (element.participant === this.participantCode) {
-        hearted = true;
-        this.deactivateHearting = false;
-      }
-      // If a trainer hearts an idea the heart object does not have
-      // a participant code.
-      if (element.participant === null && !this.participantCode) {
-        hearted = true;
-        this.deactivateHearting = false;
-      }
-    });
-    return hearted;
-  }
-
-  removeHeart(item, event) {
-    if (!this.board.allow_heart) {
-      return;
-    }
-    let hearted;
-    item.hearts.forEach((element) => {
-      if (element.participant === this.participantCode) {
-        hearted = element;
-      }
-      // If a trainer hearts an idea the heart object does not have
-      // a participant code.
-      if (element.participant === null && !this.participantCode) {
-        hearted = element;
-      }
-    });
-    if (hearted) {
-      this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
-    }
-    this.imgSrc = '/assets/img/cards/like.svg';
-  }
-
-  setHeart(idea: Idea) {
-    if (this.board.allow_heart) {
-      if (!this.deactivateHearting) {
-        this.deactivateHearting = true;
-        this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
-      }
-    }
   }
 
   mouseDownEvent(event) {
@@ -655,5 +492,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       return;
     }
     this.timeStamp = this.utilsService.calculateTimeStamp(this.item.time);
+  }
+
+  hasParticipantHearted(item: Idea): boolean {
+    const hearted = this.brainstormPostService.hasUserHearted(item, this.participantCode);
+    return hearted;
   }
 }

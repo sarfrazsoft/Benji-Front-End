@@ -1,0 +1,35 @@
+<div>
+  <div class="comment-reply">
+    <div class="textarea-wrapper">
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="2"
+        cdkAutosizeMaxRows="5000"
+        placeholder="Add a reply"
+        class="input-comment"
+        [(ngModel)]="commentModel"
+        (ngModelChange)="commentTyped()"
+        [ngClass]="{ active: commentModel.length }"
+        (keydown.enter)="addReply()">
+      </textarea>
+    </div>
+  </div>
+  <div>
+    <div 
+      benji-click-stop-propagation 
+      class="controls-container" 
+      fxLayout="row" 
+      fxLayoutAlign="end" 
+      fxLayoutGap="8px">
+      <button class="reply-controls bg-sky cancel" (click)="cancel()">
+        Cancel
+      </button>
+      <button
+        class="reply-controls bg-primary-color white-color start-resume-buttons"
+        (click)="addReply()">
+        Reply
+      </button>
+    </div>
+  </div>
+</div>

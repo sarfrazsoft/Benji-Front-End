@@ -60,9 +60,9 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   @Input() isHost: boolean;
   @Input() eventType;
   @Input() boardMode: BoardMode;
+  @Input() participantCode: number;
 
   showParticipantsGroupsDropdown = false;
-  @Input() participantCode;
 
   timer: Timer;
   act: BrainstormActivity;

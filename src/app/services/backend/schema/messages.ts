@@ -1191,6 +1191,40 @@ export class MarkNotificationsReadEvent extends ActivityEvent {
     this.extra_args = { notification_ids: ids };
   }
 }
+export class BrainstormSubmitReplyReviewCommentEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmitReplyReviewCommentEvent';
+  constructor(parentComment: number, comment: string) {
+    super();
+    this.extra_args = { parent_comment: parentComment, parent: null, comment: comment };
+  }
+}
+// parent_comment : Main comment of idea ‘id’ we have to pass here.
+// parent : when we want a comment on the reply comment parent ‘id’
+// is passed here for the commenting on the main comment its value
+// is null.
+
+export class BrainstormSubmitCommentHeartEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmitCommentHeartEvent';
+  constructor(parentComment: number, parent: number) {
+    super();
+    this.extra_args = { parent_comment: parentComment, parent: parent, heart: true };
+  }
+}
+
+export class BrainstormRemoveReplyReviewCommentEvent extends ActivityEvent {
+  event_name = 'BrainstormRemoveReplyReviewCommentEvent';
+  constructor(comment: number) {
+    super();
+    this.extra_args = { comment_id: comment };
+  }
+}
+export class BrainstormRemoveCommentHeartEvent extends ActivityEvent {
+  event_name = 'BrainstormRemoveCommentHeartEvent';
+  constructor(heart: number) {
+    super();
+    this.extra_args = { heart_id: heart };
+  }
+}
 
 export class GetUpdatedLessonDetailEvent extends ActivityEvent {
   event_name = 'GetUpdatedLessonDetailEvent';

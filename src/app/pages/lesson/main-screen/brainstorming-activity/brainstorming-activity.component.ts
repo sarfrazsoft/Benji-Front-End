@@ -63,7 +63,7 @@ export class MainScreenBrainstormingActivityComponent
   peakBackStage = null;
   showParticipantUI = false;
   showParticipantsGroupsDropdown = false;
-  participantCode;
+  participantCode: number;
   htmlData2 = `<div class="iframely-embed"><div class="iframely-responsive" style="height: 140px; padding-bottom: 0;"><a href="https://www.shutterstock.com/image-illustration/white-arrow-fall-down-on-background-1323403484" data-iframely-url="//cdn.iframe.ly/qYVUNqp?iframe=card-small"></a></div></div>`;
 
   constructor(

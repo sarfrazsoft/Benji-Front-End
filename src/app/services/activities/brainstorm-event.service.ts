@@ -4,7 +4,9 @@ import { Subject } from 'rxjs/internal/Subject';
 import { UpdateMessage } from '../backend/schema';
 import {
   BrainstormRemoveIdeaCommentResponse,
+  BrainstormRemoveIdeaHeartResponse,
   BrainstormSubmitIdeaCommentResponse,
+  BrainstormSubmitIdeaHeartResponse,
 } from '../backend/schema/event-responses';
 import { LessonRunNotification } from '../backend/schema/notification';
 
@@ -12,6 +14,22 @@ import { LessonRunNotification } from '../backend/schema/notification';
 export class BrainstormEventService {
   set ideaCommentEvent(l: BrainstormSubmitIdeaCommentResponse) {
     this.ideaCommentEvent$.next(l);
+  }
+
+  set ideaCommentReplyEvent(l: BrainstormSubmitIdeaCommentResponse) {
+    this.ideaCommentReplyEvent$.next(l);
+  }
+
+  set ideaCommentAddHeartEvent(l: BrainstormSubmitIdeaHeartResponse) {
+    this.ideaCommentAddHeartEvent$.next(l);
+  }
+
+  set ideaCommentRemoveHeartEvent(l: BrainstormRemoveIdeaHeartResponse) {
+    this.ideaCommentRemoveHeartEvent$.next(l);
+  }
+
+  set ideaRemoveCommentReplyEvent(l: BrainstormRemoveIdeaCommentResponse) {
+    this.ideaRemoveCommentReplyEvent$.next(l);
   }
 
   set ideaRemoveCommentEvent(l: BrainstormRemoveIdeaCommentResponse) {
@@ -45,7 +63,15 @@ export class BrainstormEventService {
 
   ideaCommentEvent$ = new Subject<BrainstormSubmitIdeaCommentResponse>();
 
+  ideaCommentReplyEvent$ = new Subject<BrainstormSubmitIdeaCommentResponse>();
+
+  ideaCommentAddHeartEvent$ = new Subject<BrainstormSubmitIdeaHeartResponse>();
+
+  ideaCommentRemoveHeartEvent$ = new Subject<BrainstormRemoveIdeaHeartResponse>();
+
   ideaRemoveCommentEvent$ = new Subject<BrainstormRemoveIdeaCommentResponse>();
+
+  ideaRemoveCommentReplyEvent$ = new Subject<BrainstormRemoveIdeaCommentResponse>();
 
   notifications$ = new BehaviorSubject<Array<LessonRunNotification>>(null);
 
