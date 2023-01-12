@@ -18,7 +18,6 @@ export class SignupComponent implements OnInit {
   @Input() joinSessionScreen: boolean;
   @Output() signInClicked = new EventEmitter();
   @Output() userSignedInSuccessfully = new EventEmitter();
-  @Output() guestJoinClicked = new EventEmitter();
   form: FormGroup;
   isSignupClicked = false;
   isSubmitted = false;
@@ -242,7 +241,4 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  guestJoinClick() {
-    this.guestJoinClicked.emit();
-  }
 }

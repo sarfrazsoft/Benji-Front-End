@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { asyncScheduler, Subject } from 'rxjs';
+import { throttleTime } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services';
 import {
@@ -35,6 +37,7 @@ export class BoardBackgroundComponent implements OnInit {
   blurImage: boolean;
   bgImgUpload: string;
   hostname = environment.web_protocol + '://' + environment.host;
+  subject;
 
   constructor(
     private boardBackgroundService: BoardBackgroundService,
@@ -51,6 +54,25 @@ export class BoardBackgroundComponent implements OnInit {
         this.setBgValues(board);
       }
     });
+
+    this.subject = new Subject(); // a subject to notify
+    const colorObservable = this.subject.asObservable();
+    colorObservable.pipe(throttleTime(1500, asyncScheduler, {
+      leading: false,
+      trailing: true
+    }))
+      .subscribe(value => {
+        if (value) {
+          this.sendMessage.emit(
+            new BrainstormBoardBackgroudEvent(
+              this.selectedBoard?.id,
+              this.bgImgUpload,
+              this.bgImgUrl,
+              this.bgColor
+            )
+          );
+        }
+      });
   }
 
   setBgValues(board: Board) {
@@ -76,14 +98,7 @@ export class BoardBackgroundComponent implements OnInit {
     this.bgColor = color;
     if (this.bgType === 'color') {
       this.boardBackgroundService.boardBackgroundColor = color;
-      this.sendMessage.emit(
-        new BrainstormBoardBackgroudEvent(
-          this.selectedBoard.id,
-          this.bgImgUpload,
-          this.bgImgUrl,
-          this.bgColor
-        )
-      );
+      this.subject.next(color);
     }
   }
 

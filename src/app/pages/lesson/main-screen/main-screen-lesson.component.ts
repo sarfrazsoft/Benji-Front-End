@@ -124,7 +124,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
     const participantObservable$ = defer(() => this.permissionsService.hasPermission('PARTICIPANT'));
     const combined = combineLatest([participantObservable$, this.contextService.boardsCount$]);
     combined.subscribe((val: Array<boolean | number>) => {
-      if (val[0] && val[1] > 1) {
+      if (val[0] && val[1] > 1 && !this.deviceDetectorService.isMobile) {
         this.toggleBoardsMenu();
       }
     });

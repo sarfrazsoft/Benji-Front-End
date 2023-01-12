@@ -58,9 +58,9 @@ export class TopicMediaComponent implements OnInit {
 
   getTopicMedia(val: TopicMedia) {
     if (val.uploadcare) {
+      this.hasMedia = true;
       this.uploadingTopicMedia = false;
       if (Object.keys(val.uploadcare).length) {
-        this.hasMedia = true;
         if (val.uploadcare.isImage) {
           this.hasImage = true;
           this.imageSrc = val.uploadcare.cdnUrl;
@@ -99,6 +99,7 @@ export class TopicMediaComponent implements OnInit {
         image_path: null
       }
     }
+    this.hasMedia = true;
     this.topicMedia.unsplash = null;
     this.uploadingTopicMedia = false;
     this.uploadedTopicMedia = true;
