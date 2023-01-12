@@ -126,7 +126,7 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
           console.log(changedCategory);
         });
       } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
-        this.columnSize = this.board.post_size;
+        this.updateColumnSize(this.board);
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
         this.brainstormService.ideaCommented(this.board, this.columns, () => {
           // this.refreshMasonryLayout();
@@ -167,6 +167,7 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
           if ($event.board.currentValue.id === $event.board.previousValue.id) {
           } else {
             this.columns = this.brainstormService.populateCategories(this.board, this.columns);
+            this.updateColumnSize(this.board);
           }
         }
       } else if (
@@ -232,6 +233,10 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
         }
       }
     }
+  }
+
+  updateColumnSize(board: Board) {
+    this.columnSize = board.post_size;
   }
 
   sortAndResetMasonry() {}
