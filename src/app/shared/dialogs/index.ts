@@ -17,6 +17,7 @@ export * from './participant-grouping-info-dialog/participant-grouping-info.dial
 export * from './session-settings-dialog/session-settings.dialog';
 export * from './new-folder-dialog/new-folder.dialog';
 export * from './move-to-folder-dialog/move-to-folder.dialog';
+export * from './pro-plan/pro-plan.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
@@ -43,6 +44,7 @@ import { ShareSpaceDialogComponent } from './share-space-dialog/share-space.dial
 import { TemplatesDialogComponent } from './templates-dialog/templates.dialog';
 import { NewFolderDialogComponent } from './new-folder-dialog/new-folder.dialog';
 import { MoveToFolderDialogComponent } from './move-to-folder-dialog/move-to-folder.dialog';
+import { ProPlanDialogComponent } from './pro-plan/pro-plan.dialog';
 
 export const Dialogs = [
   AddVideoDialogComponent,
@@ -61,6 +63,7 @@ export const Dialogs = [
   LaunchSessionDialogComponent,
   LessonSettingsDialogComponent,
   MCQFeedbackDialogComponent,
+  ProPlanDialogComponent,
   TemplatesDialogComponent,
   IdeaCreationDialogComponent,
   GroupingToolDialogComponent,

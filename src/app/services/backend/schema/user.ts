@@ -1,3 +1,5 @@
+import { UserInvitation } from "./auth";
+
 export interface User {
   id: number;
   username: string;
@@ -36,6 +38,19 @@ export interface TeamUser {
   branding: Branding;
   preferred_host_theme: any;
   preferred_host_theme_label: any;
+  user_subscription: UserSubscription;
+}
+
+export interface UserSubscription {
+  id: number;
+  features: string;
+  stripe_details: any;
+  is_active: boolean;
+  subscription_id: string;
+  started_at: string;
+  expire_at: string;
+  in_trial: boolean;
+  user: number;
 }
 
 export interface Team {
