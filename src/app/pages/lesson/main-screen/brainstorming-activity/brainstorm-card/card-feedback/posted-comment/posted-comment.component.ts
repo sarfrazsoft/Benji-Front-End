@@ -13,7 +13,7 @@ import {
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { remove } from 'lodash';
+import { find, remove } from 'lodash';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import {
@@ -103,6 +103,20 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
     } else {
       // it is host's idea
     }
+
+    this.brainstormEventService.ideaCommentReplyEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
+      if (this.comment.id === v.parent_comment) {
+        const newComment = find(this.comment.reply_comments, { id: v.id });
+        if (!newComment) {
+          this.comment.reply_comments.push({
+            id: v.id,
+            comment: v.comment,
+            comment_hearts: [],
+            participant: v.participant,
+          });
+        }
+      }
+    });
 
     this.brainstormEventService.ideaRemoveCommentReplyEvent$.subscribe(
       (v: BrainstormRemoveIdeaCommentResponse) => {
@@ -201,7 +215,7 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
     return false;
   }
 
-  hasParticipantHeartedComment(comment: IdeaComment): boolean {
+  hasUserHeartedComment(comment: IdeaComment): boolean {
     const commentHearted = this.brainstormPostService.hasUserHeartedComment(comment, this.participantCode);
     return commentHearted;
   }
@@ -228,7 +242,7 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   likeClicked(comment: IdeaComment): void {
-    if (this.hasParticipantHeartedComment(comment)) {
+    if (this.hasUserHeartedComment(comment)) {
       this.removeCommentHeart(comment);
     } else {
       this.setCommentHeart(comment);

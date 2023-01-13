@@ -1,5 +1,5 @@
 
-<div class="user-feed" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start">
+<div class="user-feed" fxLayout="row" fxLayoutGap="4px" fxLayoutAlign="start start">
   <div class="initials {{ 'color' + (commentIndex % 10) }}" fxLayout="column" fxLayoutAlign="center center">
     <div>
       <benji-profile-pictures
@@ -43,7 +43,8 @@
       <!-- Like -->
       <div
         fxLayout="row"
-        fxLayoutGap="8px">
+        fxLayoutGap="8px"
+        fxLayoutAlign="">
         <div 
           class="like"
           benji-click-stop-propagation
@@ -51,21 +52,23 @@
           Like
         </div>
         <div
-          *ngIf="comment.comment_hearts.length" 
+          *ngIf="hasUserHeartedComment(comment)" 
           class="likes-count"
           fxLayout="row"
           fxLayoutAlign="start center"
           fxLayoutGap="2px">
           <img src="/assets/img/cards/liked.svg">
-          <span class="count">{{ comment.comment_hearts.length }}</span>
         </div>
         <div
-          *ngIf="!comment.comment_hearts.length" 
+          *ngIf="!hasUserHeartedComment(comment)" 
           class="likes-count"
           fxLayout="row"
           fxLayoutAlign="start center"
           fxLayoutGap="2px">
           <img src="/assets/img/cards/like.svg">
+        </div>
+        <div class="count">
+          {{ comment.comment_hearts.length }}
         </div>
       </div>
       <div class="separater"></div>
