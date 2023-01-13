@@ -31,6 +31,7 @@ import {
   BrainstormChangeModeResponse,
   BrainstormCreateCategoryResponse,
   BrainstormEditResponse,
+  BrainstormRearrangeBoardResponse,
   BrainstormRemoveBoardResponse,
   BrainstormRemoveCategoryResponse,
   BrainstormRemoveCommentHeartResponse,
@@ -452,7 +453,17 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
-      // } else if (msg.eventtype === EventTypes.brainstormRearrangeBoardEvent) {
+    } else if (msg.eventtype === EventTypes.brainstormRearrangeBoardEvent) {
+      this.contextService.brainstormRearrangeBoard(
+        msg.event_msg as BrainstormRearrangeBoardResponse,
+        this.oldServerMessage
+      );
+
+      this.serverMessage = {
+        ...this.oldServerMessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
       // } else if (msg.eventtype === EventTypes.brainstormMoveIdeaBoardEvent) {
       // } else if (msg.eventtype === EventTypes.moveBrainstormIdeaEvent) {
     } else if (msg.eventtype === EventTypes.brainstormSubmitReplyReviewCommentEvent) {

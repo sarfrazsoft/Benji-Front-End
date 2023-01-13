@@ -43,6 +43,7 @@ import {
   BrainstormChangeBoardStatusResponse,
   BrainstormChangeModeResponse,
   BrainstormCreateCategoryResponse,
+  BrainstormRearrangeBoardResponse,
   BrainstormRemoveBoardResponse,
   BrainstormRemoveCategoryResponse,
   BrainstormRemoveIdeaCommentResponse,
@@ -124,7 +125,6 @@ export type EventResponseTypes =
   | ParticipantChangeBoardResponse
   | HostChangeBoardEventResponse
   | BrainstormToggleParticipantNameResponse
-  | BrainstormRemoveIdeaCommentResponse
   | BrainstormBoardSortOrderResponse
   | BrainstormChangeBoardStatusResponse
   | BrainstormToggleAllowCommentResponse
@@ -148,9 +148,8 @@ export type EventResponseTypes =
   | ChangeBoardBackgroundTypeResponse
   | ToggleBlurBackgroundImageResponse
   | BrainstormSubmitIdeaCommentResponse
-  | BrainstormSubmitIdeaCommentResponse
   | BrainstormRemoveIdeaCommentResponse
-  | BrainstormRemoveIdeaCommentResponse
+  | BrainstormRearrangeBoardResponse
   | BrainstormSetCategoryResponse;
 
 export interface ServerMessage {

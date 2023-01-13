@@ -12,6 +12,7 @@ import {
   BrainstormChangeModeResponse,
   BrainstormCreateCategoryResponse,
   BrainstormEditResponse,
+  BrainstormRearrangeBoardResponse,
   BrainstormRemoveBoardResponse,
   BrainstormRemoveCategoryResponse,
   BrainstormRemoveCommentHeartResponse,
@@ -768,7 +769,6 @@ export class ContextService {
       res.board_id,
       oldActivityState.brainstormactivity.boards
     );
-    console.log(res);
 
     // liking a comment
     // brainstormidea_id: 6106
@@ -886,6 +886,17 @@ export class ContextService {
       if (board.brainstormcategory_set[j].id === res.category) {
         categoryIdeas.push(idea);
       }
+    }
+  }
+
+  brainstormRearrangeBoard(res: BrainstormRearrangeBoardResponse, oldActivityState: UpdateMessage) {
+    const board = this.boardsNavigationService.getBoard(
+      res.board_id,
+      oldActivityState.brainstormactivity.boards
+    );
+    if (board) {
+      board.next_board = res.next_board;
+      board.previous_board = res.previous_board;
     }
   }
 }
