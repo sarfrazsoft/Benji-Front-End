@@ -205,7 +205,7 @@
       >
         <div fxLayout="row" fxLayoutAlign="start center" *ngIf="areHeartsAllowed()">
           <img
-            *ngIf="!hasParticipantHearted(item) && !deactivateHearting"
+            *ngIf="!hasParticipantHearted(item)"
             benji-click-stop-propagation
             (click)="setHeart(item)"
             class="heart"
@@ -214,7 +214,7 @@
             (mouseover)="imgSrc = '/assets/img/cards/liking.svg'"
           />
           <img
-            *ngIf="hasParticipantHearted(item) || deactivateHearting"
+            *ngIf="hasParticipantHearted(item)"
             benji-click-stop-propagation
             (click)="removeHeart(item)"
             class="heart"

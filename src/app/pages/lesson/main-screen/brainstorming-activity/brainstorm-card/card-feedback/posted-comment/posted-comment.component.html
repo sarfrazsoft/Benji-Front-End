@@ -12,8 +12,7 @@
   </div>
   <div 
     class="comments" 
-    fxLayout="column" 
-    fxLayoutGap="4px">
+    fxLayout="column">
     <div class="comment" fxLayout="row">
       <div class="grey-bg" fxLayout="column" fxLayoutAlign="start start">
         <div
@@ -43,35 +42,34 @@
       <!-- Like -->
       <div
         fxLayout="row"
-        fxLayoutGap="8px"
-        fxLayoutAlign="">
+        fxLayoutGap="4px"
+        fxLayoutAlign="start center">
         <div 
           class="like"
           benji-click-stop-propagation
           (click)="likeClicked(comment)">
           Like
         </div>
-        <div
-          *ngIf="hasUserHeartedComment(comment)" 
-          class="likes-count"
-          fxLayout="row"
+        <div 
+          fxLayout="row" 
           fxLayoutAlign="start center"
           fxLayoutGap="2px">
-          <img src="/assets/img/cards/liked.svg">
-        </div>
-        <div
-          *ngIf="!hasUserHeartedComment(comment)" 
-          class="likes-count"
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxLayoutGap="2px">
-          <img src="/assets/img/cards/like.svg">
-        </div>
-        <div class="count">
-          {{ comment.comment_hearts.length }}
+          <div
+            *ngIf="hasUserHeartedComment(comment)" 
+            class="likes-count">
+            <img src="/assets/img/cards/liked.svg">
+          </div>
+          <div
+            *ngIf="!hasUserHeartedComment(comment)" 
+            class="likes-count">
+            <img src="/assets/img/cards/like.svg">
+          </div>
+          <div class="count">
+            {{ comment.comment_hearts.length }}
+          </div>
         </div>
       </div>
-      <div class="separater"></div>
+      <!-- <div class="separater"></div> -->
       <!-- Reply -->
       <div
         *ngIf="allowReply"
@@ -80,7 +78,7 @@
         Reply
       </div>
     </div>
-    <div class="child-comments">
+    <div class="child-comments" *ngIf="comment.reply_comments.length">
       <ng-container *ngFor="let childComment of comment.reply_comments">
         <benji-posted-comment
           [comment]="childComment"

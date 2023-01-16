@@ -147,16 +147,22 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
 
         // child
         if (v.parent && v.parent_comment && this.comment.id === v.parent) {
-          this.comment.comment_hearts.push({
-            id: v.id,
-            participant: v.participant,
-          });
+          const newHeart = find(this.comment.comment_hearts, { id: v.id });
+          if (!newHeart) {
+            this.comment.comment_hearts.push({
+              id: v.id,
+              participant: v.participant,
+            });
+          }
         } else if (!v.parent && this.comment.id === v.parent_comment) {
           // root comment
-          this.comment.comment_hearts.push({
-            id: v.id,
-            participant: v.participant,
-          });
+          const newHeart = find(this.comment.comment_hearts, { id: v.id });
+          if (!newHeart) {
+            this.comment.comment_hearts.push({
+              id: v.id,
+              participant: v.participant,
+            });
+          }
         }
       }
     );
@@ -253,6 +259,7 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
     if (this.allowReply) {
       this.sendMessage.emit(new BrainstormSubmitCommentHeartEvent(comment.id, null));
     } else {
+      console.log(comment.parent_comment);
       // this is a reply comment
       // we also need to pass rootComment
       this.sendMessage.emit(new BrainstormSubmitCommentHeartEvent(comment.parent_comment, comment.id));

@@ -7,6 +7,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  ViewChildren,
 } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BrainstormService } from 'src/app/services/activities';
@@ -26,6 +27,8 @@ export class CommentReplyComponent implements OnInit, OnChanges, AfterViewInit, 
   @Input() item: Idea;
   @Input() participantCode;
   @Input() comment: IdeaComment;
+
+  @ViewChildren('input') vc;
 
   @Output() sendMessage = new EventEmitter<any>();
   @Output() viewChanged = new EventEmitter<any>();
@@ -55,7 +58,9 @@ export class CommentReplyComponent implements OnInit, OnChanges, AfterViewInit, 
 
   ngOnDestroy() {}
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.vc.first.nativeElement.focus();
+  }
 
   ngOnChanges() {}
 

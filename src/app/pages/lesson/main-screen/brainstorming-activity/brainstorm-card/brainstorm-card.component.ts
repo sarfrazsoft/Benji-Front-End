@@ -93,7 +93,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
 
   submitting_participant;
 
-  deactivateHearting = false;
   classGrey: boolean;
   classWhite: boolean;
   commentKey: string;
@@ -352,7 +351,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
         this.sendMessage.emit(new HostChangeBoardEvent($event));
       }
     });
-    console.log('navigate to board actually');
   }
 
   ideaCardClicked($event) {
@@ -497,5 +495,31 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   hasParticipantHearted(item: Idea): boolean {
     const hearted = this.brainstormPostService.hasUserHearted(item, this.participantCode);
     return hearted;
+  }
+  removeHeart(item, event) {
+    if (!this.board.allow_heart) {
+      return;
+    }
+    let hearted;
+    item.hearts.forEach((element) => {
+      if (element.participant === this.participantCode) {
+        hearted = element;
+      }
+      // If a trainer hearts an idea the heart object does not have
+      // a participant code.
+      if (element.participant === null && !this.participantCode) {
+        hearted = element;
+      }
+    });
+    if (hearted) {
+      this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
+    }
+    this.imgSrc = '/assets/img/cards/like.svg';
+  }
+
+  setHeart(idea: Idea) {
+    if (this.board.allow_heart) {
+      this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
+    }
   }
 }

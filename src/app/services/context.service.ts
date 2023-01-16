@@ -754,6 +754,7 @@ export class ContextService {
             id: res.id,
             comment: res.comment,
             comment_hearts: [],
+            parent_comment: res.parent_comment,
             participant: res.participant,
           });
         }
