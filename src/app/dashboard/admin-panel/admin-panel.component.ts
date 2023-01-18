@@ -149,7 +149,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   }
 
   openCreateSession() {
-    if (this.lessonRuns.length > 3 && !this.userSubscription?.is_active) {
+    if (this.lessonRuns.length >= 3 && !this.userSubscription?.is_active) {
       this.openProPlanDialog();
     } else {
       this.dialog
