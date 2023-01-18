@@ -74,10 +74,15 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   }
 
   setUpNavigationButtons() {
-    setTimeout(() => {
-      this._isNextNavigableBoardAvailable = this.isNextNavigableBoardAvailable() ? true : false;
-      this._isPreviousNavigableBoardAvailable = this.isPreviousNavigableBoardAvailable() ? true : false;
-    }, 0);
+    if (this.activityState?.brainstormactivity?.meeting_mode && this.participantCode) {
+      this._isNextNavigableBoardAvailable = false;
+      this._isPreviousNavigableBoardAvailable = false;
+    } else {
+      setTimeout(() => {
+        this._isNextNavigableBoardAvailable = this.isNextNavigableBoardAvailable() ? true : false;
+        this._isPreviousNavigableBoardAvailable = this.isPreviousNavigableBoardAvailable() ? true : false;
+      }, 0);
+    }
   }
 
   propagate($event) {
@@ -106,6 +111,9 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   }
 
   changeBoard(move: 'next' | 'previous') {
+    if (this.activityState?.brainstormactivity?.meeting_mode && this.participantCode) {
+      return;
+    }
     const currentBoard = this.getCurrentBoard();
     if (move === 'next') {
       if (currentBoard?.next_board) {
