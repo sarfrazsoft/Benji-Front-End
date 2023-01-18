@@ -65,7 +65,7 @@
             <img src="/assets/img/cards/like.svg">
           </div>
           <div class="count">
-            {{ comment.comment_hearts.length }}
+            {{ comment.comment_hearts?.length }}
           </div>
         </div>
       </div>
@@ -78,7 +78,9 @@
         Reply
       </div>
     </div>
-    <div class="child-comments" *ngIf="comment.reply_comments.length">
+    <div 
+      class="child-comments" 
+      *ngIf="comment.reply_comments && comment.reply_comments.length">
       <ng-container *ngFor="let childComment of comment.reply_comments">
         <benji-posted-comment
           [comment]="childComment"
