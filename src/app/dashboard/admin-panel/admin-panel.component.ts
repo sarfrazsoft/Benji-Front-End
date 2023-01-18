@@ -209,6 +209,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   }
 
   setLessonRuns(lesRuns: Array<any>) {
+    this.lessonRuns = lesRuns;
     this.activatedRoute.data.forEach((data: any) => {
       // To exclude template lessons
       this.lessons = data.dashData.lessons.filter((lesson) => lesson.public_permission !== 'duplicate');

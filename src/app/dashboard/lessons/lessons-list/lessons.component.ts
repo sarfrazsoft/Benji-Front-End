@@ -6,7 +6,7 @@ import { orderBy } from 'lodash';
 import { Subject } from 'rxjs';
 import * as global from 'src/app/globals';
 import { ContextService } from 'src/app/services';
-import { LessonInformation, NotificationTypes } from 'src/app/services/backend/schema';
+import { LessonInformation, NotificationTypes, UserSubscription } from 'src/app/services/backend/schema';
 import { Lesson, SessionInformation } from 'src/app/services/backend/schema/course_details';
 import { Folder, LessonGroupService, MoveToFolderData } from 'src/app/services/lesson-group.service';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -30,9 +30,12 @@ export class LessonsComponent implements OnInit {
   @Input() layout;
   @Output() openCreateSession = new EventEmitter();
   @Output() setLessonRuns = new EventEmitter();
+  @Output() openProPlanDialog = new EventEmitter();
+
   eventsSubject: Subject<void> = new Subject<void>();
   folderLessonsIDs: Array<number> = [];
   notificationTypes = NotificationTypes;
+  userSubscription: UserSubscription;
 
   edit(lesson, $event) {
     if (!this.isTemplates) {
@@ -56,6 +59,7 @@ export class LessonsComponent implements OnInit {
     if (this.lessons.length) {
       this.lessons = orderBy(this.lessons, (lesson) => new Date(lesson.last_edited), 'desc');
     }
+    this.userSubscription = this.contextService.user.user_subscription;
   }
 
   openDetails(lesson: Lesson) {
@@ -78,8 +82,10 @@ export class LessonsComponent implements OnInit {
         this.resetSelectedFolder();
       }
       if (notify === this.notificationTypes.DELETE) {
+        this.setLessonRuns.emit(this.lessonRuns);
         this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
       } else if (notify === this.notificationTypes.DUPLICATE) {
+        this.setLessonRuns.emit(this.lessonRuns);
         this.utilsService.openSuccessNotification(`Session successfully duplicated.`, `close`);
       }
     });
@@ -117,27 +123,31 @@ export class LessonsComponent implements OnInit {
   }
 
   duplicateSession(val: LessonInformation) {
-    const dialogRef = this.matDialog
-      .open(DuplicateSessionDialogComponent, {
-        disableClose: true,
-        panelClass: 'confirmation-dialog',
-      })
-      .afterClosed()
-      .subscribe((res) => {
-        if (res[0] || res[1]) {
-          let duplicateBoardIdeas: Boolean;
-          res[1] ? (duplicateBoardIdeas = true) : (duplicateBoardIdeas = false);
-          const request = global.apiRoot + '/course_details/lesson/' + val.lessonId + '/duplicate-session/';
-          this.http.post(request, {}).subscribe((response: SessionInformation) => {
-            if (response) {
-              this.duplicateSessionBoards(val.lessonId, response.id, duplicateBoardIdeas);
-              this.getAllLessonRuns(response.lesson);
-            } else {
-              this.utilsService.openWarningNotification('Something went wrong.', '');
-            }
-          });
-        }
-      });
+    if (this.lessonRuns.length >= 3 && !this.userSubscription?.is_active) {
+      this.openProPlanDialog.emit();
+    } else {
+      const dialogRef = this.matDialog
+        .open(DuplicateSessionDialogComponent, {
+          disableClose: true,
+          panelClass: 'confirmation-dialog',
+        })
+        .afterClosed()
+        .subscribe((res) => {
+          if (res[0] || res[1]) {
+            let duplicateBoardIdeas: Boolean;
+            res[1] ? (duplicateBoardIdeas = true) : (duplicateBoardIdeas = false);
+            const request = global.apiRoot + '/course_details/lesson/' + val.lessonId + '/duplicate-session/';
+            this.http.post(request, {}).subscribe((response: SessionInformation) => {
+              if (response) {
+                this.duplicateSessionBoards(val.lessonId, response.id, duplicateBoardIdeas);
+                this.getAllLessonRuns(response.lesson);
+              } else {
+                this.utilsService.openWarningNotification('Something went wrong.', '');
+              }
+            });
+          }
+        });
+    }
   }
 
   getAllLessonRuns(lessonId: number) {

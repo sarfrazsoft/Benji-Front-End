@@ -8,7 +8,7 @@
     (deleteSessionEvent)="deleteSession($event)"
   ></benji-lesson-list>
 </div>
-<div  *ngIf="layout == 'tilesLayout'" class="lessons-tiles">
+<div *ngIf="layout == 'tilesLayout'" class="lessons-tiles">
   <div class="courses" fxLayoutGap="16px" fxLayout="row wrap">
     <div *ngFor="let lesson of lessonRuns">
       <benji-lesson-tile
@@ -17,11 +17,12 @@
         (duplicateSessionEvent)="duplicateSession($event)"
         (moveToFoldersEvent)="moveToFolders($event)"
         (deleteSessionEvent)="deleteSession($event)"
-        ></benji-lesson-tile>
+        (openProPlanDialog)="openProPlanDialog()"
+      ></benji-lesson-tile>
     </div>
     <div (click)="openCreateSessionDialog()" class="new-space" fxLayout="row" fxLayoutAlign="center center">
       <div class="add-new noselect" fxLayout="row" fxLayoutGap="8px">
-        <img class="icon" src="assets/img/dashboard/new-space.svg" alt="">
+        <img class="icon" src="assets/img/dashboard/new-space.svg" alt="" />
         <div class="text">New Space</div>
       </div>
     </div>
