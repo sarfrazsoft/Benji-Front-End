@@ -307,7 +307,7 @@ export class ContextService {
     participantCode: number
   ) {
     forOwn(oldActivityState.brainstormactivity.participants, function (value, key) {
-      remove(value, (code) => code === participantCode);
+      remove(value, (code) => code === participantBoard.participant_code);
       if (key === participantBoard.board_id.toString()) {
         value.push(participantCode);
       }
