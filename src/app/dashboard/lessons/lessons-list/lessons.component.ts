@@ -123,6 +123,9 @@ export class LessonsComponent implements OnInit {
   }
 
   duplicateSession(val: LessonInformation) {
+    console.log(this.lessonRuns.length);
+    console.log(!this.userSubscription?.is_active);
+    console.log(this.lessonRuns.length >= 3 && !this.userSubscription?.is_active);
     if (this.lessonRuns.length >= 3 && !this.userSubscription?.is_active) {
       this.openProPlanDialog.emit();
     } else {
