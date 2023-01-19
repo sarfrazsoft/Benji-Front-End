@@ -19,7 +19,7 @@ export class ActivitiesService {
       name = name + ' ' + host.last_name;
     }
 
-    activityState.lesson_run.participant_set.forEach((p) => {
+    activityState.lesson_run?.participant_set.forEach((p) => {
       if (p.participant_code === code) {
         name = p.display_name;
       }

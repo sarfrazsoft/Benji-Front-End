@@ -16,12 +16,11 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
 
   remainingCount = 0;
   displayCodes: [];
-  _activityState: UpdateMessage;
 
   constructor(private activitiesService: ActivitiesService) {}
 
   ngOnInit(): void {
-    this._activityState = this.activityState;
+    // this.activityState = this.activityState;
   }
 
   ngOnChanges(): void {
@@ -32,20 +31,20 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
       this.remainingCount = 0;
     }
 
-    if (this.activityState && this.activityState.eventType === EventTypes.joinEvent) {
-      // only update activity state when join event occurs
-      this._activityState = this.activityState;
-    }
+    // if (this.activityState && this.activityState.eventType === EventTypes.joinEvent) {
+    // only update activity state when join event occurs
+    // this._activityState = this.activityState;
+    // }
   }
 
   getName(code: number) {
-    return this.activitiesService.getParticipantName(this._activityState, code);
+    return this.activitiesService.getParticipantName(this.activityState, code);
   }
 
   getInitials(code: number) {
     let nameString = '';
 
-    nameString = this.activitiesService.getParticipantName(this._activityState, code);
+    nameString = this.activitiesService.getParticipantName(this.activityState, code);
 
     const fullName = this.name ? this.name.split(' ') : nameString.split(' ');
     const first = fullName[0] ? fullName[0].charAt(0) : '';
