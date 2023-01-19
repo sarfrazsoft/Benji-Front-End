@@ -20,6 +20,8 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
   constructor(private activitiesService: ActivitiesService) {}
 
   ngOnInit(): void {
+    console.log('line 23 benji profile pictures');
+    console.log(this.participantCodes);
     // this.activityState = this.activityState;
   }
 
@@ -38,7 +40,10 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
   }
 
   getName(code: number) {
-    return this.activitiesService.getParticipantName(this.activityState, code);
+    const name = this.activitiesService.getParticipantName(this.activityState, code);
+    console.log('line 43 benji profile pictures');
+    console.log(name);
+    return name;
   }
 
   getInitials(code: number) {
@@ -52,6 +57,8 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
       return first.toUpperCase();
     }
     const second = fullName[fullName.length - 1] ? fullName[fullName.length - 1].charAt(0) : '';
+    console.log('line 58 benji profile pictures');
+    console.log((first + second).toUpperCase());
     return (first + second).toUpperCase();
   }
 
