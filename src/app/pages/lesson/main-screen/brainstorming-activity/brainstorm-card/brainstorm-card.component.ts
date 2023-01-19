@@ -92,7 +92,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   @Output() ideaDetailedDialogClosed = new EventEmitter<any>();
 
   submitting_participant;
-
+  submittingUser = undefined;
   classGrey: boolean;
   classWhite: boolean;
   commentKey: string;
@@ -153,6 +153,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     });
 
     this.lessonRunCode = this.activityState?.lesson_run?.lessonrun_code;
+
+    if (this.item && this.item.submitting_participant) {
+      this.submittingUser = this.item.submitting_participant.participant_code;
+    }
 
     this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {

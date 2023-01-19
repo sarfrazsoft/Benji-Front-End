@@ -442,14 +442,16 @@ export class ContextService {
               id: res.idea_document?.id,
             };
 
+            const name = find(
+              oldActivityState?.lesson_run?.participant_set,
+              (p) => p.participant_code === res.participant
+            )?.display_name;
+
             const idea: Idea = {
               ...res,
               submitting_participant: {
                 participant_code: res.participant,
-                display_name: find(
-                  oldActivityState?.lesson_run?.participant_set,
-                  (p) => p.participant_code === res.participant
-                )?.display_name,
+                display_name: name,
               },
               pinned: false,
               comments: [],
