@@ -522,4 +522,18 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
     }
   }
+
+  getItemCommentsLength(item: Idea) {
+    let count = 0;
+    if (item.comments.length) {
+      count = item.comments.length;
+      for (let i = 0; i < item.comments.length; i++) {
+        const comment = item.comments[i];
+        if (comment.reply_comments && comment.reply_comments.length) {
+          count = count + comment.reply_comments.length;
+        }
+      }
+    }
+    return count;
+  }
 }

@@ -224,7 +224,7 @@
         </div>
         <div fxLayoutAlign="start center" *ngIf="areCommentsAllowed()">
           <img class="thought" src="/assets/img/cards/comments.svg" />
-          <span>{{ item.comments.length ? item.comments.length : '0' }}</span>
+          <span>{{ getItemCommentsLength(item) }}</span>
         </div>
       </div>
       <ng-container *ngIf="areCommentsAllowed()">

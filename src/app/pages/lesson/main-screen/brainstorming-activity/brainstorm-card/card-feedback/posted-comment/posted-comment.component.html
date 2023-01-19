@@ -72,30 +72,36 @@
       <!-- <div class="separater"></div> -->
       <!-- Reply -->
       <div
-        *ngIf="allowReply"
+        *ngIf="canReply()"
         class="reply" 
         (click)="addReplyToCommentUI(comment)">
         Reply
       </div>
     </div>
     <div 
-      class="child-comments" 
+      class="child-comments"
+      fxLayout="column"
+      fxLayoutGap="8px"
       *ngIf="comment.reply_comments && comment.reply_comments.length">
-      <ng-container *ngFor="let childComment of comment.reply_comments">
-        <benji-posted-comment
-          [comment]="childComment"
-          [item]="item"
-          [board]="board"
-          [isAdmin]="isAdmin"
-          [participantCode]="participantCode"
-          [activityState]="activityState"
-          [allowReply]="false"
-          [avatarSize]="avatarSize"
-          (sendMessage)="sendMessage.emit($event)">
-        </benji-posted-comment>
+      <ng-container *ngFor="let childComment of comment.reply_comments; let last = last">
+        <div class="child-comment">
+          <benji-posted-comment
+            [comment]="childComment"
+            [item]="item"
+            [board]="board"
+            [isAdmin]="isAdmin"
+            [participantCode]="participantCode"
+            [activityState]="activityState"
+            [allowReply]="false"
+            [isLast]="last"
+            [avatarSize]="avatarSize"
+            (sendMessage)="sendMessage.emit($event)"
+            (addingReply)="addReplyToCommentUI2()">
+          </benji-posted-comment>
+        </div>
       </ng-container>
     </div>
-    <div *ngIf="comment['addingReply']">
+    <div class="comment-reply-wrapper" *ngIf="comment['addingReply']">
       <benji-comment-reply
         [comment]="comment"
         (viewChanged)="viewChanged.emit()"

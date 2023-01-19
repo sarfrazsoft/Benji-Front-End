@@ -754,6 +754,7 @@ benji-categorized-ideas {
     span {
       color: #bdbdbd;
     }
+
     .user-feed {
       position: relative;
       overflow: hidden;
@@ -795,40 +796,41 @@ benji-categorized-ideas {
           }
         }
         .child-comments {
-          margin-top: 6px;
-          margin-bottom: 8px;
+          margin-top: 8px;
         }
-        .comment-reply {
-          margin-bottom: 12px;
-          .textarea-wrapper {
-            border: 1px solid #E7E7E7;
-            border-radius: 8px;
-            padding: 8px 12px;
-            transition: 0.2s;
-            &:focus-within {
-              border-color: #555BEA;
-            }
-            textarea {
-              padding: 0px;
-              border: 0px;
-              outline: none !important;
-              width: 100%;
-              overflow: hidden;
-              font-size: 12px;
-              &:focus {
+        .comment-reply-wrapper {
+          margin-top: 8px;
+          .comment-reply {
+            .textarea-wrapper {
+              border: 1px solid #E7E7E7;
+              border-radius: 8px;
+              padding: 8px 12px;
+              transition: 0.2s;
+              &:focus-within {
+                border-color: #555BEA;
+              }
+              textarea {
+                padding: 0px;
                 border: 0px;
+                outline: none !important;
+                width: 100%;
+                overflow: hidden;
+                font-size: 12px;
+                &:focus {
+                  border: 0px;
+                }
               }
             }
-          }
-          .reply-controls {
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 16px;
-            padding: 6px 12px;
-            border-radius: 8px;
-            &.cancel {
-              color: #37352F;
-              background-color: #F3F4F7;
+            .reply-controls {
+              font-weight: 500;
+              font-size: 14px;
+              line-height: 16px;
+              padding: 6px 12px;
+              border-radius: 8px;
+              &.cancel {
+                color: #37352F;
+                background-color: #F3F4F7;
+              }
             }
           }
         }

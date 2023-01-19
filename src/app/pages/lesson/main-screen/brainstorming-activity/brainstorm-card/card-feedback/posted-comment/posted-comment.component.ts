@@ -61,6 +61,7 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
   @Input() eventType;
   @Input() isAdmin;
   @Input() allowReply = true;
+  @Input() isLast = true;
   @Input() avatarSize;
   @Input() commentIndex;
   @Input() activityState: UpdateMessage;
@@ -68,6 +69,7 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
 
   @Output() sendMessage = new EventEmitter<any>();
   @Output() viewChanged = new EventEmitter<any>();
+  @Output() addingReply = new EventEmitter<any>();
 
   submittingUser = undefined;
 
@@ -274,7 +276,21 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   addReplyToCommentUI(comment: IdeaComment) {
-    comment['addingReply'] = true;
+    if (this.allowReply) {
+      comment['addingReply'] = true;
+    } else {
+      this.addingReply.emit(comment.parent_comment);
+      this.viewChanged.emit();
+    }
+  }
+  addReplyToCommentUI2() {
+    this.comment['addingReply'] = true;
     this.viewChanged.emit();
+  }
+
+  canReply() {
+    if (this.isLast) {
+      return true;
+    }
   }
 }
