@@ -16,12 +16,13 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
 
   remainingCount = 0;
   displayCodes: [];
-  _activityState: UpdateMessage;
 
   constructor(private activitiesService: ActivitiesService) {}
 
   ngOnInit(): void {
-    this._activityState = this.activityState;
+    console.log('line 23 benji profile pictures');
+    console.log(this.participantCodes);
+    // this.activityState = this.activityState;
   }
 
   ngOnChanges(): void {
@@ -32,20 +33,23 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
       this.remainingCount = 0;
     }
 
-    if (this.activityState && this.activityState.eventType === EventTypes.joinEvent) {
-      // only update activity state when join event occurs
-      this._activityState = this.activityState;
-    }
+    // if (this.activityState && this.activityState.eventType === EventTypes.joinEvent) {
+    // only update activity state when join event occurs
+    // this._activityState = this.activityState;
+    // }
   }
 
   getName(code: number) {
-    return this.activitiesService.getParticipantName(this._activityState, code);
+    const name = this.activitiesService.getParticipantName(this.activityState, code);
+    console.log('line 43 benji profile pictures');
+    console.log(name);
+    return name;
   }
 
   getInitials(code: number) {
     let nameString = '';
 
-    nameString = this.activitiesService.getParticipantName(this._activityState, code);
+    nameString = this.activitiesService.getParticipantName(this.activityState, code);
 
     const fullName = this.name ? this.name.split(' ') : nameString.split(' ');
     const first = fullName[0] ? fullName[0].charAt(0) : '';
@@ -53,6 +57,8 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
       return first.toUpperCase();
     }
     const second = fullName[fullName.length - 1] ? fullName[fullName.length - 1].charAt(0) : '';
+    console.log('line 58 benji profile pictures');
+    console.log((first + second).toUpperCase());
     return (first + second).toUpperCase();
   }
 
