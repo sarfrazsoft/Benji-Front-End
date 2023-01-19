@@ -816,6 +816,7 @@ benji-categorized-ideas {
                 width: 100%;
                 overflow: hidden;
                 font-size: 12px;
+                word-break: break-word;
                 &:focus {
                   border: 0px;
                 }
