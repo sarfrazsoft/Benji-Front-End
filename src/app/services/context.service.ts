@@ -311,12 +311,40 @@ export class ContextService {
     oldActivityState: UpdateMessage,
     participantCode: number
   ) {
-    forOwn(oldActivityState.brainstormactivity.participants, function (value, key) {
-      remove(value, (code) => code === participantBoard.participant_code);
-      if (key === participantBoard.board_id.toString()) {
-        value.push(participantCode);
+    try {
+      // Iterate over the participants property of the oldActivityState object
+      for (const key in oldActivityState?.brainstormactivity?.participants) {
+        if (oldActivityState?.brainstormactivity?.participants.hasOwnProperty(key)) {
+          // Get the participantsArray associated with the current key, and check if it is an array
+          const participantsArray = oldActivityState?.brainstormactivity?.participants[key];
+          if (!participantsArray || !Array.isArray(participantsArray)) {
+            throw new Error(`Unexpected participantsArray for key ${key}: ${participantsArray}`);
+          }
+
+          // Check if the participantsArray array contains the participantBoard.participant_code
+          if (participantsArray.includes(participantBoard.participant_code)) {
+            // If it does, remove the participantBoard.participant_code from the array
+            remove(participantsArray, (code) => code === participantBoard.participant_code);
+          }
+
+          // Check if the current key matches the participantBoard.board_id
+          if (key === participantBoard.board_id.toString()) {
+            // If it does, add the participantCode to the participantsArray array
+            participantsArray.push(participantCode);
+          }
+        }
       }
-    });
+    } catch (err) {
+      // Log any errors that occur
+      console.error(err);
+    }
+
+    // forOwn(oldActivityState.brainstormactivity.participants, function (value, key) {
+    //   remove(value, (code) => code === participantBoard.participant_code);
+    //   if (key === participantBoard.board_id.toString()) {
+    //     value.push(participantCode);
+    //   }
+    // });
   }
 
   changeBoardStatus(statusChange: BrainstormChangeBoardStatusResponse, oldActivityState: UpdateMessage) {
