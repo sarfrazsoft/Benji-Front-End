@@ -36,6 +36,7 @@ export class LessonsComponent implements OnInit {
   folderLessonsIDs: Array<number> = [];
   notificationTypes = NotificationTypes;
   userSubscription: UserSubscription;
+  ignoreSubscription: boolean;
 
   edit(lesson, $event) {
     if (!this.isTemplates) {
@@ -60,6 +61,7 @@ export class LessonsComponent implements OnInit {
       this.lessons = orderBy(this.lessons, (lesson) => new Date(lesson.last_edited), 'desc');
     }
     this.userSubscription = this.contextService.user.user_subscription;
+    this.ignoreSubscription = this.contextService.user.ignore_subscription;
   }
 
   openDetails(lesson: Lesson) {
@@ -123,7 +125,7 @@ export class LessonsComponent implements OnInit {
   }
 
   duplicateSession(val: LessonInformation) {
-    if (this.lessonRuns.length >= 3 && !this.userSubscription?.is_active) {
+    if (this.lessonRuns.length >= 3 && !this.userSubscription?.is_active && !this.ignoreSubscription) {
       this.openProPlanDialog.emit();
     } else {
       const dialogRef = this.matDialog

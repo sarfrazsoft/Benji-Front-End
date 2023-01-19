@@ -7,7 +7,6 @@ export interface SidenavItem {
   disabled?: boolean;
   icon?: string;
   hoverIcon?: string;
-  activeIcon?: string;
 }
 
 @Component({
@@ -18,16 +17,14 @@ export class SidenavItemComponent implements OnInit {
   @Input() sidenavItem: SidenavItem;
   @Output() loadHomeEvent = new EventEmitter();
 
-  icon: string;
   activeIcon: string;
-  constructor(private authService: AuthService) { }
+  imgSrc: string;
+
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     if (this.sidenavItem.icon) {
-      this.icon = this.sidenavItem.icon;
-    }
-    if (this.sidenavItem.activeIcon) {
-      this.activeIcon = this.sidenavItem.activeIcon;
+      this.imgSrc = this.sidenavItem.icon;
     }
   }
 
@@ -36,6 +33,8 @@ export class SidenavItemComponent implements OnInit {
       this.logout();
     } else if (navName === 'Help Center') {
       window.open('https://guides.mybenji.com/', '_blank');
+    } else if (navName === 'Templates') {
+      window.open('https://www.mybenji.com/templates', '_blank');
     } else if (navName === 'Home') {
       this.loadHomeEvent.emit();
     }

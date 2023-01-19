@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
-import { Branding } from 'src/app/services/backend/schema';
+import { Branding, UserSubscription } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { FolderInfo, LessonGroupService } from 'src/app/services/lesson-group.service';
 import {
@@ -35,6 +35,10 @@ export class SidenavComponent implements OnInit {
   folders: any = [];
   selectedFolder: any;
   folderLessonsIDs: Array<number> = [];
+  imgSrc: string;
+  userId: number;
+  userEmail: string;
+  userSubscription: UserSubscription;
 
   dashboard = {
     section: 1,
@@ -44,6 +48,7 @@ export class SidenavComponent implements OnInit {
         navRoute: './',
         permission: '',
         icon: '/assets/img/dashboard/home.svg',
+        hoverIcon: '/assets/img/dashboard/home-hover.svg',
       },
     ],
   };
@@ -55,6 +60,7 @@ export class SidenavComponent implements OnInit {
         navName: 'Notifications',
         navRoute: 'notifications',
         icon: '/assets/img/dashboard/notifications.svg',
+        hoverIcon: '/assets/img/dashboard/notifications-hover.svg',
       },
     ],
   };
@@ -64,8 +70,9 @@ export class SidenavComponent implements OnInit {
     items: [
       {
         navName: 'Templates',
-        navRoute: './templates',
+        navRoute: 'https://www.mybenji.com/templates',
         icon: '/assets/img/dashboard/templates.svg',
+        hoverIcon: '/assets/img/dashboard/templates-hover.svg',
       },
     ],
   };
@@ -77,6 +84,7 @@ export class SidenavComponent implements OnInit {
         navName: 'Help Center',
         navRoute: 'https://guides.mybenji.com/',
         icon: '/assets/img/dashboard/help.svg',
+        hoverIcon: '/assets/img/dashboard/help-hover.svg',
       },
     ],
   };
@@ -88,6 +96,7 @@ export class SidenavComponent implements OnInit {
         navName: 'Settings',
         navRoute: 'account',
         icon: '/assets/img/dashboard/settings.svg',
+        hoverIcon: '/assets/img/dashboard/settings-hover.svg',
       },
     ],
   };
@@ -99,9 +108,28 @@ export class SidenavComponent implements OnInit {
         navName: 'Logout',
         navRoute: 'logout',
         icon: '/assets/img/dashboard/log-out.svg',
+        hoverIcon: '/assets/img/dashboard/log-out-hover.svg',
       },
     ],
   };
+
+  billingSection =
+    {
+      navName: 'Billing',
+      link: 'billing',
+      icon: '/assets/img/dashboard/billing.svg',
+      hoverIcon: '/assets/img/dashboard/billing-hover.svg',
+    };
+
+  upgradeSection =
+    {
+      navName: 'Upgrade to Pro',
+      link: 'upgrade',
+      icon: '/assets/img/dashboard/upgrade.svg',
+      hoverIcon: '/assets/img/dashboard/upgrade-hover.svg',
+    };
+
+  proplanSection;
 
   constructor(
     private dialog: MatDialog,
@@ -112,6 +140,12 @@ export class SidenavComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.userId = this.contextService.user?.id;
+    this.userEmail = this.contextService.user?.email;
+    this.userSubscription = this.contextService.user?.user_subscription;
+    this.proplanSection = this.userSubscription?.is_active ? this.billingSection : this.upgradeSection;
+    this.imgSrc = this.proplanSection.icon;
+
     this.initNavigation();
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
@@ -164,7 +198,7 @@ export class SidenavComponent implements OnInit {
     this.contextService.user$.subscribe((user) => {
       this.sidenavTopSections = [this.dashboard, this.notifications];
 
-      this.sidenavBottomSections = [this.accountSection, this.helpCenter, this.authSection];
+      this.sidenavBottomSections = [this.templatesSection, this.accountSection, this.helpCenter, this.authSection];
     });
   }
 
@@ -177,15 +211,15 @@ export class SidenavComponent implements OnInit {
     );
   }
 
-  createOrUpdateFolder(isNew: boolean, folderId?: number) {
-    if (folderId) {
-      this.setFolderLessonsIDs(folderId);
+  createOrUpdateFolder($event) {
+    if ($event.folderId) {
+      this.setFolderLessonsIDs($event.folderId);
     }
-    const folder = this.folders.filter((x) => x.id === folderId);
+    const folder = this.folders.filter((x) => x.id === $event.folderId);
     this.dialog
       .open(NewFolderDialogComponent, {
         data: {
-          newFolder: isNew,
+          newFolder: $event.isNew,
           title: folder[0]?.name,
         },
         panelClass: 'new-folder-dialog',
@@ -193,13 +227,13 @@ export class SidenavComponent implements OnInit {
       .afterClosed()
       .subscribe((folderInfo: FolderInfo) => {
         if (folderInfo) {
-          const request = isNew
+          const request = $event.isNew
             ? this.lessonGroupService.createNewFolder(folderInfo)
             : this.lessonGroupService.updateFolder({
-                title: folderInfo.title,
-                id: folderId,
-                lessonsIds: this.folderLessonsIDs,
-              });
+              title: folderInfo.title,
+              id: $event.folderId,
+              lessonsIds: this.folderLessonsIDs,
+            });
           request.subscribe(
             (data) => {
               this.getAllFolders();
@@ -211,8 +245,8 @@ export class SidenavComponent implements OnInit {
       });
   }
 
-  deleteFolder(id: number, name: string) {
-    const msg = 'Are you sure you want to delete ' + name + '?';
+  deleteFolder($event) {
+    const msg = 'Are you sure you want to delete ' + $event.folderName + '?';
     const dialogRef = this.dialog
       .open(ConfirmationDialogComponent, {
         data: {
@@ -224,7 +258,7 @@ export class SidenavComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
-          this.lessonGroupService.deleteFolder(id).subscribe(
+          this.lessonGroupService.deleteFolder($event.folderId).subscribe(
             (data) => {
               this.getAllFolders();
               this.removePostQueryParam();
@@ -255,10 +289,10 @@ export class SidenavComponent implements OnInit {
     });
   }
 
-  selectFolder(id: number) {
-    this.selectedFolder = id;
-    this.folderChangingQueryParams(id);
-    this.contextService.selectedFolder = id;
+  selectFolder($event: number) {
+    this.selectedFolder = $event;
+    this.folderChangingQueryParams($event);
+    this.contextService.selectedFolder = $event;
   }
 
   setFolderLessonsIDs(folderId: number) {
@@ -270,5 +304,11 @@ export class SidenavComponent implements OnInit {
         this.folderLessonsIDs.push(lesson.id);
       });
     });
+  }
+
+  goProplan(link: string) {
+    window.location.href = link === 'billing'
+      ? 'https://billing.stripe.com/p/login/28o00P72N4P0clqcMM'
+      : 'https://buy.stripe.com/test_aEU29ucVY47G82AdQQ?prefilled_email=' + this.userEmail + '&client_reference_id=' + this.userId;
   }
 }

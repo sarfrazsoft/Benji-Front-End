@@ -35,8 +35,8 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   folderLessonsIDs: Array<number> = [];
   userId: number;
   userEmail: string;
-
   userSubscription: UserSubscription;
+  ignoreSubscription: boolean;
 
   form = new FormGroup({
     editorContent: new FormControl(doc, Validators.required()),
@@ -78,6 +78,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
     this.userId = this.contextService.user.id;
     this.userEmail = this.contextService.user.email;
     this.userSubscription = this.contextService.user.user_subscription;
+    this.ignoreSubscription = this.contextService.user.ignore_subscription;
 
     this.route.queryParams.subscribe((params) => {
       if (params.folder) {
@@ -149,7 +150,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   }
 
   openCreateSession() {
-    if (this.lessonRuns.length >= 3 && !this.userSubscription?.is_active) {
+    if (this.lessonRuns.length >= 3 && !this.userSubscription?.is_active && !this.ignoreSubscription) {
       this.openProPlanDialog();
     } else {
       this.dialog

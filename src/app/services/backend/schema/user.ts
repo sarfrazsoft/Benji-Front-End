@@ -39,6 +39,7 @@ export interface TeamUser {
   preferred_host_theme: any;
   preferred_host_theme_label: any;
   user_subscription: UserSubscription;
+  ignore_subscription: boolean;
 }
 
 export interface UserSubscription {

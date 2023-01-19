@@ -99,7 +99,6 @@ export class AccountService {
             maxSize: 152,
           })
           .then((resizedImage: Blob) => {
-            console.log(resizedImage);
             formData.append('logo', resizedImage, logo.name);
             return this.httpClient
               .put(url, formData, { params, headers })

@@ -7,6 +7,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
 import { ImageViewDialogComponent, MainScreenComponents } from '../index';
+import { FolderComponent } from './sidenav/folder/folder.component';
 
 export const LayoutDeclarations = [
   ...MainScreenComponents,
@@ -16,6 +17,7 @@ export const LayoutDeclarations = [
   ToolbarComponent,
   SidenavComponent,
   SidenavItemComponent,
+  FolderComponent
 ];
 
 export const EntryComponents = [ImageViewDialogComponent];

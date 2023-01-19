@@ -1,0 +1,49 @@
+<div
+  class="folder"
+  [ngClass]="{ selected: selectedFolder == folder.id }"
+  (click)="selectFolder.emit(folder.id)"
+  fxLayoutAlign="space-between"
+  (mouseout)="imgSrc = '/assets/img/dashboard/folder.svg'"
+  (mouseover)="imgSrc = '/assets/img/dashboard/folder-hover.svg'"
+>
+  <div fxLayoutGap="12px" fxLayout="row" fxLayoutAlign="start center">
+    <img
+      *ngIf="selectedFolder == folder.id"
+      class="item-icon"
+      [src]="'/assets/img/dashboard/folder-hover.svg'"
+    />
+    <img *ngIf="selectedFolder != folder.id" class="item-icon" [src]="imgSrc" />
+    <div class="name">{{ folder.name }}</div>
+  </div>
+  <img
+    class="nav"
+    src="/assets/img/side-nav/three-dots.svg"
+    [matMenuTriggerFor]="menu"
+    [matMenuTriggerData]="{ id: folder.id, name: folder.name }"
+    benji-click-stop-propagation
+  />
+</div>
+<mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
+  <ng-template matMenuContent let-id="id" let-name="name">
+    <button
+      mat-menu-item
+      (click)="createOrUpdateFolder.emit({ isNew: false, folderId: id })"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxLayoutGap="8px"
+    >
+      <img class="dots" src="/assets/img/side-nav/edit.svg" />
+      <span>Rename</span>
+    </button>
+    <button
+      mat-menu-item
+      (click)="deleteFolder.emit({ folderId: id, folderName: name })"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxLayoutGap="8px"
+    >
+      <img class="dots" src="/assets/img/side-nav/delete.svg" />
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>
