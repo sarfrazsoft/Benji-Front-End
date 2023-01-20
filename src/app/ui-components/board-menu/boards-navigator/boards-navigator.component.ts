@@ -152,9 +152,44 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         const unSortedBoards: Array<Board> = this.getBoards();
-        this.sortBoards(unSortedBoards);
+        try {
+          this.sortBoards(unSortedBoards);
+        } catch (error) {
+          console.error(error);
+        }
       }
     });
+  }
+
+  sortBoards2(unSortedBoards: Array<Board>) {
+    let firstBoard;
+    for (let i = 0; i < unSortedBoards.length; i++) {
+      const board = unSortedBoards[i];
+      if (board.previous_board === null) {
+        firstBoard = board;
+        break;
+      }
+    }
+    if (!firstBoard) {
+      throw new Error('No board found with previous_board as null, cannot determine first board');
+    }
+
+    const boards: Array<Board> = [firstBoard];
+    for (let i = 0; i < unSortedBoards.length; i++) {
+      const board = unSortedBoards[i];
+      if (board.id === firstBoard.next_board) {
+        boards.push(board);
+        i = -1;
+      }
+    }
+
+    // adds remaining boards
+    for (let i = 0; i < unSortedBoards.length; i++) {
+      if (!boards.includes(unSortedBoards[i])) {
+        boards.push(unSortedBoards[i]);
+      }
+    }
+    this.boards = boards;
   }
 
   sortBoards(unSortedBoards: Array<Board>) {
