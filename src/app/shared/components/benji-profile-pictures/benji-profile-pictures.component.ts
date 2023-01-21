@@ -17,10 +17,25 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
   remainingCount = 0;
   displayCodes: [];
 
+  names = [];
+  initials = [];
+
   constructor(private activitiesService: ActivitiesService) {}
 
   ngOnInit(): void {
     // this.activityState = this.activityState;
+    this.setupNames();
+  }
+
+  setupNames() {
+    this.names = [];
+    this.initials = [];
+
+    for (let i = 0; i < this.participantCodes.length; i++) {
+      const participantCode = this.participantCodes[i];
+      this.names.push(this.activitiesService.getParticipantName(this.activityState, participantCode));
+      this.initials.push(this.getInitials(participantCode));
+    }
   }
 
   ngOnChanges(): void {
@@ -31,10 +46,10 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
       this.remainingCount = 0;
     }
 
-    // if (this.activityState && this.activityState.eventType === EventTypes.joinEvent) {
-    // only update activity state when join event occurs
-    // this._activityState = this.activityState;
-    // }
+    if (this.activityState && this.activityState.eventType === EventTypes.joinEvent) {
+      // only update activity state when join event occurs
+      this.setupNames();
+    }
   }
 
   getName(code: number) {
