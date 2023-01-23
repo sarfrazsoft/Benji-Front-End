@@ -161,7 +161,11 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     });
   }
 
-  sortBoards2(unSortedBoards: Array<Board>) {
+  sortBoards(unSortedBoards: Array<Board>) {
+    if (unSortedBoards.length === 0) {
+      throw new Error('Input array is empty, cannot sort boards');
+    }
+
     let firstBoard;
     for (let i = 0; i < unSortedBoards.length; i++) {
       const board = unSortedBoards[i];
@@ -175,14 +179,25 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     }
 
     const boards: Array<Board> = [firstBoard];
-    for (let i = 0; i < unSortedBoards.length; i++) {
-      const board = unSortedBoards[i];
-      if (board.id === firstBoard.next_board) {
-        boards.push(board);
-        i = -1;
+    const addedBoards = new Set();
+    addedBoards.add(firstBoard);
+    let nextId = firstBoard.next_board;
+    while (nextId) {
+      let found = false;
+      for (let i = 0; i < unSortedBoards.length; i++) {
+        const board = unSortedBoards[i];
+        if (board.id === nextId && !addedBoards.has(board)) {
+          boards.push(board);
+          addedBoards.add(board);
+          nextId = board.next_board;
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        nextId = null;
       }
     }
-
     // adds remaining boards
     for (let i = 0; i < unSortedBoards.length; i++) {
       if (!boards.includes(unSortedBoards[i])) {
@@ -192,7 +207,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     this.boards = boards;
   }
 
-  sortBoards(unSortedBoards: Array<Board>) {
+  sortBoards2(unSortedBoards: Array<Board>) {
     let firstBoard;
     for (let i = 0; i < unSortedBoards.length; i++) {
       const board = unSortedBoards[i];
