@@ -7,12 +7,11 @@
         <benji-posted-comment
           [comment]="comment"
           [item]="item"
-          [board]="board"
+          [allowHeart]="board.allow_heart"
           [participantCode]="participantCode"
           [activityState]="activityState"
           [allowReply]="true"
           [isAdmin]="isAdmin"
-          [eventType]="eventType"
           [avatarSize]="avatarSize"
           [commentIndex]="i"
           (sendMessage)="sendMessage.emit($event)"

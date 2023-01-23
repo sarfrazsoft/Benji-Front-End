@@ -24,6 +24,7 @@ import {
   BrainstormService,
 } from 'src/app/services/activities';
 import {
+  AvatarSize,
   Board,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormSubmitIdeaCommentEvent,
@@ -68,7 +69,7 @@ export class CardFeedbackComponent implements OnInit, OnChanges, AfterViewInit, 
   @Input() item: Idea;
   @Input() participantCode;
   @Input() eventType;
-  @Input() avatarSize;
+  @Input() avatarSize: AvatarSize;
   @Input() isAdmin;
   @Input() activityState: UpdateMessage;
   @Input() ideaDetailedDialogRef: MatDialogRef<IdeaDetailedDialogComponent, any>;

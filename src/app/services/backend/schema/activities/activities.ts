@@ -390,6 +390,8 @@ export type BoardSort = 'newest_to_oldest' | 'oldest_to_newest' | 'likes' | 'uns
 
 export type PostSize = 'small' | 'medium' | 'large';
 
+export type AvatarSize = 'small' | 'medium' | 'large';
+
 export interface BoardParticipants {
   [boardID: string]: Array<number>;
 }

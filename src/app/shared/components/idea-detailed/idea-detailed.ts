@@ -362,7 +362,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
     this.activityState = this.data.activityState;
 
-    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code;
+    this.lessonRunCode = this.activityState?.lesson_run?.lessonrun_code;
   }
 
   ideaIsEdited(event) {

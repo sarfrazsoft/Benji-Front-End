@@ -69,7 +69,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="separater"></div> -->
       <!-- Reply -->
       <div
         *ngIf="canReply()"
@@ -88,7 +87,7 @@
           <benji-posted-comment
             [comment]="childComment"
             [item]="item"
-            [board]="board"
+            [allowHeart]="allowHeart"
             [isAdmin]="isAdmin"
             [participantCode]="participantCode"
             [activityState]="activityState"

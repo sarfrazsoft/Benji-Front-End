@@ -18,13 +18,12 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import {
   ActivitiesService,
-  BoardsNavigationService,
   BrainstormEventService,
   BrainstormPostService,
   BrainstormService,
 } from 'src/app/services/activities';
 import {
-  Board,
+  AvatarSize,
   BrainstormRemoveCommentHeartEvent,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormRemoveIdeaHeartEvent,
@@ -44,7 +43,6 @@ import {
   BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartResponse,
 } from 'src/app/services/backend/schema/event-responses';
-import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 
@@ -54,15 +52,14 @@ import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detaile
   templateUrl: './posted-comment.component.html',
 })
 export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-  @Input() board: Board;
+  @Input() allowHeart = false;
   @Input() item: Idea;
   @Input() comment: IdeaComment;
   @Input() participantCode;
-  @Input() eventType;
   @Input() isAdmin;
   @Input() allowReply = true;
   @Input() isLast = true;
-  @Input() avatarSize;
+  @Input() avatarSize: AvatarSize;
   @Input() commentIndex;
   @Input() activityState: UpdateMessage;
   @Input() ideaDetailedDialogRef: MatDialogRef<IdeaDetailedDialogComponent, any>;
@@ -89,11 +86,6 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
     private brainstormService: BrainstormService,
     private brainstormPostService: BrainstormPostService,
     private brainstormEventService: BrainstormEventService,
-    private boardsNavigationService: BoardsNavigationService,
-    private deviceService: DeviceDetectorService,
-    private _ngZone: NgZone,
-    private ngxPermissionsService: NgxPermissionsService,
-    private boardStatusService: BoardStatusService,
     private breakpointObserver: BreakpointObserver,
     private activatedRoute: ActivatedRoute,
     private utilsService: UtilsService
@@ -188,7 +180,7 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
   ngAfterViewInit() {}
 
   areHeartsAllowed() {
-    return this.board.allow_heart;
+    return this.allowHeart;
   }
 
   ngOnChanges(changes) {}
@@ -229,7 +221,7 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   removeHeart(item, event) {
-    if (!this.board.allow_heart) {
+    if (!this.allowHeart) {
       return;
     }
     let hearted;

@@ -29,6 +29,7 @@ import {
   BrainstormService,
 } from 'src/app/services/activities';
 import {
+  AvatarSize,
   Board,
   BoardStatus,
   BrainstormActivity,
@@ -78,7 +79,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   @Input() eventType;
   @Input() isColumnsLayout;
   @Input() myGroup;
-  @Input() avatarSize;
+  @Input() avatarSize: AvatarSize;
   @Input() userRole: IdeaUserRole;
   @Input() ideaDetailedDialogOpen: boolean;
   @ViewChild('colName') colNameElement: ElementRef;

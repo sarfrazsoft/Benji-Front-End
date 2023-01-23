@@ -296,18 +296,26 @@
                   <div class="text">No comments yet.</div>
                   <div class="sub-text">Start the conversation.</div>
                 </div>
-                <div class="comment" *ngFor="let comment of idea.comments" fxLayout="row" fxLayoutGap="8px">
-                  <div class="dp">
-                    <benji-profile-pictures
-                      [activityState]="activityState"
-                      [participantCodes]="[comment.participant]"
-                      [showTooltip]="false"
-                      [size]="'medium'"
-                    ></benji-profile-pictures>
-                  </div>
-                  <div class="comment-bg" fxLayout="column">
-                    <div class="commentor-name"> {{ getParticipantName(comment.participant) }} </div>
-                    <div class="comment-text"> {{ comment.comment }} </div>
+                <div class="list-of-comments" fxLayout="column" fxLayoutGap="8px">
+                  <div 
+                    class="comment"
+                    *ngFor="let comment of idea.comments; let i = index"
+                    fxLayout="column"
+                    fxLayoutGap="8px">
+                    <div class="root-comment">
+                      <benji-posted-comment
+                        [comment]="comment"
+                        [item]="idea"
+                        [allowHeart]="false"
+                        [participantCode]="participantCode"
+                        [activityState]="activityState"
+                        [allowReply]="true"
+                        [isAdmin]="userRole === 'owner'"
+                        [avatarSize]="'small'"
+                        [commentIndex]="i"
+                        (sendMessage)="sendMessage.emit($event)">
+                      </benji-posted-comment>
+                    </div>
                   </div>
                 </div>
               </div>
