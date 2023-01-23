@@ -152,12 +152,62 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         const unSortedBoards: Array<Board> = this.getBoards();
-        this.sortBoards(unSortedBoards);
+        try {
+          this.sortBoards(unSortedBoards);
+        } catch (error) {
+          console.error(error);
+        }
       }
     });
   }
 
   sortBoards(unSortedBoards: Array<Board>) {
+    if (unSortedBoards.length === 0) {
+      throw new Error('Input array is empty, cannot sort boards');
+    }
+
+    let firstBoard;
+    for (let i = 0; i < unSortedBoards.length; i++) {
+      const board = unSortedBoards[i];
+      if (board.previous_board === null) {
+        firstBoard = board;
+        break;
+      }
+    }
+    if (!firstBoard) {
+      throw new Error('No board found with previous_board as null, cannot determine first board');
+    }
+
+    const boards: Array<Board> = [firstBoard];
+    const addedBoards = new Set();
+    addedBoards.add(firstBoard);
+    let nextId = firstBoard.next_board;
+    while (nextId) {
+      let found = false;
+      for (let i = 0; i < unSortedBoards.length; i++) {
+        const board = unSortedBoards[i];
+        if (board.id === nextId && !addedBoards.has(board)) {
+          boards.push(board);
+          addedBoards.add(board);
+          nextId = board.next_board;
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        nextId = null;
+      }
+    }
+    // adds remaining boards
+    for (let i = 0; i < unSortedBoards.length; i++) {
+      if (!boards.includes(unSortedBoards[i])) {
+        boards.push(unSortedBoards[i]);
+      }
+    }
+    this.boards = boards;
+  }
+
+  sortBoards2(unSortedBoards: Array<Board>) {
     let firstBoard;
     for (let i = 0; i < unSortedBoards.length; i++) {
       const board = unSortedBoards[i];

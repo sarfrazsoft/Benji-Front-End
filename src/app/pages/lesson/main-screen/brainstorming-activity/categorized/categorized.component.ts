@@ -123,7 +123,6 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
       ) {
       } else if (this.eventType === 'BrainstormSubmitEvent') {
         this.brainstormService.addIdeaToCategory(this.board, this.columns, (changedCategory: Category) => {
-          console.log(changedCategory);
         });
       } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
         this.updateColumnSize(this.board);

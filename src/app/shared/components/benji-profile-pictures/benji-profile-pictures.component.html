@@ -5,16 +5,16 @@
   <div 
     class="participant"
     fxLayout="column"
-    *ngFor="let code of participantCodes">
+    *ngFor="let code of participantCodes; let i = index">
     <div 
       class="initials {{size}} {{ 'color' + getColorIndex(code) }}" 
       fxLayout="column" 
       fxLayoutAlign="center center"
-      matTooltip="{{ getName(code) }}"
+      matTooltip="{{ names[i] ? names[i] : '' }}"
       [matTooltipPosition]="'below'"
       [matTooltipDisabled]="!showTooltip"
       show-delay="100">
-      <span> {{ getInitials(code) }} </span>
+      <span> {{ initials[i] }} </span>
     </div>
   </div>
   <div 
@@ -25,7 +25,7 @@
       class="initials {{size}}" 
       fxLayout="column" 
       fxLayoutAlign="center center">
-      <span> {{ getInitials() }} </span>
+      <span> {{ initials[i] }} </span>
     </div>
   </div>
   <div 
