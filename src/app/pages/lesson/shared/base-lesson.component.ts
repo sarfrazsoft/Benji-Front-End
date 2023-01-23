@@ -220,6 +220,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   handleServerMessage(msg: ServerMessage) {
+    console.log(msg);
     if (msg.eventtype === EventTypes.notificationEvent) {
       this.serverMessage = {
         ...this.serverMessage,

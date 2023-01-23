@@ -579,6 +579,9 @@ export class ContextService {
   }
 
   removeBoard(res: BrainstormRemoveBoardResponse, oldActivityState: UpdateMessage) {
+    if (!res) {
+      throw new Error('BrainstormRemoveBoardResponse is undefined/null');
+    }
     const deletedBoard = this.boardsNavigationService.getBoard(
       res.id,
       oldActivityState.brainstormactivity.boards
