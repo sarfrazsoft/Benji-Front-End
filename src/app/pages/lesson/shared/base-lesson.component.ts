@@ -6,6 +6,7 @@ import * as LogRocket from 'logrocket';
 import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { distinctUntilKeyChanged } from 'rxjs/operators';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
@@ -200,7 +201,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       this.lessonRun,
       this.participantDetails ? this.participantDetails.participant_code : null
     );
-    this.socket.subscribe(
+    this.socket.pipe(distinctUntilKeyChanged('event_id')).subscribe(
       (serverMessage: ServerMessage) => {
         this.handleServerMessage(serverMessage);
       },

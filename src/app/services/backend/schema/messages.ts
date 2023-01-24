@@ -153,6 +153,7 @@ export type EventResponseTypes =
   | BrainstormSetCategoryResponse;
 
 export interface ServerMessage {
+  event_id: number;
   messagetime: number;
   updatemessage?: UpdateMessage;
   clienterror?: ClientError;
