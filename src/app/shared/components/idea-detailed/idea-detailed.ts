@@ -206,6 +206,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   userSubmittedComment = false;
   userSubmittedSuccesfully = false;
+  @ViewChild('scrollableArea', { static: false }) scrollableArea: ElementRef;
 
   constructor(
     private activitiesService: ActivitiesService,
@@ -557,6 +558,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
   brainstormSubmitIdeaCommentEvent(): void {
     if (this.userSubmittedComment) {
+      this.scrollIntoView();
       const existingComment = this.commentModel.trim();
       this.idea.comments.forEach((c) => {
         if (
@@ -572,6 +574,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
         }
       });
     }
+  }
+
+  scrollIntoView(): void {
+    setTimeout(() => {
+      this.scrollableArea.nativeElement.scrollTop = this.scrollableArea.nativeElement.scrollHeight + 56;
+    }, 200);
   }
 
   getInitials(nameString: string) {

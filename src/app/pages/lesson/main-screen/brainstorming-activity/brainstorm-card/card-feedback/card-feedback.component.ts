@@ -157,9 +157,9 @@ export class CardFeedbackComponent implements OnInit, OnChanges, AfterViewInit, 
   }
 
   addComment() {
-    // if (this.ideaDetailedDialogRef) {
-    //   this.ideaDetailedDialogRef.componentInstance.brainstormSubmitIdeaCommentEvent();
-    // }
+    if (this.ideaDetailedDialogRef) {
+      this.ideaDetailedDialogRef.componentInstance.brainstormSubmitIdeaCommentEvent();
+    }
     if (this.userSubmittedComment) {
       let existingComment = '';
       if (this.ideaDetailedDialogRef) {
