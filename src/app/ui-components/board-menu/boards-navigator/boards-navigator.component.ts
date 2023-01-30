@@ -182,7 +182,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
         if (!unSortedBoards.find((b) => b.id === board.previous_board)) {
           const orphanBoard = board;
           // call a separate function with that board
-          this.handleOrphanBoard(orphanBoard);
+          // this.handleOrphanBoard(orphanBoard);
           break;
         }
       }
@@ -222,7 +222,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   handleOrphanBoard(board: Board) {
     // your separate function code here
     console.log(`Orphan board found: ${board.id}`);
-    this.sendMessage.emit(new BrainstormRearrangeBoardEvent(board.id, null, board.next_board));
+    // this.sendMessage.emit(new BrainstormRearrangeBoardEvent(board.id, null, board.next_board));
   }
 
   sortBoards2(unSortedBoards: Array<Board>) {
