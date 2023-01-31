@@ -175,6 +175,18 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       }
     }
     if (!firstBoard) {
+      // No board found with previous_board as null, cannot determine first board
+      // find the board that has `previous_board` set to id of a board that does not exist in the list.
+      for (let i = 0; i < unSortedBoards.length; i++) {
+        const board = unSortedBoards[i];
+        if (!unSortedBoards.find((b) => b.id === board.previous_board)) {
+          const orphanBoard = board;
+          // call a separate function with that board
+          // this.handleOrphanBoard(orphanBoard);
+          break;
+        }
+      }
+
       throw new Error('No board found with previous_board as null, cannot determine first board');
     }
 
@@ -205,6 +217,13 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       }
     }
     this.boards = boards;
+  }
+
+  handleOrphanBoard(board: Board) {
+    // your separate function code here
+    // console.log(`Orphan board found: ${board.id}`);
+    throw new Error(`Orphan board found: ${board.id}`);
+    // this.sendMessage.emit(new BrainstormRearrangeBoardEvent(board.id, null, board.next_board));
   }
 
   sortBoards2(unSortedBoards: Array<Board>) {

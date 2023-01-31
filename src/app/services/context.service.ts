@@ -614,56 +614,58 @@ export class ContextService {
   }
 
   removeBoard(res: BrainstormRemoveBoardResponse, oldActivityState: UpdateMessage) {
-    const deletedBoard = this.boardsNavigationService.getBoard(
-      res.id,
-      oldActivityState.brainstormactivity.boards
-    );
-    if (deletedBoard.next_board) {
-      // find the board that was next to the deleted board
-      // and set previous_board value as the previous of deleted board
-      const nextBoard = this.boardsNavigationService.getBoard(
-        deletedBoard.next_board,
-        oldActivityState.brainstormactivity.boards
-      );
-
-      nextBoard.previous_board = deletedBoard.previous_board;
-    } else {
-      const previousBoard = this.boardsNavigationService.getBoard(
-        deletedBoard.previous_board,
-        oldActivityState.brainstormactivity.boards
-      );
-      previousBoard.next_board = null;
-    }
-
-    if (deletedBoard.previous_board) {
-      // find the board that was previous to the deleted board
-      // and set the next_board value as the next of deleted board
-      const previousBoard = this.boardsNavigationService.getBoard(
-        deletedBoard.previous_board,
-        oldActivityState.brainstormactivity.boards
-      );
-
-      previousBoard.next_board = deletedBoard.next_board;
-    } else {
-      // we're deleting the first board
-      const nextBoard = this.boardsNavigationService.getBoard(
-        deletedBoard.next_board,
-        oldActivityState.brainstormactivity.boards
-      );
-
-      nextBoard.previous_board = null;
-    }
-
-    // if host board is deleted
-    // change host board to previous board
-    if (oldActivityState.brainstormactivity.host_board === res.id) {
-      if (deletedBoard.previous_board) {
-        oldActivityState.brainstormactivity.host_board = deletedBoard.previous_board;
-      } else if (deletedBoard.next_board) {
-        oldActivityState.brainstormactivity.host_board = deletedBoard.next_board;
+    try {
+      if (
+        !res ||
+        !oldActivityState ||
+        !oldActivityState.brainstormactivity ||
+        !oldActivityState.brainstormactivity.boards
+      ) {
+        throw new Error('Input is undefined/null');
       }
+
+      const deletedBoardIndex = oldActivityState.brainstormactivity.boards.findIndex(
+        (board) => board.id === res.id
+      );
+      if (deletedBoardIndex === -1) {
+        throw new Error(`Board with id '${res.id}' not found`);
+      }
+
+      const [deletedBoard] = oldActivityState.brainstormactivity.boards.splice(deletedBoardIndex, 1);
+      const { previous_board: previousBoardId, next_board: nextBoardId } = deletedBoard;
+
+      if (previousBoardId !== null) {
+        const previousBoardIndex = oldActivityState.brainstormactivity.boards.findIndex(
+          (board) => board.id === previousBoardId
+        );
+        if (previousBoardIndex === -1) {
+          throw new Error(`Previous board with id '${previousBoardId}' not found`);
+        }
+        oldActivityState.brainstormactivity.boards[previousBoardIndex].next_board = nextBoardId;
+      }
+
+      if (nextBoardId !== null) {
+        const nextBoardIndex = oldActivityState.brainstormactivity.boards.findIndex(
+          (board) => board.id === nextBoardId
+        );
+        if (nextBoardIndex === -1) {
+          throw new Error(`Next board with id '${nextBoardId}' not found`);
+        }
+        oldActivityState.brainstormactivity.boards[nextBoardIndex].previous_board = previousBoardId;
+      }
+
+      // if host board is deleted
+      // change host board to previous board
+      if (oldActivityState.brainstormactivity.host_board === res.id) {
+        if (deletedBoard.previous_board) {
+          oldActivityState.brainstormactivity.host_board = deletedBoard.previous_board;
+        } else if (deletedBoard.next_board) {
+          oldActivityState.brainstormactivity.host_board = deletedBoard.next_board;
+        }
+      }
+    } catch (error) {
+      console.error(error);
     }
-    remove(oldActivityState.brainstormactivity.boards, { id: res.id });
   }
 
   addPinIdea(res: BrainstormAddRemoveIdeaPinResponse, oldActivityState: UpdateMessage) {
