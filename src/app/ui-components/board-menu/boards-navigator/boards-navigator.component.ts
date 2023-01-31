@@ -221,7 +221,8 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
 
   handleOrphanBoard(board: Board) {
     // your separate function code here
-    console.log(`Orphan board found: ${board.id}`);
+    // console.log(`Orphan board found: ${board.id}`);
+    throw new Error(`Orphan board found: ${board.id}`);
     // this.sendMessage.emit(new BrainstormRearrangeBoardEvent(board.id, null, board.next_board));
   }
 
