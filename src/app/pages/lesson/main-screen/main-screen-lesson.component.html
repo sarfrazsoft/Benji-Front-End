@@ -1,6 +1,6 @@
 <benji-main-screen-toolbar
   [activityState]="serverMessage"
-  *ngIf="isConnected() && serverMessage"
+  *ngIf="(isConnected() && serverMessage) && !facilitatorConnectionFailed"
   [disableControls]="disableControls"
   [participantCode]="getParticipantCode()"
   (socketMessage)="sendSocketMessage($event)"
@@ -37,24 +37,9 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div class="ms-preloader flexer align-center" *ngIf="!isConnected() || !isFacilitatorConnected()">
-      <mat-spinner></mat-spinner>
-    </div>
-
     <div class="ms-fullheight-container" [ngClass]="{ 'boards-menu-opened': !boardsMenuClosed }">
-      <!-- <benji-main-screen-toolbar 
-        [activityState]="serverMessage"
-        *ngIf="isConnected() && serverMessage && navType!=='boards'"
-        [disableControls]="disableControls"
-        [participantCode]="getParticipantCode()"
-        (socketMessage)="sendSocketMessage($event)"
-        (openSettingsMenuEvent)="openSettingsMenu()"
-        (toggleBoardsMenuEvent)="toggleBoardsMenu()"
-        [boardsMenuClosed]="boardsMenuClosed"
-      ></benji-main-screen-toolbar> -->
-
       <div
-        *ngIf="isConnected() && serverMessage"
+        *ngIf="(isConnected() && serverMessage) && !facilitatorConnectionFailed"
         [ngClass]="
           getActivityType() === at.lobby
             ? 'ms-lesson__activity-container ms-lesson__activity-container--lobby'
@@ -69,6 +54,22 @@
         >
         </benji-ms-brainstorming-activity>
       </div>
+
+      <!-- create new component -->
+      <ng-container *ngIf="facilitatorConnectionFailed">
+        <benji-connection-error
+          [title]="'Failed to establish a connection'"
+          [subTitle]="'Try the following to fix the issue'"
+        ></benji-connection-error>
+      </ng-container>
+
+      <!-- create new component -->
+      <ng-container *ngIf="!(isConnected() && serverMessage)">
+        <benji-loading-screen
+          [title]="'Loading your space'"
+          [subTitle]="'This might take a moment or so...'"
+        ></benji-loading-screen>
+      </ng-container>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

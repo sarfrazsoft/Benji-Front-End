@@ -16,6 +16,8 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
 import { TipTapEditorComponents } from './tiptap-editor';
 import { UploadcareWidgetComponent } from './uploadcare-widget/uploadcare-widget.component';
 import { UppyDashboardComponent } from './uppy-dashboard/uppy-dashboard.component';
+import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
+import { ConnectionErrorComponent } from './connection-error/connection-error.component';
 export { AvatarComponent };
 
 export const CmpComponents = [
@@ -37,6 +39,8 @@ export const CmpComponents = [
   UploadcareWidgetComponent,
   ...TipTapEditorComponents,
   ProgressbarComponent,
+  LoadingScreenComponent,
+  ConnectionErrorComponent
 ];
 
 export const CmpEntryComponents = [

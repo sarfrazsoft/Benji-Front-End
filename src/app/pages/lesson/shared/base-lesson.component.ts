@@ -70,6 +70,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   serverOffsets: number[];
   avgServerTimeOffset: number;
   facilitatorConnected = false;
+  facilitatorConnectionFailed = false;
   timer;
 
   participantCode: number;
@@ -604,6 +605,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         if (notify_type === 'no_facilitator') {
           console.log('facilitator not connected');
           this.facilitatorConnected = false;
+          this.facilitatorConnectionFailed = true;
           this.socketService.restartLesson(this.lessonRun.id);
         }
       }

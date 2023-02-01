@@ -1,0 +1,13 @@
+<div class="loading-screen connection-error" fxLayoutAlign="center center">
+  <div class="content-box" fxLayout="column" fxLayoutAlign="start center">
+    <img class="error-icon" src="/assets/img/connection-error.svg" />
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <div class="title">{{ title }}</div>
+      <div class="sub-title">{{ subTitle }}</div>
+      <ul class="sub-title">
+        <li (click)="reloadCurrentPage()"><span class="linked">Reload page</span></li>
+        <li>Check out <a class="linked" href="#">Help Centre Article</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
