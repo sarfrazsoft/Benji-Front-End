@@ -231,7 +231,22 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('single_user_participant');
+    this.removeHostKeyValuePairsFromLocalStorage();
+
     this.closeIntercom();
+  }
+
+  removeHostKeyValuePairsFromLocalStorage(): void {
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith('host_')) {
+          localStorage.removeItem(key);
+        }
+      }
+    } catch (error) {
+      console.error('An error occurred while removing items from localStorage:', error);
+    }
   }
 
   getToken() {
