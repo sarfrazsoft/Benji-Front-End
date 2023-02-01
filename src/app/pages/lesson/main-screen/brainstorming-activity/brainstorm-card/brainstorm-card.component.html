@@ -14,7 +14,7 @@
     <ng-container>
       <!-- Idea image -->
       <div
-        class="brainstorm-image"
+        class="brainstorm-image cursor-pointer"
         (mousedown)="mouseDownEvent($event)"
         (mouseup)="mouseUpEvent($event, item)"
         *ngIf="item.idea_image !== null"
@@ -104,7 +104,7 @@
       </div>
     </ng-container>
     <div
-      class="card-header muuriDragHandle"
+      class="card-header muuriDragHandle cursor-pointer"
       (mousedown)="mouseDownEvent($event)"
       (mouseup)="mouseUpEvent($event, item)"
       [ngClass]="{ hidden: !item.pinned && !showUserName, 'host-pinned': !showUserName && item.pinned }"
@@ -167,7 +167,7 @@
     </div>
     <div
       cdkDragHandle
-      class="content muuriDragHandle"
+      class="content muuriDragHandle cursor-pointer"
       [ngClass]="{
         'no-image': (!item.idea_video && !item.idea_document && !item.idea_image) || showUserName,
         'host-pinned':
@@ -197,7 +197,7 @@
     <div class="feedback" *ngIf="areCommentsAllowed() || areHeartsAllowed()">
       <div
         cdkDragHandle
-        class="counts muuriDragHandle"
+        class="counts muuriDragHandle cursor-pointer"
         fxLayout="row"
         fxLayoutAlign="space-between center"
         (mousedown)="mouseDownEvent($event)"

@@ -27,7 +27,7 @@
       </div>
       <mat-icon
         *ngIf="canDeleteComment(comment.participant) || isAdmin"
-        class="delete-icon"
+        class="delete-icon cursor-pointer"
         (click)="removeComment(comment.id, item.id)">
         clear
       </mat-icon>
@@ -37,7 +37,7 @@
     <div 
       class="like-reply"
       fxLayout="row"
-      fxLayoutGap="8px"
+      fxLayoutGap="0px"
       fxLayoutAlign="start center">
       <!-- Like -->
       <div
@@ -45,7 +45,7 @@
         fxLayoutGap="4px"
         fxLayoutAlign="start center">
         <div 
-          class="like"
+          class="like cursor-pointer"
           benji-click-stop-propagation
           (click)="likeClicked(comment)">
           Like
@@ -53,18 +53,22 @@
         <div 
           fxLayout="row" 
           fxLayoutAlign="start center"
-          fxLayoutGap="2px">
+          fxLayoutGap="2px"
+          *ngIf="comment.comment_hearts?.length">
           <div
             *ngIf="hasUserHeartedComment(comment)" 
-            class="likes-count">
+            class="likes-count cursor-pointer"
+            (click)="likeClicked(comment)">
             <img src="/assets/img/cards/liked.svg">
           </div>
           <div
             *ngIf="!hasUserHeartedComment(comment)" 
-            class="likes-count">
+            class="likes-count cursor-pointer"
+            (click)="likeClicked(comment)">
             <img src="/assets/img/cards/like.svg">
           </div>
-          <div class="count">
+          <div class="count"
+            [ngStyle]="{'padding-right': comment.comment_hearts?.length ? '4px' : '0'}">
             {{ comment.comment_hearts?.length }}
           </div>
         </div>
@@ -72,7 +76,7 @@
       <!-- Reply -->
       <div
         *ngIf="canReply()"
-        class="reply" 
+        class="reply cursor-pointer"
         (click)="addReplyToCommentUI(comment)">
         Reply
       </div>

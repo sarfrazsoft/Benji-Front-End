@@ -798,6 +798,9 @@ export class ContextService {
   }
 
   brainstormAddCommentHeart(res: BrainstormSubmitIdeaHeartResponse, oldActivityState: UpdateMessage) {
+    if (!res) {
+      throw new Error('BE response not valid for event Add Comment heart');
+    }
     const board = this.boardsNavigationService.getBoard(
       res.board_id,
       oldActivityState.brainstormactivity.boards

@@ -272,8 +272,8 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
       comment['addingReply'] = true;
     } else {
       this.addingReply.emit(comment.parent_comment);
-      this.viewChanged.emit();
     }
+    this.viewChanged.emit();
   }
   addReplyToCommentUI2() {
     this.comment['addingReply'] = true;

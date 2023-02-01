@@ -82,6 +82,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   @Input() avatarSize: AvatarSize;
   @Input() userRole: IdeaUserRole;
   @Input() ideaDetailedDialogOpen: boolean;
+  @Input() layoutMode;
   @ViewChild('colName') colNameElement: ElementRef;
   @ViewChild('player') player: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
@@ -184,9 +185,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       this.oldVideo = this.item.idea_video.id;
     }
 
-    if (this.board.post_size) {
+    if (this.board?.post_size) {
       this.postSize = this.board.post_size;
-      this.hostAvatarSize = this.postSize === 'small' ? 'small' : 'medium';
+      if (this.layoutMode === 'thread') {
+        this.hostAvatarSize = 'large';
+      } else {
+        this.hostAvatarSize = this.postSize === 'small' ? 'small' : 'medium';
+      }
+      this.avatarSize = this.hostAvatarSize as AvatarSize;
     }
     this.brainstormService.selectedBoard$.pipe(untilDestroyed(this)).subscribe((board: Board) => {
       if (board) {
@@ -234,7 +240,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       }
     } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
       this.postSize = this.board.post_size;
-      this.hostAvatarSize = this.postSize === 'small' ? 'small' : 'medium';
+      if (this.layoutMode === 'thread') {
+        this.hostAvatarSize = 'large';
+      } else {
+        this.hostAvatarSize = this.postSize === 'small' ? 'small' : 'medium';
+      }
+      this.avatarSize = this.hostAvatarSize as AvatarSize;
     } else if (this.activityState.eventType !== EventTypes.notificationEvent) {
       this.localActivityState = this.activityState;
     }

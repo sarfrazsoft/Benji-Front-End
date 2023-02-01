@@ -215,9 +215,11 @@ benji-ms-brainstorming-activity {
                   top: 12px;
                 }
               }
-              .user-name .name,
-              .time-stamp {
+              .user-name .name {
                 font-size: 16px;
+              }
+              .time-stamp {
+                font-size: 14px;
               }
             }
             .content {
@@ -286,6 +288,14 @@ benji-ms-brainstorming-activity {
               }
               .user-feed .grey-bg {
                 padding: 12px;
+              }
+              .like-reply {
+                .like {
+                  font-size: 12px;
+                }
+                .reply {
+                  font-size: 12px;
+                }
               }
             }
             .heart,
@@ -530,6 +540,7 @@ benji-categorized-ideas {
     }
   }
 }
+
 .cdk-drag-preview.brainstorm-idea,
 .cdk-drag-dragging.brainstorm-idea,
 .brainstorm-idea {
@@ -540,7 +551,6 @@ benji-categorized-ideas {
   -moz-box-sizing: border-box;
   display: block;
   box-sizing: border-box;
-  cursor: pointer;
   position: relative;
   color: #616161;
   overflow: hidden;
@@ -561,8 +571,13 @@ benji-categorized-ideas {
   }
   &.medium,
   &.large {
-    .card-header .user-name .name {
-      font-size: 16px;
+    .card-header {
+      .time-stamp {
+        font-size: 14px;
+      }
+      .user-name .name {
+        font-size: 16px;
+      }
     }
     .content {
       &.no-image {
@@ -587,14 +602,29 @@ benji-categorized-ideas {
       .counts {
         padding-top: 16px;
       }
-    }
-
-
-    .like-reply {
-      .like, .reply {
-        font-size: 12px;
-        line-height: 12px;
+      .comments {
+        .comment {
+          .grey-bg {
+            padding: 12px;
+            .comment {
+              font-size: 14px;
+            }
+          }
+        }
+        .like-reply {
+          .like, .reply {
+            font-size: 12px;
+            line-height: 12px;
+          }
+        }
       }
+    }
+    .comment-reply .textarea-wrapper textarea {
+      font-size: 14px;
+    }
+    .comment-input-container .input-comment {
+      line-height: 20px;
+      font-size: 14px;
     }
   }
   .card-header {
@@ -734,7 +764,6 @@ benji-categorized-ideas {
   .comments {
     max-width: calc(100% - 32px);
     width: 100%;
-    word-break: break-all;
     .comment {
       .grey-bg {
         background: #f3f4f7;
@@ -753,7 +782,7 @@ benji-categorized-ideas {
           line-height: 16px;
           color: #37352f;
           font-weight: 400;
-          word-wrap: break-word;
+          word-break: break-word;
         }
       }
       .delete-icon {
@@ -843,6 +872,8 @@ benji-categorized-ideas {
   }
 }
 
+
+
 .comment-input-container {
   box-sizing: border-box;
   flex-grow: 1;
@@ -851,6 +882,7 @@ benji-categorized-ideas {
   border: 1px solid #e7e7e7;
   border-radius: 14px;
   padding: 6px 8px;
+  line-height: 16px;
   &.detailed {
     padding: 7px;
     border-radius: 18px;

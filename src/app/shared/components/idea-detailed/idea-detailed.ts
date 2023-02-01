@@ -28,6 +28,7 @@ import {
   Group,
   Idea,
   IdeaDocument,
+  PostSize,
   RemoveIdeaDocumentEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
@@ -204,6 +205,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   pdfCleared = false;
   emptyUserIdeaText: boolean;
 
+  // postSize: PostSize;
+  // hostAvatarSize: string;
+
   userSubmittedComment = false;
   userSubmittedSuccesfully = false;
   @ViewChild('scrollableArea', { static: false }) scrollableArea: ElementRef;
@@ -364,6 +368,11 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.activityState = this.data.activityState;
 
     this.lessonRunCode = this.activityState?.lesson_run?.lessonrun_code;
+
+    // if (this.data?.board?.post_size) {
+    //   this.postSize = this.data.board.post_size;
+    //   this.hostAvatarSize = this.postSize === 'small' ? 'small' : 'medium';
+    // }
   }
 
   ideaIsEdited(event) {

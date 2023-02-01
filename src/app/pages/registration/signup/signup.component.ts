@@ -1,15 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DeviceDetectorService } from 'ngx-device-detector';
-import { AuthService, ContextService } from 'src/app/services';
-import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
-
 import { SocialAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { AuthService, ContextService } from 'src/app/services';
 import { Branding, TeamUser, User } from 'src/app/services/backend/schema';
-
+declare const window: any;
 @Component({
   selector: 'benji-dashboard-signup',
   templateUrl: './signup.component.html',
@@ -27,6 +25,7 @@ export class SignupComponent implements OnInit {
   firstName = '';
   lastName = '';
   isDemoSite = true;
+  celloReferral;
 
   logo;
 
@@ -65,10 +64,9 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo = info.logo ? info.logo.toString() : "/assets/img/Benji_logo.svg";
+        this.logo = info.logo ? info.logo.toString() : '/assets/img/Benji_logo.svg';
       }
     });
 
@@ -92,8 +90,8 @@ export class SignupComponent implements OnInit {
           .get('name')
           .setValue(
             this.authService.userInvitation.suggested_first_name +
-            ' ' +
-            this.authService.userInvitation.suggested_last_name
+              ' ' +
+              this.authService.userInvitation.suggested_last_name
           );
         // this.form.get('lastName').setValue(this.authService.userInvitation.suggested_last_name);
       }
@@ -110,6 +108,11 @@ export class SignupComponent implements OnInit {
     if (this.roomCode && this.participantCode) {
       console.log(this.roomCode, this.participantCode);
     }
+
+    if (window.CelloAttribution('getReferral')) {
+      this.celloReferral = window.CelloAttribution('getReferral');
+    }
+    // window.CelloAttribution('attachAll');
   }
 
   checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
@@ -163,7 +166,7 @@ export class SignupComponent implements OnInit {
       console.log('First Name: ' + this.firstName);
       console.log('Last Name: ' + this.lastName);
       this.authService
-        .register(val.email.toLowerCase(), val.password, this.firstName, this.lastName)
+        .register(val.email.toLowerCase(), val.password, this.firstName, this.lastName, this.celloReferral)
         .subscribe(
           (res) => {
             console.log(res.user);
@@ -183,8 +186,8 @@ export class SignupComponent implements OnInit {
                     this.deviceService.isMobile()
                       ? this.router.navigate(['/participant/join'])
                       : this.roomCode
-                        ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
-                        : this.router.navigate(['/dashboard']);
+                      ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
+                      : this.router.navigate(['/dashboard']);
                     // }
                   } else {
                   }
@@ -240,5 +243,4 @@ export class SignupComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
-
 }

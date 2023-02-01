@@ -1051,23 +1051,36 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       .comments-container {
         margin-top: 16px;
         height: 100%;
-        .comment {
-          .comment-bg {
-            background: #f6f7f9;
-            border-radius: 8px;
-            padding: 8px;
-            .commentor-name {
-              color: #37352f;
-              font-size: 14px;
-              font-weight: 500;
-              text-transform: capitalize;
-            }
-            .comment-text {
-              color: #37352f;
-              font-weight: 400;
-              font-size: 14px;
-              margin-top: 4px;
-            }
+        .list-of-comments {
+          margin-bottom: 12px;
+          .user-feed {
+            .comments {
+              .like-reply {
+                .like {
+                  font-size: 12px;
+                }
+                .reply {
+                  font-size: 12px;
+                }
+              }
+              .comment {
+                .grey-bg {
+                  padding: 12px;
+                  .name {
+                    color: #37352f;
+                    font-size: 14px;
+                    font-weight: 500;
+                    text-transform: capitalize;
+                  }
+                  .comment {
+                    color: #37352f;
+                    font-weight: 400;
+                    font-size: 14px;
+                    margin-top: 4px;
+                  }
+                } 
+              } 
+            } 
           }
         }
       }
@@ -1086,6 +1099,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         width: 100%;
         overflow: auto;
         max-height: 70vh;
+        // TODO sarfraz height: 100% doesn't let 
+        // you add a comment when there are comments just reaching
+        // the comment box
         height: 100%;
         min-height: 432px;
         &::-webkit-scrollbar {
@@ -1373,23 +1389,52 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       }
       .comments-container {
         margin-top: 16px;
-        .comment {
-          margin-bottom: 8px;
-          .comment-bg {
-            background: #f6f7f9;
-            border-radius: 8px;
-            padding: 8px;
-            .commentor-name {
-              color: #37352f;
-              font-size: 14px;
-              font-weight: 500;
-              text-transform: capitalize;
+        // .comment {
+        //   margin-bottom: 8px;
+        //   .comment-bg {
+        //     background: #f6f7f9;
+        //     border-radius: 8px;
+        //     padding: 8px;
+        //     .commentor-name {
+        //       color: #37352f;
+        //       font-size: 14px;
+        //       font-weight: 500;
+        //       text-transform: capitalize;
+        //     }
+        //     .comment-text {
+        //       color: #37352f;
+        //       font-weight: 400;
+        //       font-size: 14px;
+        //       margin-top: 4px;
+        //     }
+        //   }
+        // }
+        .list-of-comments {
+          margin-bottom: 12px;
+          .user-feed {
+            .comments {
+              .comment {
+                margin-bottom: 8px;
+                .grey-bg {
+                  .name {
+                    color: #37352f;
+                    font-size: 14px;
+                    font-weight: 500;
+                    text-transform: capitalize;
+                  }
+                  .comment {
+                    color: #37352f;
+                    font-weight: 400;
+                    font-size: 14px;
+                    margin-top: 4px;
+                  }
+                } 
+              } 
             }
-            .comment-text {
-              color: #37352f;
-              font-weight: 400;
-              font-size: 14px;
-              margin-top: 4px;
+            .like-reply {
+              .like, .reply {
+                font-size: 12px;
+              }
             }
           }
         }

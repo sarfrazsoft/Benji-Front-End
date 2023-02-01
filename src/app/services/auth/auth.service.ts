@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
@@ -16,6 +16,27 @@ export interface LoginResponse {
   user: TeamUser;
   token: string;
 }
+
+export interface CelloToken {
+  product_id: string;
+  token: string;
+}
+
+interface RegisteringUser {
+  username: string;
+  password1: string;
+  password2: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  invitation?: string;
+  invitation_token?: number;
+  meta: {
+    celloRefferal?: string;
+  };
+}
+
+declare const window: any;
 
 @Injectable()
 export class AuthService {
@@ -37,38 +58,75 @@ export class AuthService {
     // localStorage.setItem('userRole', 'mainscreenUser');
   }
 
-  register(email: string, password: string, firstName: string, lastName: string) {
+  register(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    celloRefferal: string
+  ): Observable<any | HttpErrorResponse> {
+    // Logout the user before registering
     this.logout();
-    let obj;
-    if (this.userInvitation) {
-      obj = {
-        // TODO get rid of username when backend gets rid of it
-        // Is there a character limit on the username?
-        username: this.convertEmailToUserName(email),
-        password1: password,
-        password2: password,
-        first_name: firstName,
-        last_name: lastName ? lastName : ' ',
-        email: email,
-        invitation: this.userInvitation ? this.userInvitation.id : null,
-        invitation_token: this.invitationToken ? this.invitationToken : null,
-      };
-    } else {
-      obj = {
-        // TODO get rid of username when backend gets rid of it
-        // Is there a character limit on the username?
-        username: this.convertEmailToUserName(email),
-        password1: password,
-        password2: password,
-        first_name: firstName,
-        last_name: lastName ? lastName : ' ',
-        email: email,
-      };
-    }
-    return this.http.post(global.apiRoot + '/rest-auth/registration/', obj).pipe(
-      map((res: Response) => res),
-      catchError((err) => of(err.error))
+
+    // Create the user object
+    const authUser = this.createUserObject(
+      email,
+      password,
+      firstName,
+      lastName,
+      celloRefferal,
+      this.userInvitation,
+      this.invitationToken
     );
+
+    // Make the HTTP post request
+    return this.http
+      .post<any>(global.apiRoot + '/rest-auth/registration/', authUser)
+      .pipe(catchError((err: HttpErrorResponse) => of(err)));
+  }
+
+  createUserObject(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName?: string,
+    celloRefferal?: string,
+    userInvitation?: any,
+    invitationToken?: number
+  ): RegisteringUser {
+    let obj: RegisteringUser;
+    try {
+      if (userInvitation) {
+        obj = {
+          username: this.convertEmailToUserName(email),
+          password1: password,
+          password2: password,
+          first_name: firstName,
+          last_name: lastName ? lastName : ' ',
+          email: email,
+          invitation: userInvitation ? userInvitation.id : null,
+          invitation_token: invitationToken ? invitationToken : null,
+          meta: {
+            celloRefferal: celloRefferal ?? null,
+          },
+        };
+      } else {
+        obj = {
+          username: this.convertEmailToUserName(email),
+          password1: password,
+          password2: password,
+          first_name: firstName,
+          last_name: lastName ? lastName : ' ',
+          email: email,
+          meta: {
+            celloRefferal: celloRefferal ?? null,
+          },
+        };
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    return obj;
   }
 
   checkConfirmationCode(code: string) {
@@ -114,6 +172,27 @@ export class AuthService {
     this.layoutService.hideSidebar = false;
     localStorage.setItem('user', JSON.stringify(res.user));
     localStorage.setItem('benji_branding', JSON.stringify(res.user.branding));
+  }
+
+  startCello() {
+    this.http
+      .get(global.apiRoot + '/course_details/cello-token/')
+      .pipe(
+        map((celloToken: CelloToken) => {
+          return celloToken;
+        }),
+        catchError((err) => {
+          console.log(err);
+          return of(err.error);
+        })
+      )
+      .subscribe((t: CelloToken) => {
+        window.Cello('boot', {
+          productId: t.product_id,
+          token: t.token,
+          showOnBoot: true,
+        });
+      });
   }
 
   createParticipant(username: string, enteredRoomCode: number, userEmail?: string, user?: number) {
@@ -320,5 +399,4 @@ export class AuthService {
         })
       );
   }
-
 }

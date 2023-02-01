@@ -9,7 +9,7 @@
           <div class="google-text">Sign up with Google</div>
         </div>
         <div class="or"><span>or</span></div> -->
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" data-cello="true">
           <div>
             <input
               class="sign-up-field w-input"
@@ -95,32 +95,6 @@
               <div *ngIf="password.errors.notEquivalent">Password and Confirm password do not match.</div>
             </mat-error>
           </div>
-          <!-- <div>
-            <input 
-              class="sign-up-field w-input"
-              maxlength="256"
-              required
-              type="password"
-              formControlName="confirmPassword"
-              autocomplete="new-password"
-              placeholder="Confirm Password"
-            />
-            <mat-error
-              *ngIf="
-                confirmPassword.invalid &&
-                (confirmPassword.dirty || confirmPassword.touched) &&
-                isSignupClicked
-              "
-              class="alert alert-danger"
-            >
-              <div *ngIf="confirmPassword.errors.required">
-                Confirm password is required.
-              </div>
-              <div *ngIf="confirmPassword.errors.notEquivalent">
-                Password and Confirm password do not match.
-              </div>
-            </mat-error>
-          </div> -->
           <div class="tos-text">
             By signing up you agree to the
             <a href="https://guides.mybenji.com/terms-of-use" class="primary-color">Terms and Conditions</a>

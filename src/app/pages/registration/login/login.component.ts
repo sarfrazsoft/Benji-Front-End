@@ -1,16 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DeviceDetectorService } from 'ngx-device-detector';
-import { AuthService, ContextService } from 'src/app/services';
-import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
-
 import { SocialAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { AuthService, ContextService } from 'src/app/services';
 import { LoginResponse } from 'src/app/services/auth/auth.service';
 import { Branding, TeamUser, User } from 'src/app/services/backend/schema';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
   selector: 'benji-dashboard-login',
@@ -59,6 +58,8 @@ export class LoginComponent implements OnInit {
       });
       this.user = user;
     });
+
+    // this.window = this.document.defaultView;
   }
 
   signInWithGoogle(): void {
@@ -127,8 +128,8 @@ export class LoginComponent implements OnInit {
                 this.deviceDetectorService.isMobile()
                   ? this.router.navigate(['/participant/join'])
                   : this.joinSessionScreen
-                    ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
-                    : this.router.navigate(['/dashboard']);
+                  ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
+                  : this.router.navigate(['/dashboard']);
               }
             }
           }

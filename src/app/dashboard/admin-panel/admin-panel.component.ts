@@ -74,6 +74,8 @@ export class AdminPanelComponent implements OnInit, OnChanges {
 
     this.authService.startIntercom();
 
+    this.authService.startCello();
+
     this.adminName = this.contextService.user.first_name;
     this.userId = this.contextService.user.id;
     this.userEmail = this.contextService.user.email;
