@@ -71,6 +71,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   avgServerTimeOffset: number;
   facilitatorConnected = false;
   facilitatorConnectionFailed = false;
+  facilitatorStillConnecting = true;
   timer;
 
   participantCode: number;
@@ -202,18 +203,31 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       this.lessonRun,
       this.participantDetails ? this.participantDetails.participant_code : null
     );
-    this.socket.pipe(distinctUntilKeyChanged('event_id')).subscribe(
-      (serverMessage: ServerMessage) => {
-        this.handleServerMessage(serverMessage);
-      },
-      (err) => {
-        LogRocket.error('Error subscribing to to socket', err);
-        this.connectAndSubscribe();
-      },
-      () => {
-        console.log('complete');
-      }
-    );
+    this.socket
+      .map((v: ServerMessage) => {
+        if (v.servernotification?.notification_type === 'facilitator_disconnected') {
+          this.facilitatorConnectionFailed = true;
+          this.facilitatorStillConnecting = false;
+        } else if (v.servernotification?.notification_type === 'facilitator_connected') {
+          this.facilitatorConnectionFailed = false;
+          this.facilitatorStillConnecting = false;
+        }
+        return v;
+      })
+      .pipe(distinctUntilKeyChanged('event_id'))
+      .subscribe(
+        (serverMessage: ServerMessage) => {
+          this.handleServerMessage(serverMessage);
+        },
+        (err) => {
+          LogRocket.error('Error subscribing to to socket', err);
+          this.connectAndSubscribe();
+          this.facilitatorStillConnecting = true;
+        },
+        () => {
+          console.log('complete');
+        }
+      );
   }
 
   isConnected() {
@@ -227,6 +241,8 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   handleServerMessage(msg: ServerMessage) {
     console.log('msg in handleServerMessage on event' + msg.eventtype);
     console.log(msg);
+    this.facilitatorStillConnecting = false;
+
     if (msg.eventtype === EventTypes.notificationEvent) {
       this.serverMessage = {
         ...this.serverMessage,
@@ -605,12 +621,14 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         if (notify_type === 'no_facilitator') {
           console.log('facilitator not connected');
           this.facilitatorConnected = false;
+          this.facilitatorStillConnecting = false;
           this.facilitatorConnectionFailed = true;
           this.socketService.restartLesson(this.lessonRun.id);
         }
       }
     } else if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
       this.facilitatorConnected = true;
+      this.facilitatorStillConnecting = false;
       this.serverMessage = {
         ...msg.updatemessage,
         eventType: msg.eventtype,

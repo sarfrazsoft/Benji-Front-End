@@ -603,6 +603,10 @@ benji-categorized-ideas {
         padding-top: 16px;
       }
       .comments {
+        .comment-reply-wrapper .comment-reply .textarea-wrapper textarea {
+          font-size: 14px;
+          line-height: 20px;
+        }
         .comment {
           .grey-bg {
             padding: 12px;
@@ -619,9 +623,7 @@ benji-categorized-ideas {
         }
       }
     }
-    .comment-reply .textarea-wrapper textarea {
-      font-size: 14px;
-    }
+
     .comment-input-container .input-comment {
       line-height: 20px;
       font-size: 14px;

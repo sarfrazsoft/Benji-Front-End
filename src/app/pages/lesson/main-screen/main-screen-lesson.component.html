@@ -64,7 +64,7 @@
       </ng-container>
 
       <!-- create new component -->
-      <ng-container *ngIf="!(isConnected() && serverMessage)">
+      <ng-container *ngIf="facilitatorStillConnecting">
         <benji-loading-screen
           [title]="'Loading your space'"
           [subTitle]="'This might take a moment or so...'"
