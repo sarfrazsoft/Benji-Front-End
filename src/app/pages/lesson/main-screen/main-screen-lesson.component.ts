@@ -19,7 +19,7 @@ import { BoardBackgroundService } from 'src/app/services/board-background.servic
 import { UtilsService } from 'src/app/services/utils.service';
 import { MainScreenToolbarComponent } from 'src/app/ui-components/main-screen-toolbar/main-screen-toolbar.component';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
-
+declare const window: any;
 @Component({
   selector: 'benji-main-screen-lesson',
   templateUrl: './main-screen-lesson.component.html',
@@ -119,6 +119,8 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   ];
 
   ngAfterViewInit() {
+    window.Cello('hide');
+
     this.innerWidth = window.innerWidth;
 
     const participantObservable$ = defer(() => this.permissionsService.hasPermission('PARTICIPANT'));
