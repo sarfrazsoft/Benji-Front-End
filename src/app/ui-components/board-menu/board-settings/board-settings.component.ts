@@ -73,6 +73,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
 
   showBottom = true;
   settingTypes = SettingsTypes;
+  boardTypes = BoardTypes;
   lessonRunCode: number;
 
   constructor(

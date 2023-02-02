@@ -99,7 +99,12 @@ benji-ms-brainstorming-activity {
       }
     }
     .benji-horizontal-rule {
-      color: #616161;
+      color: #e7e7e7;
+      border-top: 1px solid;
+      border-style: solid;
+      border-bottom: unset;
+      border-left: unset;
+      border-right: unset;
     }
   }
 
@@ -292,11 +297,12 @@ benji-ms-brainstorming-activity {
                   line-height: 20px;
                 }
                 .grey-bg {
-                 padding: 12px;
-               }
+                  padding: 12px;
+                }
               }
               .like-reply {
-                .like, .reply {
+                .like,
+                .reply {
                   font-size: 12px;
                 }
               }
@@ -619,7 +625,8 @@ benji-categorized-ideas {
           }
         }
         .like-reply {
-          .like, .reply {
+          .like,
+          .reply {
             font-size: 12px;
             line-height: 12px;
           }
@@ -754,7 +761,6 @@ benji-categorized-ideas {
       color: #bdbdbd;
     }
 
-
     .post-comment {
       .session-participants {
         margin-top: 2px;
@@ -810,7 +816,8 @@ benji-categorized-ideas {
       margin-left: 4px;
       margin-top: 4px;
 
-      .like, .reply {
+      .like,
+      .reply {
         font-size: 10px;
         color: #828282;
         font-family: 'Inter';
@@ -821,7 +828,7 @@ benji-categorized-ideas {
         padding: 4px;
         transition: 0.2s;
         &:hover {
-          background: #F3F4F7;
+          background: #f3f4f7;
         }
       }
       .likes-count {
@@ -841,12 +848,12 @@ benji-categorized-ideas {
       margin-top: 8px;
       .comment-reply {
         .textarea-wrapper {
-          border: 1px solid #E7E7E7;
+          border: 1px solid #e7e7e7;
           border-radius: 8px;
           padding: 8px 12px;
           transition: 0.2s;
           &:focus-within {
-            border-color: #555BEA;
+            border-color: #555bea;
           }
           textarea {
             padding: 0px;
@@ -868,16 +875,14 @@ benji-categorized-ideas {
           padding: 6px 12px;
           border-radius: 8px;
           &.cancel {
-            color: #37352F;
-            background-color: #F3F4F7;
+            color: #37352f;
+            background-color: #f3f4f7;
           }
         }
       }
     }
   }
 }
-
-
 
 .comment-input-container {
   box-sizing: border-box;
@@ -952,8 +957,6 @@ benji-categorized-ideas {
     }
   }
 }
-
-
 
 .user-name {
   .name {

@@ -1,16 +1,17 @@
-<div class="title">Board Status</div>
+<div class="title">{{ boardType === boardTypes.PAGE ? 'Page Status' : 'Board Status' }}</div>
 <div class="board-status">
   <ng-select
     class="board-status-dropdown"
-    appearance="outline" 
+    appearance="outline"
     placeholder="Status"
-    [items]="boardStatusDropdown"
+    [items]="statusDropdown"
     bindValue="value"
     bindLabel="name"
     [searchable]="false"
     [clearable]="false"
     [(ngModel)]="currentboardStatus"
     (change)="setBoardStatus()"
-    dropdownPosition="bottom">
+    dropdownPosition="bottom"
+  >
   </ng-select>
 </div>

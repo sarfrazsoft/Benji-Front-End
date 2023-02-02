@@ -5,12 +5,12 @@
   fxLayoutGap="24px"
 >
   <div fxLayout="row" fxLayoutAlign="space-between">
-    <div class="board-settings">Board Settings</div>
+    <div class="board-settings">{{ boardType === boardTypes.PAGE ? 'Page Settings' : 'Board Settings' }}</div>
     <mat-icon class="close" (click)="closeNav()">clear</mat-icon>
   </div>
 
   <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.TOPIC_MEDIA)">
-    <div class="title">{{ boardType === 'page' ? 'Cover Photo' : 'Topic Media' }}</div>
+    <div class="title">{{ boardType === boardTypes.PAGE ? 'Cover Photo' : 'Topic Media' }}</div>
     <div class="topic-media">
       <!-- Topic media -->
       <benji-topic-media
@@ -23,7 +23,8 @@
   </div>
 
   <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.BOARD_STATUS)">
-    <benji-board-status (sendMessage)="sendMessage.emit($event)"> </benji-board-status>
+    <benji-board-status (sendMessage)="sendMessage.emit($event)" [boardType]="boardType">
+    </benji-board-status>
   </div>
 
   <!-- Authorship on cards -->
@@ -127,12 +128,18 @@
     <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
       <div class="setting" benji-click-stop-propagation fxLayout="row" fxLayoutAlign="space-between">
         <div>
-          <div class="label">Share Board</div>
-          <div class="sub-label">Share board link to invite participants</div>
+          <div class="label">Share</div>
+          <div class="sub-label">Invite participants by sharing this link</div>
         </div>
         <div class="option primary-color" (click)="copyLink()">Copy link</div>
       </div>
-      <div class="setting" benji-click-stop-propagation fxLayout="row" fxLayoutAlign="space-between">
+      <div
+        *ngIf="boardType !== 'page'"
+        class="setting"
+        benji-click-stop-propagation
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+      >
         <div>
           <div class="label">Clear Board</div>
           <div class="sub-label">Delete all posts on the board</div>

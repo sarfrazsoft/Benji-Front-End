@@ -310,6 +310,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   updateLessonInfo() {
+    this.title.setTitle(this.activityState?.lesson_run?.lesson?.lesson_name ?? 'Benji');
     this.brainstormService.lessonName = this.activityState.lesson_run.lesson.lesson_name;
     this.brainstormService.lessonDescription = this.activityState.lesson_run.lesson.lesson_description;
     this.brainstormService.lessonImage = this.lessonService.setCoverPhoto(

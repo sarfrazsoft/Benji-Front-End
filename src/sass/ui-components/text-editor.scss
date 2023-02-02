@@ -21,12 +21,15 @@ benji-tiptap-editor {
     }
     h2 {
       font-size: 24px;
+      line-height: 32px;
+      margin-bottom: 8px;
       font-weight: 600;
       color: #37352f;
     }
     h3 {
       font-size: 20px;
       font-weight: 600;
+      margin-bottom: 8px;
       color: #37352f;
     }
   }
@@ -275,7 +278,7 @@ pre.callout-container {
     max-width: 904px;
     margin: 0px auto;
     background: #ffffff;
-    border: 1px solid #e2e6ec;
+    filter: drop-shadow(0px 0.5px 3px rgba(55, 53, 47, 0.2));
     border-radius: 16px;
     color: #37352f;
     box-sizing: border-box;

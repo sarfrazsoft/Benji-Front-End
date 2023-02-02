@@ -1,14 +1,16 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BrainstormService } from 'src/app';
-import { Board, BoardStatus, BrainstormChangeBoardStatusEvent } from 'src/app/services/backend/schema';
+import { Board, BoardStatus, BoardTypes, BrainstormChangeBoardStatusEvent } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
 @Component({
   selector: 'benji-board-status',
   templateUrl: 'board-status.component.html',
 })
 export class BoardStatusComponent implements OnInit {
+  @Input() boardType: BoardTypes;
   @Output() sendMessage = new EventEmitter<any>();
 
+  boardTypes = BoardTypes;
   currentboardStatus: BoardStatus;
 
   boardStatusDropdown: Array<{ value: BoardStatus; name: string }> = [
@@ -29,8 +31,21 @@ export class BoardStatusComponent implements OnInit {
       name: 'Private',
     },
   ];
+
+  pageStatusDropdown: Array<{ value: BoardStatus; name: string }> = [
+    {
+      value: 'open',
+      name: 'Open',
+    },
+    {
+      value: 'closed',
+      name: 'Hidden',
+    }
+  ];
+
   defaultSize = 'small';
   selectedBoard: Board;
+  statusDropdown;
 
   constructor(private brainstormService: BrainstormService, private boardStatusService: BoardStatusService) {}
 
@@ -46,6 +61,8 @@ export class BoardStatusComponent implements OnInit {
         this.selectedBoardChanged(board);
       }
     });
+
+    this.statusDropdown = this.boardType === this.boardTypes.PAGE ? this.pageStatusDropdown : this.boardStatusDropdown;
   }
 
   selectedBoardChanged(board: Board) {
@@ -54,7 +71,6 @@ export class BoardStatusComponent implements OnInit {
   }
 
   setBoardStatus() {
-    console.log(this.selectedBoard, this.currentboardStatus);
     this.sendMessage.emit(
       new BrainstormChangeBoardStatusEvent(this.currentboardStatus, this.selectedBoard.id)
     );

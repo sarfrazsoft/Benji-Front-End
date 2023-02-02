@@ -10,6 +10,17 @@ import {
   trigger,
 } from '@angular/animations';
 
+export const open = (time: number = 300) =>
+  trigger('open', [
+    transition(':enter', [
+      sequence([
+        style({ height: '0px', opacity: '0', 'overflow-y': 'hidden' }),
+        animate(`${time}ms ease-in`, style({ height: '*', opacity: 1 })),
+        style({ 'overflow-y': 'auto', 'max-height': '50px' }),
+      ]),
+    ]),
+  ]);
+
 export const openClose = (time: number = 300) =>
   trigger('openClose', [
     transition(':enter', [

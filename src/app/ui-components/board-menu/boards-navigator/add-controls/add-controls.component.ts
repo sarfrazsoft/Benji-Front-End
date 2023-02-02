@@ -8,12 +8,12 @@ import {
   EventTypes,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { openClose } from 'src/app/shared/util/animations';
+import { open } from 'src/app/shared/util/animations';
 
 @Component({
   selector: 'benji-add-controls',
   templateUrl: 'add-controls.component.html',
-  animations: [openClose()],
+  animations: [open()],
 })
 export class AddControlsComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
@@ -50,6 +50,7 @@ export class AddControlsComponent implements OnInit, OnChanges {
         { boardType: BoardTypes.POSTS }
       )
     );
+    this.close();
   }
 
   addPage(previousBoard: Board) {
@@ -63,6 +64,7 @@ export class AddControlsComponent implements OnInit, OnChanges {
         { boardType: BoardTypes.PAGE }
       )
     );
+    this.close();
   }
 
   toggleMeetingMode($event) {
@@ -73,7 +75,7 @@ export class AddControlsComponent implements OnInit, OnChanges {
     this.isAddNewPopupShown = !this.isAddNewPopupShown;
   }
 
-  close($event) {
+  close() {
     if (this.isAddNewPopupShown) {
       this.isAddNewPopupShown = false;
     }
