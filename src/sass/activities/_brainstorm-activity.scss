@@ -286,14 +286,17 @@ benji-ms-brainstorming-activity {
               .post-comment .session-participants {
                 margin-top: 3px;
               }
-              .user-feed .grey-bg {
-                padding: 12px;
+              .user-feed {
+                .comment-reply-wrapper .comment-reply .textarea-wrapper textarea {
+                  font-size: 14px;
+                  line-height: 20px;
+                }
+                .grey-bg {
+                 padding: 12px;
+               }
               }
               .like-reply {
-                .like {
-                  font-size: 12px;
-                }
-                .reply {
+                .like, .reply {
                   font-size: 12px;
                 }
               }

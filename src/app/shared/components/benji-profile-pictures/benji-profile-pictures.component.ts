@@ -36,13 +36,13 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
       this.names.push(this.activitiesService.getParticipantName(this.activityState, participantCode));
       this.initials.push(this.getInitials(participantCode));
     }
-    console.log('names');
-    console.log(this.names);
-    console.log('initials');
-    console.log(this.initials);
+    // console.log('names');
+    // console.log(this.names);
+    // console.log('initials');
+    // console.log(this.initials);
 
-    console.log(this.activityState);
-    console.log(this.participantCodes);
+    // console.log(this.activityState);
+    // console.log(this.participantCodes);
   }
 
   ngOnChanges(): void {

@@ -1056,10 +1056,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
           .user-feed {
             .comments {
               .like-reply {
-                .like {
-                  font-size: 12px;
-                }
-                .reply {
+                .like, .reply {
                   font-size: 12px;
                 }
               }
@@ -1079,7 +1076,11 @@ ng-dropdown-panel.post-idea-categories-dropdown {
                     margin-top: 4px;
                   }
                 } 
-              } 
+              }
+              .comment-reply-wrapper .comment-reply .textarea-wrapper textarea {
+                font-size: 14px;
+                line-height: 20px;
+              }
             } 
           }
         }
@@ -1389,30 +1390,14 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       }
       .comments-container {
         margin-top: 16px;
-        // .comment {
-        //   margin-bottom: 8px;
-        //   .comment-bg {
-        //     background: #f6f7f9;
-        //     border-radius: 8px;
-        //     padding: 8px;
-        //     .commentor-name {
-        //       color: #37352f;
-        //       font-size: 14px;
-        //       font-weight: 500;
-        //       text-transform: capitalize;
-        //     }
-        //     .comment-text {
-        //       color: #37352f;
-        //       font-weight: 400;
-        //       font-size: 14px;
-        //       margin-top: 4px;
-        //     }
-        //   }
-        // }
         .list-of-comments {
           margin-bottom: 12px;
           .user-feed {
             .comments {
+              .comment-reply-wrapper .comment-reply .textarea-wrapper textarea {
+                font-size: 14px;
+                line-height: 20px;
+              }
               .comment {
                 margin-bottom: 8px;
                 .grey-bg {

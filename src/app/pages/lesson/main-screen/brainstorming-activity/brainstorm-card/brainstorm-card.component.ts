@@ -188,7 +188,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     if (this.board?.post_size) {
       this.postSize = this.board.post_size;
       if (this.layoutMode === 'thread') {
-        this.hostAvatarSize = 'large';
+        this.hostAvatarSize = 'medium';
       } else {
         this.hostAvatarSize = this.postSize === 'small' ? 'small' : 'medium';
       }
@@ -241,7 +241,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
       this.postSize = this.board.post_size;
       if (this.layoutMode === 'thread') {
-        this.hostAvatarSize = 'large';
+        this.hostAvatarSize = 'medium';
       } else {
         this.hostAvatarSize = this.postSize === 'small' ? 'small' : 'medium';
       }

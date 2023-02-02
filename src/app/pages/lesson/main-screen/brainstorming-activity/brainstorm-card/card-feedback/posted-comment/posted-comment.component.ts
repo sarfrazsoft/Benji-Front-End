@@ -107,6 +107,7 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
             comment: v.comment,
             comment_hearts: [],
             participant: v.participant,
+            parent_comment: v.parent_comment,
           });
         }
       }
@@ -250,6 +251,7 @@ export class PostedCommentComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   setCommentHeart(comment: IdeaComment): void {
+    console.log(comment, this.allowReply);
     if (this.allowReply) {
       this.sendMessage.emit(new BrainstormSubmitCommentHeartEvent(comment.id, null));
     } else {

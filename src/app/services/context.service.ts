@@ -798,51 +798,62 @@ export class ContextService {
   }
 
   brainstormAddCommentHeart(res: BrainstormSubmitIdeaHeartResponse, oldActivityState: UpdateMessage) {
-    if (!res) {
-      throw new Error('BE response not valid for event Add Comment heart');
-    }
-    const board = this.boardsNavigationService.getBoard(
-      res.board_id,
-      oldActivityState.brainstormactivity.boards
-    );
-
-    // liking a comment
-    // brainstormidea_id: 6106
-    // heart: true
-    // id: 55
-    // parent: null
-    // parent_comment: 2395
-    // participant: null
-
-    if (board) {
-      const existingIdea = this.getIdea(res.brainstormidea_id, board.brainstormcategory_set);
-      if (existingIdea) {
-        if (res.parent_comment && res.parent) {
-          // child comment was liked
-          const existingComment = find(existingIdea.comments, { id: res.parent_comment });
-
-          const childComment = find(existingComment?.reply_comments, { id: res.parent });
-          if (childComment) {
-            childComment.comment_hearts.push({
-              id: res.id,
-              participant: res.participant,
-            });
-          }
-        } else if (res.parent_comment) {
-          const existingComment = find(existingIdea.comments, { id: res.parent_comment });
-          if (existingComment) {
-            existingComment.comment_hearts.push({
-              id: res.id,
-              participant: res.participant,
-            });
-          }
-        }
+    try {
+      if (!res) {
+        throw new Error('BE response not valid for event Add Comment heart');
       }
-    }
+      const board = this.boardsNavigationService.getBoard(
+        res.board_id,
+        oldActivityState.brainstormactivity.boards
+      );
 
-    // notify the service that a comment has a heart
-    this.brainstormEventService.ideaCommentAddHeartEvent = res as BrainstormSubmitIdeaHeartResponse;
-    this.brainstormEventService.activityState = oldActivityState;
+      // liking a comment
+      // brainstormidea_id: 6106
+      // heart: true
+      // id: 55
+      // parent: null
+      // parent_comment: 2395
+      // participant: null
+
+      if (!board) {
+        throw new Error('Board not found');
+      }
+      const existingIdea = this.getIdea(res.brainstormidea_id, board.brainstormcategory_set);
+      if (!existingIdea) {
+        throw new Error('Idea not found');
+      }
+      if (res.parent_comment && res.parent) {
+        // child comment was liked
+        const existingComment = find(existingIdea.comments, { id: res.parent_comment });
+
+        if (!existingComment) {
+          throw new Error('Parent comment not found');
+        }
+        const childComment = find(existingComment?.reply_comments, { id: res.parent });
+        if (!childComment) {
+          throw new Error('Child comment not found');
+        }
+        childComment.comment_hearts.push({
+          id: res.id,
+          participant: res.participant,
+        });
+      } else if (res.parent_comment) {
+        const existingComment = find(existingIdea.comments, { id: res.parent_comment });
+        if (!existingComment) {
+          throw new Error('Comment not found');
+        }
+        existingComment.comment_hearts.push({
+          id: res.id,
+          participant: res.participant,
+        });
+      }
+
+      // notify the service that a comment has a heart
+      this.brainstormEventService.ideaCommentAddHeartEvent = res as BrainstormSubmitIdeaHeartResponse;
+      this.brainstormEventService.activityState = oldActivityState;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   brainstormRemoveCommentHeart(res: BrainstormRemoveCommentHeartResponse, oldActivityState: UpdateMessage) {
