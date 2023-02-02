@@ -25,7 +25,7 @@
         [participantCode]="participantCode"
         (deleteIdea)="delete($event)"
         (ideaDetailedDialogOpened)="ideaDetailedDialogOpened($event)"
-        (ideaDetailedDialogClosed)="ideaDetailedDialogClosed($event)"
+        (ideaDetailedDialogClosed)="refreshGridLayout(); ideaDetailedDialogClosed($event)"
         [ideaDetailedDialogOpen]="ideaDetailedDialogOpen"
         (viewChanged)="refreshGridLayout()"
         [sendMessage]="sendMessage"
