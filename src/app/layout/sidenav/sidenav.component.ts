@@ -5,6 +5,7 @@ import { AuthService, ContextService } from 'src/app/services';
 import { Branding, UserSubscription } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { FolderInfo, LessonGroupService } from 'src/app/services/lesson-group.service';
+import { environment } from 'src/environments/environment';
 import {
   ConfirmationDialogComponent,
   JoinSessionDialogComponent,
@@ -113,21 +114,19 @@ export class SidenavComponent implements OnInit {
     ],
   };
 
-  billingSection =
-    {
-      navName: 'Billing',
-      link: 'billing',
-      icon: '/assets/img/dashboard/billing.svg',
-      hoverIcon: '/assets/img/dashboard/billing-hover.svg',
-    };
+  billingSection = {
+    navName: 'Billing',
+    link: 'billing',
+    icon: '/assets/img/dashboard/billing.svg',
+    hoverIcon: '/assets/img/dashboard/billing-hover.svg',
+  };
 
-  upgradeSection =
-    {
-      navName: 'Upgrade to Pro',
-      link: 'upgrade',
-      icon: '/assets/img/dashboard/upgrade.svg',
-      hoverIcon: '/assets/img/dashboard/upgrade-hover.svg',
-    };
+  upgradeSection = {
+    navName: 'Upgrade to Pro',
+    link: 'upgrade',
+    icon: '/assets/img/dashboard/upgrade.svg',
+    hoverIcon: '/assets/img/dashboard/upgrade-hover.svg',
+  };
 
   proplanSection;
 
@@ -198,7 +197,12 @@ export class SidenavComponent implements OnInit {
     this.contextService.user$.subscribe((user) => {
       this.sidenavTopSections = [this.dashboard, this.notifications];
 
-      this.sidenavBottomSections = [this.templatesSection, this.accountSection, this.helpCenter, this.authSection];
+      this.sidenavBottomSections = [
+        this.templatesSection,
+        this.accountSection,
+        this.helpCenter,
+        this.authSection,
+      ];
     });
   }
 
@@ -230,10 +234,10 @@ export class SidenavComponent implements OnInit {
           const request = $event.isNew
             ? this.lessonGroupService.createNewFolder(folderInfo)
             : this.lessonGroupService.updateFolder({
-              title: folderInfo.title,
-              id: $event.folderId,
-              lessonsIds: this.folderLessonsIDs,
-            });
+                title: folderInfo.title,
+                id: $event.folderId,
+                lessonsIds: this.folderLessonsIDs,
+              });
           request.subscribe(
             (data) => {
               this.getAllFolders();
@@ -307,8 +311,9 @@ export class SidenavComponent implements OnInit {
   }
 
   goProplan(link: string) {
-    window.location.href = link === 'billing'
-      ? 'https://billing.stripe.com/p/login/28o00P72N4P0clqcMM'
-      : 'https://buy.stripe.com/test_aEU29ucVY47G82AdQQ?prefilled_email=' + this.userEmail + '&client_reference_id=' + this.userId;
+    window.location.href =
+      link === 'billing'
+        ? 'https://billing.stripe.com/p/login/28o00P72N4P0clqcMM'
+        : environment.stripe + '?prefilled_email=' + this.userEmail + '&client_reference_id=' + this.userId;
   }
 }

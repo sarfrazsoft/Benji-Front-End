@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Intercom } from 'ng-intercom';
 import { AuthService, ContextService } from 'src/app/services';
 import { TeamUser, UserSubscription } from 'src/app/services/backend/schema';
-import { SessionSettingsDialogComponent, ProPlanDialogComponent } from '../../shared';
+import { ProPlanDialogComponent, SessionSettingsDialogComponent } from '../../shared';
 import { AdminService } from './services/admin.service';
 
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
@@ -16,6 +16,7 @@ import { DOCUMENT } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { LessonGroupService } from 'src/app/services/lesson-group.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { environment } from 'src/environments/environment';
 import doc from './../../shared/ngx-editor/doc';
 
 @Component({
@@ -143,10 +144,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
       .subscribe((res) => {
         if (res) {
           this.document.location.href =
-            'https://buy.stripe.com/test_aEU29ucVY47G82AdQQ?prefilled_email=' +
-            this.userEmail +
-            '&client_reference_id=' +
-            this.userId;
+            environment.stripe + '?prefilled_email=' + this.userEmail + '&client_reference_id=' + this.userId;
         }
       });
   }
