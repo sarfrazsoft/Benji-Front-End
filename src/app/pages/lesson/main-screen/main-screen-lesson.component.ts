@@ -119,7 +119,11 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   ];
 
   ngAfterViewInit() {
-    window.Cello('hide');
+    try {
+      window.Cello('hide');
+    } catch (error) {
+      console.error(error);
+    }
 
     this.innerWidth = window.innerWidth;
 
