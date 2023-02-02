@@ -5,7 +5,7 @@ import { AuthService, ContextService } from 'src/app/services';
 import { Branding, UserSubscription } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { FolderInfo, LessonGroupService } from 'src/app/services/lesson-group.service';
-import { environment } from 'src/environments/environment';
+import { UtilsService } from 'src/app/services/utils.service';
 import {
   ConfirmationDialogComponent,
   JoinSessionDialogComponent,
@@ -133,6 +133,7 @@ export class SidenavComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
+    private utilsService: UtilsService,
     private contextService: ContextService,
     private lessonGroupService: LessonGroupService,
     private router: Router
@@ -234,10 +235,10 @@ export class SidenavComponent implements OnInit {
           const request = $event.isNew
             ? this.lessonGroupService.createNewFolder(folderInfo)
             : this.lessonGroupService.updateFolder({
-                title: folderInfo.title,
-                id: $event.folderId,
-                lessonsIds: this.folderLessonsIDs,
-              });
+              title: folderInfo.title,
+              id: $event.folderId,
+              lessonsIds: this.folderLessonsIDs,
+            });
           request.subscribe(
             (data) => {
               this.getAllFolders();
@@ -311,9 +312,8 @@ export class SidenavComponent implements OnInit {
   }
 
   goProplan(link: string) {
-    window.location.href =
-      link === 'billing'
-        ? 'https://billing.stripe.com/p/login/28o00P72N4P0clqcMM'
-        : environment.stripe + '?prefilled_email=' + this.userEmail + '&client_reference_id=' + this.userId;
+    link === 'billing'
+      ? window.location.href = 'https://billing.stripe.com/p/login/28o00P72N4P0clqcMM'
+      : this.utilsService.goToStripe(this.userEmail, this.userId);;
   }
 }
