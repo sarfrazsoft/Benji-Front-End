@@ -19,6 +19,7 @@ export class DashboardHeaderComponent implements OnInit {
   @Input() lessonRuns: Array<any> = [];
   @Input() selectedFolderId: number;
   @Input() folderName: string;
+  @Input() layout = 'listLayout';
   @Input() folderLessonsIDs: Array<number> = [];
   @Output() toggleLayout = new EventEmitter<string>();
 

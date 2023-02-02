@@ -5,6 +5,7 @@
     [folderName]="folderName"
     [folderLessonsIDs]="folderLessonsIDs"
     (toggleLayout)="toggleLayout($event)"
+    [layout]="layout"
   >
   </benji-dashboard-header>
   <div class="subsection-container">
@@ -13,9 +14,9 @@
       [lessonRuns]="lessonRuns"
       [isTemplates]="false"
       [layout]="layout"
-      (openCreateSession)="openCreateSession()"
+      (openCreateSession)="header.openCreateSession()"
       (setLessonRuns)="setLessonRuns($event)"
-      (openProPlanDialog)="openProPlanDialog()"
+      (openProPlanDialog)="header.openProPlanDialog()"
     >
     </benji-lessons-list>
   </div>

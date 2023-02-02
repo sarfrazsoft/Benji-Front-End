@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Intercom } from 'ng-intercom';
 import { AuthService, ContextService } from 'src/app/services';
@@ -10,6 +10,7 @@ import { Validators } from 'ngx-editor';
 import { LessonGroupService } from 'src/app/services/lesson-group.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import doc from './../../shared/ngx-editor/doc';
+import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.component';
 
 @Component({
   selector: 'benji-admin-panel',
@@ -32,6 +33,8 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   get doc(): AbstractControl {
     return this.form.get('editorContent');
   }
+
+  @ViewChild(DashboardHeaderComponent) header: DashboardHeaderComponent;
 
   init(view: EditorView): void {
     this.editorView = view;
