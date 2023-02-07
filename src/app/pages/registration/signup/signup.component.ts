@@ -169,7 +169,13 @@ export class SignupComponent implements OnInit {
         .register(val.email.toLowerCase(), val.password, this.firstName, this.lastName, this.celloReferral)
         .subscribe(
           (res) => {
-            console.log(res.user);
+            if (res?.error?.email) {
+              this.emailErr = true;
+              if (res?.error?.email[0]) {
+                this.emailErrMsg = res?.error?.email[0];
+              }
+              this.emailErrMsg = res.email[0];
+            }
             if (this.participantCode && res.user.id) {
               this.authService.patchParticipant(this.participantCode, res.user.id).subscribe((result) => {
                 console.log(result);
@@ -201,11 +207,6 @@ export class SignupComponent implements OnInit {
 
             if (res.password1) {
               this.passwordMinLenErr = true;
-            }
-
-            if (res.email) {
-              this.emailErr = true;
-              this.emailErrMsg = res.email[0];
             }
           },
           (err) => {
