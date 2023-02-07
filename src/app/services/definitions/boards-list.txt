@@ -1,0 +1,5 @@
+prompt:
+I have an array of objects. let's call those objects Boards. The order of the array is determined by next_board and previous_board properties on a board. next_board and previous_board refer id of a board. Using next_board and previous_board we have created a doubly linked list. The first board has previous_board set to null and the last board has next_board set to null. 
+
+Actions:
+we need to change the order of a board. We get the id of the board, new value for next_board and new value for previous_board. Can we update the board and also update the boards that were pointing to this board so the chain isn't broken.

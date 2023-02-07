@@ -1,0 +1,2 @@
+prompt:
+This is regarding a linked list using properties previous_idea and next_idea of the Idea. previous_idea and next_idea are Ids of other Ideas. First item in the list has previous_idea set to null. Last item in the list will have next_idea set to null.
