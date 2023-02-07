@@ -46,7 +46,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
     private authService: AuthService,
     private route: ActivatedRoute,
     private utilsService: UtilsService,
-    private lessonGroupService: LessonGroupService,
+    private lessonGroupService: LessonGroupService
   ) {
     this.initDashData();
   }

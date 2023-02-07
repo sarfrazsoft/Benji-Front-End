@@ -3,8 +3,14 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { cloneDeep } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormEventService, BrainstormService, ContextService } from 'src/app';
+import { getBoard } from 'src/app/services/activities/board-list-functions/get-board/get-board';
+import { getFirstBoard } from 'src/app/services/activities/board-list-functions/get-first-board/get-first-board';
+import { getLastBoard } from 'src/app/services/activities/board-list-functions/get-last-board/get-last-board';
+import { movedBoard } from 'src/app/services/activities/board-list-functions/get-moved-board/get-moved-board';
+import { moveBoard } from 'src/app/services/activities/board-list-functions/move-board/move-board';
 import {
   Board,
   BoardSort,
@@ -166,57 +172,39 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       throw new Error('Input array is empty, cannot sort boards');
     }
 
-    let firstBoard;
-    for (let i = 0; i < unSortedBoards.length; i++) {
-      const board = unSortedBoards[i];
-      if (board.previous_board === null) {
-        firstBoard = board;
-        break;
-      }
-    }
-    if (!firstBoard) {
-      // No board found with previous_board as null, cannot determine first board
-      // find the board that has `previous_board` set to id of a board that does not exist in the list.
-      for (let i = 0; i < unSortedBoards.length; i++) {
-        const board = unSortedBoards[i];
-        if (!unSortedBoards.find((b) => b.id === board.previous_board)) {
-          const orphanBoard = board;
-          // call a separate function with that board
-          // this.handleOrphanBoard(orphanBoard);
-          break;
+    try {
+      const firstBoard = getFirstBoard(unSortedBoards);
+
+      const boards: Array<Board> = [firstBoard];
+      const addedBoards = new Set();
+      addedBoards.add(firstBoard);
+      let nextId = firstBoard.next_board;
+      while (nextId) {
+        let found = false;
+        for (let i = 0; i < unSortedBoards.length; i++) {
+          const board = unSortedBoards[i];
+          if (board.id === nextId && !addedBoards.has(board)) {
+            boards.push(board);
+            addedBoards.add(board);
+            nextId = board.next_board;
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          nextId = null;
         }
       }
-
-      throw new Error('No board found with previous_board as null, cannot determine first board');
-    }
-
-    const boards: Array<Board> = [firstBoard];
-    const addedBoards = new Set();
-    addedBoards.add(firstBoard);
-    let nextId = firstBoard.next_board;
-    while (nextId) {
-      let found = false;
+      // adds remaining boards
       for (let i = 0; i < unSortedBoards.length; i++) {
-        const board = unSortedBoards[i];
-        if (board.id === nextId && !addedBoards.has(board)) {
-          boards.push(board);
-          addedBoards.add(board);
-          nextId = board.next_board;
-          found = true;
-          break;
+        if (!boards.includes(unSortedBoards[i])) {
+          boards.push(unSortedBoards[i]);
         }
       }
-      if (!found) {
-        nextId = null;
-      }
+      this.boards = boards;
+    } catch (error) {
+      console.error(error);
     }
-    // adds remaining boards
-    for (let i = 0; i < unSortedBoards.length; i++) {
-      if (!boards.includes(unSortedBoards[i])) {
-        boards.push(unSortedBoards[i]);
-      }
-    }
-    this.boards = boards;
   }
 
   handleOrphanBoard(board: Board) {
@@ -224,29 +212,6 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     // console.log(`Orphan board found: ${board.id}`);
     throw new Error(`Orphan board found: ${board.id}`);
     // this.sendMessage.emit(new BrainstormRearrangeBoardEvent(board.id, null, board.next_board));
-  }
-
-  sortBoards2(unSortedBoards: Array<Board>) {
-    let firstBoard;
-    for (let i = 0; i < unSortedBoards.length; i++) {
-      const board = unSortedBoards[i];
-      if (board.previous_board === null) {
-        firstBoard = board;
-      }
-    }
-    const boards: Array<Board> = [];
-    boards.push(firstBoard);
-    for (let i = 0; i < boards.length; i++) {
-      const sortedBoard = boards[i];
-      for (let j = 0; j < unSortedBoards.length; j++) {
-        const unSortedBoard = unSortedBoards[j];
-        if (sortedBoard.next_board === unSortedBoard.id) {
-          boards.push(unSortedBoard);
-          break;
-        }
-      }
-    }
-    this.boards = boards;
   }
 
   getBoards() {
@@ -270,38 +235,14 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
     const draggedBoardID = event.item.data.boardID;
-    let previous_board;
-    let next_board;
-    for (let i = 0; i < this.boards.length; i++) {
-      const board = this.boards[i];
-      if (board.id === draggedBoardID) {
-        if (i === 0) {
-          previous_board = null;
-          if (this.boards[i + 1]) {
-            next_board = this.boards[i + 1].id;
-          } else {
-            next_board = null;
-          }
-        } else if (i === this.boards.length - 1) {
-          // last board
-          next_board = null;
-          if (this.boards[i - 1]) {
-            previous_board = this.boards[i - 1].id;
-          } else {
-            previous_board = null;
-          }
-        } else {
-          if (this.boards[i + 1]) {
-            next_board = this.boards[i + 1].id;
-            previous_board = this.boards[i - 1].id;
-          }
-        }
-      }
-    }
+    const draggedBoard = getBoard(draggedBoardID, this.boards);
+    const moved = movedBoard(cloneDeep(this.boards), event.previousIndex, event.currentIndex);
+    moveBoard(moved, this.boards);
 
-    this.sendMessage.emit(new BrainstormRearrangeBoardEvent(draggedBoardID, previous_board, next_board));
+    this.sendMessage.emit(
+      new BrainstormRearrangeBoardEvent(draggedBoardID, moved.previous_board, moved.next_board)
+    );
   }
 
   openDeleteDialog(boardID?: number) {

@@ -41,13 +41,13 @@ export class AdminService {
     );
   }
 
-  getLessonRuns(): Observable<Lesson[]> {
+  getLessonRuns(isHost: boolean, isParticipant: boolean): Observable<Lesson[]> {
     const page = 1;
     let filterParams = '';
     const filter = 'hosted';
     if (filter === 'hosted') {
-      filterParams = '&hosted=True';
-      filterParams = filterParams + '&participated=True';
+      filterParams = '&hosted=' + isHost;
+      filterParams = filterParams + '&participated=' + isParticipant;
     }
     return this.http.get(global.apiRoot + '/course_details/lesson_run/?page=' + page + filterParams).pipe(
       map((res: PaginatedResponse<Lesson>) => {

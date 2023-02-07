@@ -1,15 +1,15 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Intercom } from 'ng-intercom';
 import { ContextService } from 'src/app/services';
 import { TeamUser, UserSubscription } from 'src/app/services/backend/schema';
-import { DOCUMENT } from '@angular/common';
 import { LessonGroupService } from 'src/app/services/lesson-group.service';
-import { ProPlanDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared';
-import { AdminService } from '../services';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { UtilsService } from 'src/app/services/utils.service';
+import { ProPlanDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared';
+import { environment } from 'src/environments/environment';
+import { AdminService } from '../services';
 
 @Component({
   selector: 'benji-dashboard-header',
@@ -29,6 +29,8 @@ export class DashboardHeaderComponent implements OnInit {
   userSubscription: UserSubscription;
   ignoreSubscription: boolean;
 
+  hostLessonsCount: number;
+
   constructor(
     public intercom: Intercom,
     private adminService: AdminService,
@@ -38,8 +40,7 @@ export class DashboardHeaderComponent implements OnInit {
     private router: Router,
     private lessonGroupService: LessonGroupService,
     @Inject(DOCUMENT) private document: Document
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.adminName = this.contextService.user.first_name;
@@ -47,6 +48,10 @@ export class DashboardHeaderComponent implements OnInit {
     this.userEmail = this.contextService.user.email;
     this.userSubscription = this.contextService.user.user_subscription;
     this.ignoreSubscription = this.contextService.user.ignore_subscription;
+
+    this.contextService.hostLessonsCount$.subscribe((count: number) => {
+      this.hostLessonsCount = count;
+    });
   }
 
   openProPlanDialog() {
