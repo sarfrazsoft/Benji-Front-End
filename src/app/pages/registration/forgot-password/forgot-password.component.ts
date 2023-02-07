@@ -11,6 +11,7 @@ import { Branding, PartnerInfo } from 'src/app/services/backend/schema/whitelabe
 })
 export class ForgotPasswordComponent implements OnInit {
   @Input() joinSession: boolean;
+  @Input() displayJoinAsGuest = false;
   @Output() signInClicked = new EventEmitter();
   @Output() guestJoinClicked = new EventEmitter();
   form: FormGroup;
@@ -31,7 +32,7 @@ export class ForgotPasswordComponent implements OnInit {
   ngOnInit() {
     this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo = info.logo ? info.logo.toString() : "/assets/img/Benji_logo.svg";
+        this.logo = info.logo ? info.logo.toString() : '/assets/img/Benji_logo.svg';
       }
     });
 
