@@ -17,6 +17,7 @@ import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 })
 export class LoginComponent implements OnInit {
   @Input() joinSessionScreen: boolean;
+  @Input() isLoginScreen = false;
   @Output() signUpClicked = new EventEmitter();
   @Output() forgotPasswordClicked = new EventEmitter();
   @Output() userSignedInSuccessfully = new EventEmitter();
