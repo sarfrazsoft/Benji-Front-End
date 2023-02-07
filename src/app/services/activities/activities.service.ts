@@ -7,23 +7,27 @@ export class ActivitiesService {
   constructor() {}
 
   getParticipantName(activityState: UpdateMessage, code: number) {
-    const host = activityState.lesson_run?.host;
-    let name = host.first_name + ' ' + host.last_name;
-    if (host) {
-      name = 'Facilitator';
-    }
-    if (host.first_name) {
-      name = host.first_name;
-    }
-    if (host.last_name) {
-      name = name + ' ' + host.last_name;
+    if (!activityState || !activityState.lesson_run) {
+      return undefined;
     }
 
-    activityState.lesson_run?.participant_set.forEach((p) => {
-      if (p.participant_code === code) {
-        name = p.display_name;
+    const lessonRun = activityState.lesson_run;
+    let name;
+
+    if (lessonRun.host) {
+      const host = lessonRun.host;
+      name = host.first_name || host.last_name ? `${host.first_name} ${host.last_name}` : 'Facilitator';
+    }
+
+    if (lessonRun.participant_set && code) {
+      const participant = lessonRun.participant_set.find((p) => p.participant_code === code);
+      if (participant) {
+        name = participant.display_name;
+      } else {
+        name = 'John Doe';
       }
-    });
+    }
+
     return name;
   }
 
