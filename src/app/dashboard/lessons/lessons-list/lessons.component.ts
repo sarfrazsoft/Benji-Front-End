@@ -37,6 +37,7 @@ export class LessonsComponent implements OnInit {
   notificationTypes = NotificationTypes;
   userSubscription: UserSubscription;
   ignoreSubscription: boolean;
+  hostLessonsCount: number;
 
   edit(lesson, $event) {
     if (!this.isTemplates) {
@@ -62,6 +63,16 @@ export class LessonsComponent implements OnInit {
     }
     this.userSubscription = this.contextService.user.user_subscription;
     this.ignoreSubscription = this.contextService.user.ignore_subscription;
+    this.contextService.hostLessonsCount$.subscribe((count: number) => {
+      this.hostLessonsCount = count;
+    });
+    this.setHostLessonsCount();
+  }
+
+  setHostLessonsCount() {
+    this.adminService.getLessonRuns(true, false).subscribe((res) => {
+      this.contextService.hostLessonsCount = res.length;
+    });
   }
 
   openDetails(lesson: Lesson) {
@@ -76,7 +87,8 @@ export class LessonsComponent implements OnInit {
   }
 
   updateLessonRuns(notify: NotificationTypes) {
-    this.adminService.getLessonRuns().subscribe((lessonRuns) => {
+    this.setHostLessonsCount();
+    this.adminService.getLessonRuns(true, true).subscribe((lessonRuns) => {
       this.lessonRuns = lessonRuns;
       // If inside a folder then the following code with update the folder lessons
       if (this.contextService.selectedFolder) {
@@ -125,7 +137,7 @@ export class LessonsComponent implements OnInit {
   }
 
   duplicateSession(val: LessonInformation) {
-    if (this.lessonRuns.length >= 3 && !this.userSubscription?.is_active && !this.ignoreSubscription) {
+    if (this.hostLessonsCount >= 3 && !this.userSubscription?.is_active && !this.ignoreSubscription) {
       this.openProPlanDialog.emit();
     } else {
       const dialogRef = this.matDialog

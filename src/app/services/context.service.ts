@@ -60,12 +60,21 @@ export class ContextService {
     private boardsNavigationService: BoardsNavigationService,
     private brainstormEventService: BrainstormEventService
   ) {}
+
+  set hostLessonsCount(count: number) {
+    this.hostLessonsCount$.next(count);
+  }
+  get hostLessonsCount(): number {
+    return this.hostLessonsCount$.getValue();
+  }
+
   set boardsCount(count: number) {
     this.boardsCount$.next(count);
   }
   get boardsCount(): number {
     return this.boardsCount$.getValue();
   }
+
   set user(user: TeamUser) {
     this.user$.next(user);
   }
@@ -157,6 +166,11 @@ export class ContextService {
    * Boards Count
    */
   boardsCount$ = new BehaviorSubject<number>(null);
+
+  /**
+   * Boards Count
+   */
+  hostLessonsCount$ = new BehaviorSubject<number>(null);
 
   /**
    * Current User

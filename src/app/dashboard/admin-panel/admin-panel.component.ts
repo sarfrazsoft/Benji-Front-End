@@ -38,6 +38,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   userEmail: string;
   userSubscription: UserSubscription;
   ignoreSubscription: boolean;
+  hostLessonsCount: number;
 
   form = new FormGroup({
     editorContent: new FormControl(doc, Validators.required()),
@@ -115,6 +116,10 @@ export class AdminPanelComponent implements OnInit, OnChanges {
         );
       }
     });
+
+    this.contextService.hostLessonsCount$.subscribe((count: number) => {
+      this.hostLessonsCount = count;
+    });
   }
 
   ngOnChanges() {
@@ -150,7 +155,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   }
 
   openCreateSession() {
-    if (this.lessonRuns.length >= 3 && !this.userSubscription?.is_active && !this.ignoreSubscription) {
+    if (this.hostLessonsCount >= 3 && !this.userSubscription?.is_active && !this.ignoreSubscription) {
       this.openProPlanDialog();
     } else {
       this.dialog
