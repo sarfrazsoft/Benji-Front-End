@@ -41,5 +41,9 @@ export const sortByFirstToLast = (arr: Array<Idea>) => {
     current = updatedArr.find((idea) => idea.id === current.next_idea);
   }
 
-  return [...sorted, ...legacyIdeas];
+  const sortedNLegacy = [...sorted, ...legacyIdeas];
+
+  const unsortedIdeas = arr.filter((idea) => !sortedNLegacy.includes(idea));
+
+  return [...sortedNLegacy, ...unsortedIdeas];
 };
