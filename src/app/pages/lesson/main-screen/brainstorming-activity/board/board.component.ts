@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { clone, cloneDeep, uniqBy } from 'lodash';
+import { clone, cloneDeep, last, uniqBy } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
@@ -23,19 +23,14 @@ import {
   ContextService,
   SharingToolService,
 } from 'src/app/services';
+import { getIdeaFromCategory } from 'src/app/services/activities/idea-list-functions/get-idea-from-category/get-idea-from-category';
 import {
   Board,
   BoardMode,
   BoardStatus,
   BoardTypes,
   BrainstormActivity,
-  BrainstormEditDocumentIdeaEvent,
-  BrainstormEditIdeaSubmitEvent,
-  BrainstormEditIdeaVideoSubmitEvent,
   BrainstormRemoveSubmissionEvent,
-  BrainstormSubmitDocumentEvent,
-  BrainstormSubmitEvent,
-  BrainstormSubmitVideoEvent,
   BrainstormToggleCategoryModeEvent,
   Category,
   EventTypes,
@@ -44,6 +39,14 @@ import {
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import {
+  BrainstormEditDocumentIdeaEvent,
+  BrainstormEditIdeaSubmitEvent,
+  BrainstormEditIdeaVideoSubmitEvent,
+  BrainstormSubmitDocumentEvent,
+  BrainstormSubmitEvent,
+  BrainstormSubmitVideoEvent,
+} from 'src/app/services/backend/schema/messages/idea-submit-events';
 import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
@@ -291,6 +294,17 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        // every posted idea go through here
+        if (category) {
+          const lastIdea = getIdeaFromCategory(category, 'last');
+          result = {
+            next_idea: null,
+            previous_idea: lastIdea?.id ?? null,
+            ...result,
+          };
+          // we will update lastIdea.next_idea when the idea is
+          // successfully submittedW
+        }
         this.saveIdea(result);
       }
     });
@@ -351,6 +365,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       image_path: idea.selectedThirdPartyImageUrl,
       idea_video: idea.video_id,
       meta: idea.meta,
+      next_idea: idea?.next_idea,
+      previous_idea: idea?.previous_idea,
     };
     if (idea.id) {
       i = { id: idea.id, ...i };
@@ -378,6 +394,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       idea_image: idea.idea_image ? (idea.idea_image.id ? idea.idea_image.id : null) : null,
       image_path: idea.selectedThirdPartyImageUrl,
       idea_video: idea.video_id,
+      next_idea: idea?.next_idea,
+      previous_idea: idea?.previous_idea,
     };
     if (idea.id) {
       // if there's id in the idea that means we're editing existing idea
@@ -398,6 +416,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       idea_image: idea.webcamImageId,
       image_path: idea.selectedThirdPartyImageUrl,
       idea_video: idea.video_id,
+      next_idea: idea?.next_idea,
+      previous_idea: idea?.previous_idea,
     };
     if (idea.id) {
       // update video
@@ -441,6 +461,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
               category: idea.category.id,
               groupId: idea.groupId,
               idea_image: res.id,
+              next_idea: idea?.next_idea,
+              previous_idea: idea?.previous_idea,
             };
             if (action === 'create') {
               this.submit(i);
@@ -479,6 +501,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
           groupId: idea.groupId,
           idea_image: idea.idea_image ? (idea.idea_image.id ? idea.idea_image.id : null) : null,
           image_path: idea.selectedThirdPartyImageUrl,
+          next_idea: idea?.next_idea,
+          previous_idea: idea?.previous_idea,
         };
         this.submit(i);
       }
@@ -497,6 +521,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         groupId: idea.groupId,
         idea_image: undefined,
         image_path: idea.selectedThirdPartyImageUrl,
+        next_idea: idea?.next_idea,
+        previous_idea: idea?.previous_idea,
       };
       this.sendMessage.emit(new BrainstormEditIdeaSubmitEvent(i));
     } else {
@@ -512,26 +538,28 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     this.sendMessage.emit(
-      new BrainstormSubmitDocumentEvent(
-        idea.text,
-        idea.title,
-        idea.category.id,
-        idea.groupId,
-        idea.selectedpdfDoc
-      )
+      new BrainstormSubmitDocumentEvent({
+        text: idea.text,
+        title: idea.title,
+        category: idea.category.id,
+        documentId: idea.selectedpdfDoc,
+        next_idea: idea?.next_idea,
+        previous_idea: idea?.previous_idea,
+      })
     );
   }
 
   updateIdeaWithDocument(idea) {
-    this.sendMessage.emit(
-      new BrainstormEditDocumentIdeaEvent(
-        idea.id,
-        idea.text,
-        idea.title,
-        idea.category.id,
-        idea.selectedpdfDoc
-      )
-    );
+    const i: any = {
+      id: idea.id,
+      text: idea.text,
+      title: idea.title,
+      category: idea.category.id,
+      documentId: idea.selectedpdfDoc,
+      next_idea: idea?.next_idea,
+      previous_idea: idea?.previous_idea,
+    };
+    this.sendMessage.emit(new BrainstormEditDocumentIdeaEvent(i));
   }
 
   isSet(val) {

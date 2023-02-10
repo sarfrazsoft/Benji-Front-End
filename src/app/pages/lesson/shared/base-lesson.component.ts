@@ -32,6 +32,7 @@ import {
   BrainstormChangeModeResponse,
   BrainstormCreateCategoryResponse,
   BrainstormEditResponse,
+  BrainstormIdeaRearrangeResponse,
   BrainstormRearrangeBoardResponse,
   BrainstormRemoveBoardResponse,
   BrainstormRemoveCategoryResponse,
@@ -238,9 +239,17 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     return this.facilitatorConnected;
   }
 
+  updateServerMessage(msg: ServerMessage, oldServerMessage: UpdateMessage): UpdateMessage {
+    return {
+      ...oldServerMessage,
+      eventType: msg.eventtype,
+      isHost: this.clientType === 'participant' ? false : true,
+    };
+  }
+
   handleServerMessage(msg: ServerMessage) {
     console.log('msg in handleServerMessage on event' + msg.eventtype);
-    console.log(msg);
+    console.log(cloneDeep(msg));
     this.facilitatorStillConnecting = false;
 
     if (msg.eventtype === EventTypes.notificationEvent) {
@@ -255,235 +264,135 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         msg.event_msg as BrainstormToggleParticipantNameResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.participantChangeBoardEvent) {
       this.contextService.changeParticipantBoardInActivityState(
         msg.event_msg as ParticipantChangeBoardResponse,
         this.oldServerMessage,
         this.participantCode
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.hostChangeBoardEvent) {
       this.contextService.changeHostBoardInActivityState(
         msg.event_msg as HostChangeBoardEventResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormSubmitIdeaCommentEvent) {
       this.contextService.addCommentToActivityState(
         msg.event_msg as BrainstormSubmitIdeaCommentResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormRemoveIdeaCommentEvent) {
       this.contextService.removeCommentFromActivityState(
         msg.event_msg as BrainstormRemoveIdeaCommentResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormBoardSortOrderEvent) {
       this.contextService.changeBoardSortOrder(
         msg.event_msg as BrainstormBoardSortOrderResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormToggleAllowCommentEvent) {
       this.contextService.brainstormToggleAllowComment(
         msg.event_msg as BrainstormToggleAllowCommentResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormToggleAllowHeartEvent) {
       this.contextService.brainstormToggleAllowHeart(
         msg.event_msg as BrainstormToggleAllowHeartResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormSubmitIdeaHeartEvent) {
       this.contextService.brainstormSubmitIdeaHeart(
         msg.event_msg as BrainstormSubmitIdeaHeartResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormRemoveIdeaHeartEvent) {
       this.contextService.brainstormRemovedIdeaHeart(
         msg.event_msg as BrainstormRemoveIdeaHeartResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormChangeModeEvent) {
       this.contextService.brainstormChangeMode(
         msg.event_msg as BrainstormChangeModeResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormChangeBoardStatusEvent) {
       this.contextService.changeBoardStatus(
         msg.event_msg as BrainstormChangeBoardStatusResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormSubmitEvent) {
       this.contextService.addIdea(msg.event_msg as BrainstormSubmitResponse, this.oldServerMessage);
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormRemoveSubmissionEvent) {
       this.contextService.removeIdea(msg.event_msg as BrainstormRemoveSubmitResponse, this.oldServerMessage);
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.removeIdeaDocumentEvent) {
       this.contextService.removeIdeaDocument(
         msg.event_msg as RemoveIdeaDocumentResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormEditIdeaSubmitEvent) {
       this.contextService.editIdea(msg.event_msg as BrainstormEditResponse, this.oldServerMessage);
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormCreateCategoryEvent) {
       this.contextService.createCategory(
         msg.event_msg as BrainstormCreateCategoryResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormRemoveCategoryEvent) {
       this.contextService.removeCategory(
         msg.event_msg as BrainstormRemoveCategoryResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormRenameCategoryEvent) {
       this.contextService.renameCategory(
         msg.event_msg as BrainstormRenameCategoryResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormAddBoardEventBaseEvent) {
       this.contextService.addBoard(msg.event_msg as BrainstormAddBoardResponse, this.oldServerMessage);
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.duplicateBoardEvent) {
       this.contextService.duplicateBoard(msg.event_msg as Board, this.oldServerMessage);
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormRemoveBoardEvent) {
       this.contextService.removeBoard(msg.event_msg as BrainstormRemoveBoardResponse, this.oldServerMessage);
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormAddIdeaPinEvent) {
       this.contextService.addPinIdea(
         msg.event_msg as BrainstormAddRemoveIdeaPinResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormRemoveIdeaPinEvent) {
       this.contextService.removePinIdea(
         msg.event_msg as BrainstormAddRemoveIdeaPinResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormRearrangeBoardEvent) {
       this.contextService.brainstormRearrangeBoard(
         msg.event_msg as BrainstormRearrangeBoardResponse,
         this.oldServerMessage
       );
 
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
       // } else if (msg.eventtype === EventTypes.brainstormMoveIdeaBoardEvent) {
       // } else if (msg.eventtype === EventTypes.moveBrainstormIdeaEvent) {
     } else if (msg.eventtype === EventTypes.brainstormSubmitReplyReviewCommentEvent) {
@@ -492,94 +401,64 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         this.oldServerMessage
       );
 
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormSubmitCommentHeartEvent) {
       this.contextService.brainstormAddCommentHeart(
         msg.event_msg as BrainstormSubmitIdeaHeartResponse,
         this.oldServerMessage
       );
 
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormRemoveReplyReviewCommentEvent) {
       this.contextService.brainstormRemoveReplyReviewComment(
         msg.event_msg as BrainstormRemoveIdeaCommentResponse,
         this.oldServerMessage
       );
 
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormRemoveCommentHeartEvent) {
       this.contextService.brainstormRemoveCommentHeart(
         msg.event_msg as BrainstormRemoveCommentHeartResponse,
         this.oldServerMessage
       );
 
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormSetCategoryEvent) {
       this.contextService.setPostCategory(
         msg.event_msg as BrainstormSetCategoryResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormBoardBackgroudEvent) {
       this.contextService.brainstormBoardBackground(
         msg.event_msg as BrainstormBoardBackgroundResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.changeBoardBackgroundTypeEvent) {
       this.contextService.changeBoardBackgroundType(
         msg.event_msg as ChangeBoardBackgroundTypeResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.toggleBlurBackgroundImageEvent) {
       this.contextService.toggleBlurBackgroundImage(
         msg.event_msg as ToggleBlurBackgroundImageResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormBoardPostSizeEvent) {
       this.contextService.changePostSize(
         msg.event_msg as BrainstormBoardPostSizeResponse,
         this.oldServerMessage
       );
-      this.serverMessage = {
-        ...this.oldServerMessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
+    } else if (msg.eventtype === EventTypes.brainstormIdeaRearrangeEvent) {
+      this.contextService.brainstormIdeaRearrange(
+        msg.event_msg as BrainstormIdeaRearrangeResponse,
+        this.oldServerMessage
+      );
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.joinEvent) {
       this.participantCode = this.setParticipantCode();
       this.facilitatorConnected = true;

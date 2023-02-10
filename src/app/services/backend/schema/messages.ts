@@ -43,6 +43,7 @@ import {
   BrainstormChangeBoardStatusResponse,
   BrainstormChangeModeResponse,
   BrainstormCreateCategoryResponse,
+  BrainstormIdeaRearrangeResponse,
   BrainstormRearrangeBoardResponse,
   BrainstormRemoveBoardResponse,
   BrainstormRemoveCategoryResponse,
@@ -150,6 +151,7 @@ export type EventResponseTypes =
   | BrainstormSubmitIdeaCommentResponse
   | BrainstormRemoveIdeaCommentResponse
   | BrainstormRearrangeBoardResponse
+  | BrainstormIdeaRearrangeResponse
   | BrainstormSetCategoryResponse;
 
 export interface ServerMessage {
@@ -483,146 +485,6 @@ export class BrainstormVotingCompleteInternalEvent extends ActivityEvent {
   event_name = 'BrainstormVotingCompleteInternalEvent';
 }
 
-export class BrainstormSubmitEvent extends ActivityEvent {
-  event_name = 'BrainstormSubmitEvent';
-
-  constructor(idea: {
-    id: number;
-    text: string;
-    title: string;
-    category: number;
-    groupId: number;
-    idea_image: number;
-    image_path?: string;
-    idea_video: number;
-    meta: any;
-  }) {
-    super();
-    this.extra_args = {
-      idea: idea.text,
-      title: idea.title,
-      category: idea.category,
-      group_id: idea.groupId,
-      idea_image: idea.idea_image,
-      image_path: idea.image_path,
-      meta: idea.meta,
-    };
-  }
-}
-
-export class BrainstormSubmitVideoEvent extends ActivityEvent {
-  event_name = 'BrainstormSubmitEvent';
-
-  constructor(idea: { id: number; text: string; title: string; category: number; idea_video: number }) {
-    super();
-    this.extra_args = {
-      id: idea.id,
-      idea: idea.text,
-      title: idea.title,
-      category: idea.category,
-      idea_video: idea.idea_video,
-    };
-  }
-}
-
-export class BrainstormEditIdeaVideoSubmitEvent extends ActivityEvent {
-  event_name = 'BrainstormEditIdeaSubmitEvent';
-
-  constructor(idea: { id: number; text: string; title: string; category: number; idea_video: number }) {
-    super();
-    this.extra_args = {
-      brainstormidea: idea.id,
-      idea: idea.text,
-      title: idea.title,
-      category: idea.category,
-      idea_video: idea.idea_video,
-    };
-  }
-}
-
-export class BrainstormSubmitDocumentEvent extends ActivityEvent {
-  event_name = 'BrainstormSubmitEvent';
-
-  constructor(text: string, title: string, category: number, groupId: number, documentId: number) {
-    super();
-    this.extra_args = {
-      idea: text,
-      title: title,
-      category: category,
-      group_id: groupId,
-      idea_document: documentId,
-    };
-  }
-}
-// export class BrainstormSubmitIframelyEvent extends ActivityEvent {
-//   event_name = 'BrainstormSubmitEvent';
-
-//   constructor(text: string, title: string, category: number, meta: any) {
-//     super();
-//     this.extra_args = {
-//       idea: text,
-//       title: title,
-//       category: category,
-//       meta: meta,
-//     };
-//   }
-// }
-
-// export class BrainstormEditIframelyEvent extends ActivityEvent {
-//   event_name = 'BrainstormEditIdeaSubmitEvent';
-
-//   constructor(id: number, text: string, title: string, category: number, meta: any) {
-//     super();
-//     this.extra_args = {
-//       brainstormidea: id,
-//       idea: text,
-//       title: title,
-//       category: category,
-//       meta: meta,
-//     };
-//   }
-// }
-export class BrainstormEditDocumentIdeaEvent extends ActivityEvent {
-  event_name = 'BrainstormEditIdeaSubmitEvent';
-
-  constructor(id: string, text: string, title: string, category: number, documentId: number) {
-    super();
-    this.extra_args = {
-      brainstormidea: id,
-      idea: text,
-      title: title,
-      category: category,
-      idea_document: documentId,
-    };
-  }
-}
-export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {
-  event_name = 'BrainstormEditIdeaSubmitEvent';
-
-  constructor(idea: {
-    id: number;
-    text: string;
-    title: string;
-    category: number;
-    groupId: number;
-    idea_image?: number;
-    image_path?: string;
-    meta?: any;
-  }) {
-    super();
-    this.extra_args = {
-      brainstormidea: idea.id,
-      idea: idea.text,
-      title: idea.title,
-      category: idea.category,
-      group_id: idea.groupId,
-      idea_image: idea.idea_image,
-      image_path: idea.image_path,
-      meta: idea.meta,
-    };
-  }
-}
-
 export class BrainstormSubmitIdeaCommentEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitIdeaCommentEvent';
 
@@ -735,9 +597,14 @@ export class BrainstormVoteEvent extends ActivityEvent {
 export class BrainstormSetCategoryEvent extends ActivityEvent {
   event_name = 'BrainstormSetCategoryEvent';
 
-  constructor(id: string, category: string) {
+  constructor(idea: { id: number; category: number; next_idea: number; previous_idea: number }) {
     super();
-    this.extra_args = { brainstormidea: id, category: category };
+    this.extra_args = {
+      brainstormidea: idea.id,
+      category: idea.category,
+      next_idea: idea.next_idea,
+      previous_idea: idea.previous_idea,
+    };
   }
 }
 
@@ -1104,6 +971,17 @@ export class BrainstormRearrangeBoardEvent extends ActivityEvent {
       board: board,
       previous_board: previousBoard,
       next_board: nextBoard,
+    };
+  }
+}
+export class BrainstormIdeaRearrangeEvent extends ActivityEvent {
+  event_name = 'BrainstormIdeaRearrangeEvent';
+  constructor(brainstormidea: number, nextIdea: number, previousIdea: number) {
+    super();
+    this.extra_args = {
+      brainstormidea: brainstormidea,
+      next_idea: nextIdea,
+      previous_idea: previousIdea,
     };
   }
 }

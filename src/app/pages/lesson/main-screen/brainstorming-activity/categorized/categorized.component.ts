@@ -15,7 +15,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { differenceBy, includes, orderBy, remove } from 'lodash';
+import { cloneDeep, differenceBy, find, includes, orderBy, parseInt, remove } from 'lodash';
 import * as moment from 'moment';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
@@ -23,16 +23,21 @@ import * as global from 'src/app/globals';
 import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
 import { BrainstormEventService, PostLayoutService } from 'src/app/services';
 import { BrainstormService } from 'src/app/services/activities/brainstorm.service';
+import { insertAt } from 'src/app/services/activities/idea-list-functions/insert-at/insert-at';
+import { moveIdea } from 'src/app/services/activities/idea-list-functions/move-idea-in-list/move-idea-in-list';
+import { pushIdeaIntoCategory } from 'src/app/services/activities/idea-list-functions/push-idea-into-category/push-idea-into-category';
+import { removeIdeaFromCategory } from 'src/app/services/activities/idea-list-functions/remove-idea-from-category/remove-idea-from-category';
 import {
   Board,
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
+  BrainstormIdeaRearrangeEvent,
   BrainstormRemoveCategoryEvent,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormRemoveIdeaHeartEvent,
   BrainstormRenameCategoryEvent,
   BrainstormSetCategoryEvent,
-  BrainstormSubmitEvent,
+  BrainstormSetCategoryResponse,
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartEvent,
@@ -103,18 +108,55 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
       this.columnSize = this.board.post_size;
     }
 
-    // this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
-    // Add the comment to the card
-    // if (this.board.id === v.board_id) {
-    // the comment was added in the board
-    // this.brainstormService.categorizedIdeaCommentAdded(v, this.columns);
-    // }
+    // this.brainstormEventService.categoryChangedForIdea$.subscribe((v: BrainstormSetCategoryResponse) => {
+    //   // Add the comment to the card
+    //   if (this.board.id === v.board) {
+    //     // the comment was added in the board
+    //     // console.log(v);
+
+    //     let idea: Idea;
+    //     for (let j = 0; j < this.columns.length; j++) {
+    //       const categoryIdeas = this.columns[j].brainstormidea_set.filter((r) => !r.removed);
+    //       const tempIdea = find(categoryIdeas, { id: v.brainstormidea_id });
+    //       if (tempIdea) {
+    //         idea = tempIdea;
+    //         console.log(cloneDeep(this.board.brainstormcategory_set[j].brainstormidea_set));
+    //         console.log(tempIdea);
+    //         this.board.brainstormcategory_set[j].brainstormidea_set = removeIdeaFromCategory(
+    //           this.board.brainstormcategory_set[j].brainstormidea_set,
+    //           tempIdea.id
+    //         );
+    //         console.log(cloneDeep(this.board.brainstormcategory_set[j].brainstormidea_set));
+    //         break;
+    //       }
+    //     }
+
+    //     if (idea) {
+    //       idea.next_idea = v.next_idea;
+    //       idea.previous_idea = v.previous_idea;
+    //       for (let j = 0; j < this.columns.length; j++) {
+    //         if (this.columns[j].id === v.category) {
+    //           const tempIdea = find(this.columns[j].brainstormidea_set, { id: idea.id });
+
+    //           if (!tempIdea) {
+    //             console.log(cloneDeep(this.columns[j].brainstormidea_set));
+    //             this.columns[j].brainstormidea_set = pushIdeaIntoCategory(
+    //               this.columns[j].brainstormidea_set,
+    //               idea
+    //             );
+    //             console.log(cloneDeep(this.columns[j].brainstormidea_set));
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
     // });
   }
 
   ngOnChanges($event: SimpleChanges) {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
+      console.log(cloneDeep(this.columns));
       this.cycle = 'second';
     } else {
       if (
@@ -122,10 +164,11 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
         this.eventType === 'BrainstormEditSubInstruction'
       ) {
       } else if (this.eventType === 'BrainstormSubmitEvent') {
-        this.brainstormService.addIdeaToCategory(this.board, this.columns, (changedCategory: Category) => {
-        });
+        console.log(this.board);
+        this.brainstormService.addIdeaToCategory(this.board, this.columns);
       } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
         this.updateColumnSize(this.board);
+      } else if (this.eventType === EventTypes.brainstormIdeaRearrangeEvent) {
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
         this.brainstormService.ideaCommented(this.board, this.columns, () => {
           // this.refreshMasonryLayout();
@@ -158,6 +201,12 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
       } else if (this.eventType === 'BrainstormBoardSortOrderEvent') {
         this.brainstormService.sortIdeas(this.board, this.columns);
       } else if (this.eventType === 'BrainstormSetCategoryEvent') {
+        // console.log('columns');
+        // console.log(this.columns);
+        // console.log(this.board.brainstormcategory_set, this.columns);
+        this.columns = this.brainstormService.populateCategories(this.board, this.columns);
+        // this.brainstormService.categoryChangedForIdea(this.board, this.columns, () => {});
+        // this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       } else if (
         this.eventType === EventTypes.hostChangeBoardEvent ||
         this.eventType === EventTypes.participantChangeBoardEvent
@@ -196,40 +245,6 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
           // do nothing
         }
       } else if (this.eventType === 'SetMetaDataBoardEvent') {
-        if (!this.isHost) {
-          if (this.board.meta.updated === 'post_order') {
-            const colsIdeaOrderInfo: ColsIdeaOrderInfo = this.board.meta.colsIdeaOrderInfo;
-            this.columns.forEach((column: Category) => {
-              if (column.id.toString() === colsIdeaOrderInfo.container) {
-                moveItemInArray(
-                  column.brainstormidea_set,
-                  colsIdeaOrderInfo.previousIndex,
-                  colsIdeaOrderInfo.currentIndex
-                );
-              }
-            });
-          } else if (this.board.meta.updated === 'category_changed') {
-            let container;
-            let previousContainer;
-            const colsIdeaOrderInfo: ColsCategoryChangeIdeaOrderInfo =
-              this.board.meta.colsCategoryChangeIdeaOrderInfo;
-            this.columns.forEach((column: Category) => {
-              if (column.id.toString() === colsIdeaOrderInfo.container) {
-                container = column;
-              }
-              if (column.id.toString() === colsIdeaOrderInfo.previousContainer) {
-                previousContainer = column;
-              }
-            });
-
-            transferArrayItem(
-              previousContainer.brainstormidea_set,
-              container.brainstormidea_set,
-              colsIdeaOrderInfo.previousIndex,
-              colsIdeaOrderInfo.currentIndex
-            );
-          }
-        }
       }
     }
   }
@@ -315,60 +330,106 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
   }
 
   drop(event: CdkDragDrop<Idea[]>) {
-    // if (this.isHost) {
     if (event.previousContainer === event.container) {
       if (event.previousIndex === event.currentIndex) {
         return;
       }
       if (this.board.sort !== 'unsorted') {
+        const sortOption = global.PostOrderOptions.find((v) => v.value === this.board.sort);
+        const sortOptionName = sortOption ? sortOption.name : 'Unknown';
+
+        this.utilsService.openWarningNotification(`The board sort mode is set to ${sortOptionName}`, '');
         return;
       }
-      // const category = event.container.element.nativeElement.getAttribute('columnId');
-      // const colsIdeaOrderInfo: ColsIdeaOrderInfo = {
-      //   container: category,
-      //   previousIndex: event.previousIndex,
-      //   currentIndex: event.currentIndex,
-      // };
-      // this.sendMessage.emit(
-      //   new SetMetaDataBoardEvent(this.board.id, {
-      //     ...this.board.meta,
-      //     updated: 'post_order',
-      //     colsIdeaOrderInfo: colsIdeaOrderInfo,
-      //   })
-      // );
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.sendRearrangeEvent(event);
     } else {
-      // const category = event.container.element.nativeElement.getAttribute('columnId');
-      // const previousCategory = event.previousContainer.element.nativeElement.getAttribute('columnId');
-
-      // const ideasOrder: ColsCategoryChangeIdeaOrderInfo = {
-      //   container: category,
-      //   previousContainer: previousCategory,
-      //   previousIndex: event.previousIndex,
-      //   currentIndex: event.currentIndex,
-      // };
-      // this.sendMessage.emit(
-      //   new SetMetaDataBoardEvent(this.board.id, {
-      //     ...this.board.meta,
-      //     updated: 'category_changed',
-      //     colsCategoryChangeIdeaOrderInfo: ideasOrder,
-      //   })
-      // );
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
       this.sendCategorizeEvent(event);
     }
-    // }
   }
 
   sendCategorizeEvent(event: CdkDragDrop<Idea[]>) {
-    const categoryID = event.container.element.nativeElement.getAttribute('columnID');
-    const ideaID = event.item.element.nativeElement.getAttribute('ideaId');
-    this.sendMessage.emit(new BrainstormSetCategoryEvent(ideaID, categoryID));
+    const movedIdeaInOriginalState = event.previousContainer.data[event.previousIndex];
+    const categoryId = parseInt(event.container.element.nativeElement.getAttribute('columnID'), 10);
+    // if ideas are legacy
+    const allIdeasAreLegacy = event.container.data.every(
+      (idea) => idea.next_idea === null && idea.previous_idea === null
+    );
+    if (allIdeasAreLegacy && event.container.data?.length > 1) {
+      // transferArrayItem(
+      //   event.previousContainer.data,
+      //   event.container.data,
+      //   event.previousIndex,
+      //   event.currentIndex
+      // );
+      this.sendMessage.emit(
+        new BrainstormSetCategoryEvent({
+          id: movedIdeaInOriginalState.id,
+          category: categoryId,
+          next_idea: null,
+          previous_idea: null,
+        })
+      );
+    } else {
+      // if ideas are not legacy
+      // at least one idea has next_idea or previous_idea set
+      // console.log(`verify if this previousindex is from previous container ${event.previousIndex}`); yes
+      // console.log(`verify if this current index is from new container ${event.currentIndex}`); yes
+      // const movedIdea = moveIdea(cloneDeep(event.container.data), event.previousIndex, event.currentIndex);
+
+      // remove idea from category
+      // console.log(cloneDeep(event.previousContainer.data));
+
+      // for (let j = 0; j < this.columns.length; j++) {
+      //   const col = this.columns[j];
+      //   if (col.id === categoryId) {
+      //     col.brainstormidea_set = removeIdeaFromCategory(
+      //       event.previousContainer.data,
+      //       movedIdeaInOriginalState.id
+      //     );
+      //     event.previousContainer.data = col.brainstormidea_set;
+      //   }
+      // }
+      event.previousContainer.data = removeIdeaFromCategory(
+        event.previousContainer.data,
+        movedIdeaInOriginalState.id
+      );
+      // transferArrayItem(
+      //   event.previousContainer.data,
+      //   event.container.data,
+      //   event.previousIndex,
+      //   event.currentIndex
+      // );
+      // removeIdeaFromCategory(event.previousContainer.data, movedIdeaInOriginalState.id);
+      // event.previousContainer.data
+
+      // console.log(cloneDeep(event.previousContainer.data));
+
+      // insert idea into new category using index
+      // use the returned next_idea and previouse_idea to send BE event
+      // const movedIdea = insertAt(event.container.data, movedIdeaInOriginalState, event.currentIndex);
+      const movedIdea = insertAt(
+        event.container.data,
+        cloneDeep(movedIdeaInOriginalState),
+        event.currentIndex
+      );
+
+      // after that check how to handle the response from the event
+      const i = {
+        id: movedIdeaInOriginalState.id,
+        category: categoryId,
+        next_idea: movedIdea.next_idea,
+        previous_idea: movedIdea.previous_idea,
+      };
+      this.sendMessage.emit(new BrainstormSetCategoryEvent(i));
+    }
+  }
+
+  sendRearrangeEvent(event: CdkDragDrop<Idea[]>) {
+    const movedIdea = moveIdea(cloneDeep(event.container.data), event.previousIndex, event.currentIndex);
+    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    this.sendMessage.emit(
+      new BrainstormIdeaRearrangeEvent(movedIdea.id, movedIdea.next_idea, movedIdea.previous_idea)
+    );
   }
 
   submitComment(ideaId, val) {

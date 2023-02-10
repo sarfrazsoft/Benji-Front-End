@@ -12,6 +12,7 @@ import {
   BrainstormChangeModeResponse,
   BrainstormCreateCategoryResponse,
   BrainstormEditResponse,
+  BrainstormIdeaRearrangeResponse,
   BrainstormRearrangeBoardResponse,
   BrainstormRemoveBoardResponse,
   BrainstormRemoveCategoryResponse,
@@ -38,6 +39,9 @@ import { moveBoard } from './activities/board-list-functions/move-board/move-boa
 import { removeBoard } from './activities/board-list-functions/remove-board/remove-board';
 import { BoardsNavigationService } from './activities/boards-navigation.service';
 import { BrainstormEventService } from './activities/brainstorm-event.service';
+import { BrainstormService } from './activities/brainstorm.service';
+import { pushIdeaIntoCategory } from './activities/idea-list-functions/push-idea-into-category/push-idea-into-category';
+import { removeIdeaFromCategory } from './activities/idea-list-functions/remove-idea-from-category/remove-idea-from-category';
 import {
   Board,
   BoardInfo,
@@ -63,7 +67,8 @@ export class ContextService {
     private http: HttpClient,
     private router: Router,
     private boardsNavigationService: BoardsNavigationService,
-    private brainstormEventService: BrainstormEventService
+    private brainstormEventService: BrainstormEventService,
+    private brainstormService: BrainstormService
   ) {}
 
   set hostLessonsCount(count: number) {
@@ -240,6 +245,51 @@ export class ContextService {
   destroyActivityTimer() {
     this.activityTimer$.next(null);
   }
+
+  // reusable functions
+  getIdea(id: number, categorySet: Array<Category>): Idea {
+    for (let j = 0; j < categorySet.length; j++) {
+      const existingCategory = categorySet[j];
+      const existingIdea = find(existingCategory.brainstormidea_set, { id: id });
+      if (existingIdea) {
+        return existingIdea;
+      }
+    }
+  }
+
+  getIdeaFromBoards(id: number, boards: Array<Board>): Idea {
+    let idea;
+    try {
+      boards.forEach((board) => {
+        board.brainstormcategory_set.forEach((category) => {
+          const existingIdea = find(category.brainstormidea_set, { id: id });
+          if (existingIdea) {
+            idea = existingIdea;
+          }
+        });
+      });
+    } catch (error) {
+      console.error(`Error in finding idea: ${error}`);
+    }
+    return idea;
+  }
+
+  getCategoryFromBoards(id: number, boards: Array<Board>): Category {
+    let category: Category;
+    try {
+      boards.forEach((board) => {
+        const existingCategory = find(board.brainstormcategory_set, { id: id });
+        if (existingCategory) {
+          category = existingCategory;
+        }
+      });
+    } catch (error) {
+      console.error(`Error in finding category: ${error}`);
+    }
+    return category;
+  }
+
+  // Event handlers
 
   removeCommentFromActivityState(
     removedComment: BrainstormRemoveIdeaCommentResponse,
@@ -481,8 +531,14 @@ export class ContextService {
               idea_document: res.idea_document ?? null,
               idea_video: res.idea_video ?? null,
               idea_image: res.idea_image ?? null,
+
+              next_idea: res.next_idea ?? null,
+              previous_idea: res.previous_idea ?? null,
             };
-            category.brainstormidea_set.push(idea);
+
+            const arr = category.brainstormidea_set.filter((v) => !v.removed);
+            category.brainstormidea_set = pushIdeaIntoCategory(arr, idea);
+            // category.brainstormidea_set.push(idea);
           }
         }
         break;
@@ -523,7 +579,10 @@ export class ContextService {
           const category = board.brainstormcategory_set[j];
           const existingIdea = find(category.brainstormidea_set, { id: res.brainstormidea_id });
           if (existingIdea) {
-            remove(category.brainstormidea_set, { id: res.brainstormidea_id });
+            const ideas: Array<Idea> = category.brainstormidea_set.filter((v) => !v.removed);
+            const removedId: number = res.brainstormidea_id;
+            // TODO Mahin does removeIdeaFromCategory really need to go to brainstorm service?
+            category.brainstormidea_set = this.brainstormService.removeIdeaFromCategory(ideas, removedId);
             break;
           }
         }
@@ -682,16 +741,6 @@ export class ContextService {
     }
   }
 
-  getIdea(id: number, categorySet: Array<Category>): Idea {
-    for (let j = 0; j < categorySet.length; j++) {
-      const existingCategory = categorySet[j];
-      const existingIdea = find(existingCategory.brainstormidea_set, { id: id });
-      if (existingIdea) {
-        return existingIdea;
-      }
-    }
-  }
-
   brainstormSubmitReplyReviewComment(
     res: BrainstormSubmitIdeaCommentResponse,
     oldActivityState: UpdateMessage
@@ -845,19 +894,32 @@ export class ContextService {
 
     let idea: Idea;
     for (let j = 0; j < board.brainstormcategory_set.length; j++) {
-      const categoryIdeas = board.brainstormcategory_set[j].brainstormidea_set;
+      const categoryIdeas = board.brainstormcategory_set[j].brainstormidea_set.filter((v) => !v.removed);
       const tempIdea = find(categoryIdeas, { id: res.brainstormidea_id });
       if (tempIdea) {
         idea = tempIdea;
-        remove(categoryIdeas, { id: res.brainstormidea_id });
+        board.brainstormcategory_set[j].brainstormidea_set = removeIdeaFromCategory(
+          categoryIdeas,
+          tempIdea.id
+        );
+
+        break;
       }
     }
-    for (let j = 0; j < board.brainstormcategory_set.length; j++) {
-      const categoryIdeas = board.brainstormcategory_set[j].brainstormidea_set;
-      if (board.brainstormcategory_set[j].id === res.category) {
-        categoryIdeas.push(idea);
+
+    if (idea) {
+      idea.next_idea = res.next_idea;
+      idea.previous_idea = res.previous_idea;
+      for (let j = 0; j < board.brainstormcategory_set.length; j++) {
+        const categoryIdeas = board.brainstormcategory_set[j].brainstormidea_set;
+        if (board.brainstormcategory_set[j].id === res.category) {
+          board.brainstormcategory_set[j].brainstormidea_set = pushIdeaIntoCategory(categoryIdeas, idea);
+        }
       }
     }
+
+    // notify the service that a comment has a reply
+    this.brainstormEventService.categoryChangedForIdea = res as BrainstormSetCategoryResponse;
   }
 
   //
@@ -990,6 +1052,24 @@ export class ContextService {
       } catch (error) {
         console.error(error);
       }
+    }
+  }
+
+  brainstormIdeaRearrange(res: BrainstormIdeaRearrangeResponse, oldActivityState: UpdateMessage) {
+    const category = this.getCategoryFromBoards(res.category, oldActivityState.brainstormactivity?.boards);
+
+    const existingIdea = this.getIdea(res.brainstormidea_id, [category]);
+
+    if (existingIdea) {
+      category.brainstormidea_set = removeIdeaFromCategory(
+        category.brainstormidea_set,
+        res.brainstormidea_id
+      );
+
+      existingIdea.previous_idea = res.previous_idea;
+      existingIdea.next_idea = res.next_idea;
+
+      category.brainstormidea_set = pushIdeaIntoCategory(category.brainstormidea_set, existingIdea);
     }
   }
 }

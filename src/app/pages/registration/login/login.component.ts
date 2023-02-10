@@ -116,7 +116,7 @@ export class LoginComponent implements OnInit {
           // if (localStorage.getItem('participant')) {
           //   localStorage.removeItem('participant');
           // }
-          if (res) {
+          if (!res.token) {
             this.emailPasswordError = true;
           } else {
             if (this.authService.redirectURL.length) {

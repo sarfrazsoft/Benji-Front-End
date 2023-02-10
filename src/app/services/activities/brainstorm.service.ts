@@ -14,6 +14,9 @@ import {
   Idea,
   PostOrder,
 } from '../backend/schema';
+import { pushIdeaIntoCategory } from './idea-list-functions/push-idea-into-category/push-idea-into-category';
+import { removeIdeaFromCategory } from './idea-list-functions/remove-idea-from-category/remove-idea-from-category';
+import { sortByFirstToLast } from './idea-list-functions/sort-ideas-by-next-previous/sort-ideas-by-next-previous';
 
 @Injectable()
 export class BrainstormService {
@@ -133,29 +136,59 @@ export class BrainstormService {
     return arr;
   }
 
-  addIdeaToCategory(act: Board, existingCategories, callback) {
-    let changedCategory: Category;
-    act.brainstormcategory_set.forEach((category: Category, index) => {
-      existingCategories.forEach((existingCategory) => {
-        if (existingCategory.id === category.id) {
-          const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-          if (BEIdeas.length === existingCategory.brainstormidea_set.length) {
+  addIdeaToCategory(act: Board, existingCategories) {
+    act.brainstormcategory_set.forEach((BEcategory: Category, index) => {
+      existingCategories.forEach((existingCategory: Category) => {
+        if (existingCategory.id === BEcategory.id) {
+          const BEIdeas = BEcategory.brainstormidea_set?.filter((idea) => !idea.removed);
+          if (BEIdeas && BEIdeas.length === existingCategory.brainstormidea_set.length) {
           } else {
             const myDifferences = differenceBy(BEIdeas, existingCategory.brainstormidea_set, 'id');
-            existingCategory.brainstormidea_set.push(myDifferences[0]);
-            changedCategory = cloneDeep(existingCategory);
+            const idea = myDifferences[0];
+            // const arr = existingCategory.brainstormidea_set.filter((i) => !i.removed);
+            console.log(idea, existingCategory.brainstormidea_set);
+            try {
+              existingCategory.brainstormidea_set = pushIdeaIntoCategory(
+                existingCategory.brainstormidea_set,
+                idea
+              );
+            } catch (error) {
+              console.log(error);
+            }
           }
         }
       });
     });
-    callback(changedCategory);
   }
 
-  populateCategories(board: Board, columns) {
+  removeIdeaFromCategory(ideas: Array<Idea>, removedId: number) {
+    // Helper function to find the object with a given id
+    const findObjectById = (id) => {
+      return ideas.find((obj) => obj.id === id);
+    };
+    // if the ideas contain ideas that have next_idea and previous_idea null
+    // that means this category and ideas are legacy content that does not have
+    // next_idea and previous_idea sorts
+    if (ideas.filter((obj) => obj.next_idea === null && obj.previous_idea === null).length > 0) {
+      remove(ideas, { id: removedId });
+      return ideas;
+    }
+    try {
+      const removedObject = findObjectById(removedId);
+      if (!removedObject) {
+        throw new Error(`Object with id ${removedId} not found in the array`);
+      }
+      ideas = removeIdeaFromCategory(ideas, removedId);
+      return ideas;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  populateCategories(board: Board, columns: Array<Category>) {
     columns = [];
     board.brainstormcategory_set.sort((a, b) => {
       return a.id - b.id;
-      // return b.id - a.id;
     });
     board.brainstormcategory_set.forEach((category) => {
       if (category.brainstormidea_set) {
@@ -170,12 +203,28 @@ export class BrainstormService {
 
     columns = board.brainstormcategory_set.filter((cat) => !cat.removed);
 
+    for (let i = 0; i < columns.length; i++) {
+      const column: Category = columns[i];
+      try {
+        column.brainstormidea_set = sortByFirstToLast(column.brainstormidea_set);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     return this.sortIdeas(board, columns);
   }
 
   sortIdeas(board: Board, columns) {
     if (board.sort === 'unsorted') {
-      // do nothing
+      // This code snippet is using a for loop to iterate through an array of "columns".
+      //  For each column, it is accessing a property called "brainstormidea_set" and
+      // using the JavaScript sort method to sort the ideas within that property. The
+      // sorting is being done based on the value of the "pinned" property of each idea.
+      // If two ideas have the same value for "pinned", they will be considered equal and
+      // their order will not be changed. If one idea has a "pinned" value of true and the
+      // other has a "pinned" value of false, the idea with the true value will be considered
+      // "smaller" and will come first in the sorted array.
       for (let i = 0; i < columns.length; i++) {
         const col = columns[i];
         col.brainstormidea_set = col.brainstormidea_set.sort((a: Idea, b: Idea) => {
@@ -342,7 +391,7 @@ export class BrainstormService {
     act.brainstormcategory_set.forEach((category, index) => {
       existingCategories.forEach((existingCategory) => {
         if (existingCategory.id === category.id) {
-          const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+          const BEIdeas = category.brainstormidea_set?.filter((idea) => !idea.removed);
           if (BEIdeas.length === existingCategory.brainstormidea_set.length) {
           } else {
             const myDifferences: Array<any> = differenceBy(
@@ -353,7 +402,10 @@ export class BrainstormService {
             for (let i = 0; i < myDifferences.length; i++) {
               const element = myDifferences[i];
               if (element) {
-                remove(existingCategory.brainstormidea_set, (idea: any) => idea.id === element.id);
+                existingCategory.brainstormidea_set = removeIdeaFromCategory(
+                  existingCategory.brainstormidea_set,
+                  element.id
+                );
               }
             }
           }
@@ -661,5 +713,27 @@ export class BrainstormService {
       }
     });
     return selectedBoard;
+  }
+
+  getIdeaFromCategory(category: Category, first: boolean): Idea | null {
+    try {
+      const ideas = category.brainstormidea_set.filter((idea) => !idea.removed);
+      if (ideas.length) {
+        if (ideas.length === 1) {
+          return ideas[0];
+        }
+        let currentId = first ? ideas[0].previous_idea : ideas[0].next_idea;
+        let current = ideas.find((item) => item.id === currentId);
+        while (current && current[first ? 'previous_idea' : 'next_idea']) {
+          currentId = current[first ? 'previous_idea' : 'next_idea'];
+          current = ideas.find((item) => item.id === currentId);
+        }
+        return current || ideas[0];
+      }
+      return null;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
 }

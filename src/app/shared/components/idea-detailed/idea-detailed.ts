@@ -17,6 +17,7 @@ import { cloneDeep } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
+import { getIdeaFromCategory } from 'src/app/services/activities/idea-list-functions/get-idea-from-category/get-idea-from-category';
 import {
   Board,
   BoardStatus,
@@ -709,7 +710,17 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   categoryChanged(category) {
-    this.sendMessage.emit(new BrainstormSetCategoryEvent(this.data.item.id.toString(), category.id));
+    const lastIdea = getIdeaFromCategory(category, 'last');
+    if (lastIdea) {
+      this.sendMessage.emit(
+        new BrainstormSetCategoryEvent({
+          id: this.data.item.id,
+          category: category.id,
+          next_idea: null,
+          previous_idea: lastIdea.id,
+        })
+      );
+    }
   }
 
   areCommentsAllowed() {

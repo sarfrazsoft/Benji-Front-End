@@ -1,6 +1,7 @@
 'use strict';
 
 import { environment } from './../environments/environment';
+import { BoardSort, SortOrderEntery } from './services/backend/schema';
 
 const backend = environment.host;
 const web_protocol = environment.web_protocol;
@@ -144,7 +145,7 @@ export const DefaultwhiteLabelInfo = {
     lightLogo: './assets/img/Benji_logo_white.png',
     darkLogo: './assets/img/Benji_logo.svg',
     // darkLogo: './assets/img/maestro_sessions_logo_spot.png',
-    welcomeDescription: 'What\'s Benji? Learn more about the future of learning',
+    welcomeDescription: "What's Benji? Learn more about the future of learning",
     primary_lighter: '#80a8ff',
     primary_light: '#4c83fc',
     primary: '#555BEA',
@@ -209,5 +210,24 @@ export const DefaultwhiteLabelInfo1 = {
 
 export enum Move {
   next = 'next',
-  previous = 'previous'
+  previous = 'previous',
 }
+
+export const PostOrderOptions: Array<SortOrderEntery> = [
+  {
+    value: 'newest_to_oldest',
+    name: 'Newest to oldest',
+  },
+  {
+    value: 'oldest_to_newest',
+    name: 'Oldest to newest',
+  },
+  {
+    value: 'likes',
+    name: 'Likes',
+  },
+  {
+    value: 'unsorted',
+    name: 'Unsorted',
+  },
+];

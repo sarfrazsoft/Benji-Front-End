@@ -77,6 +77,9 @@ export class PostLayoutService {
       //     this.sendMessage$.next(new BrainstormBoardSortOrderEvent('unsorted', board_id));
       //   }, 1000);
       // }
+      if (board.sort !== 'unsorted') {
+        return;
+      }
       this.sendMessage$.next(
         new SetMetaDataBoardEvent(board_id, {
           ...board.meta,
@@ -84,6 +87,7 @@ export class PostLayoutService {
           post_order: ideasOrder,
         })
       );
+      console.log(event);
     });
   }
 

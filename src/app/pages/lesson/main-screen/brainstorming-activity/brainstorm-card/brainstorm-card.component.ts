@@ -16,6 +16,7 @@ import {
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { cloneDeep } from 'lodash';
 import * as LogRocket from 'logrocket';
 import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -420,7 +421,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
         showCategoriesDropdown: this.isColumnsLayout,
         categories: this.board.brainstormcategory_set,
         item: this.item,
-        category: this.category,
+        category: cloneDeep(this.category),
         myGroup: this.myGroup,
         activityState: this.activityState,
         participantCode: this.participantCode,

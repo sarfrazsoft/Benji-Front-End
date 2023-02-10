@@ -21,7 +21,6 @@ import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming
 import { BrainstormEventService, BrainstormService } from 'src/app/services';
 import {
   Board,
-  BrainstormSubmitEvent,
   BrainstormSubmitIdeaCommentResponse,
   Category,
   EventTypes,

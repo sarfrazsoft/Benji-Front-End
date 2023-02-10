@@ -152,6 +152,7 @@ export class AuthService {
       .pipe(
         map((res: LoginResponse) => {
           this.setLoggedInUserSession(res);
+          return res;
         }),
         catchError((err) => of(err.error))
       );
@@ -205,7 +206,12 @@ export class AuthService {
       })
       .pipe(
         map((res: Participant) => {
-          this.setParticipantSession(res);
+          if (res['message']) {
+            // TODO ask Akash to change the response type to something fixed
+            this.setParticipantSession(res['participant']);
+          } else {
+            this.setParticipantSession(res);
+          }
           return res;
         }),
         catchError((err) => {
@@ -370,10 +376,10 @@ export class AuthService {
     const name = user.first_name + ' ' + user.last_name;
 
     this.createParticipant(name, lessonCode, user.email, user.id).subscribe(
-      (res) => {
+      (res: { message: string; participant: Participant }) => {
         let loginError = false;
-        if (res.lessonrun_code) {
-          this.navigateToScreenLesson(res.lessonrun_code);
+        if (res['lessonrun_code']) {
+          this.navigateToScreenLesson(res['lessonrun_code']);
         } else if (res.message === 'You are already in this session.') {
           this.setParticipantSession(res.participant);
           this.navigateToScreenLesson(res.participant.lessonrun_code);

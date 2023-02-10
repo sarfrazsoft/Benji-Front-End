@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { CoverPhoto } from './backend/schema/course_details';
-import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import * as global from 'src/app/globals';
+import { environment } from 'src/environments/environment';
+import { CoverPhoto } from './backend/schema/course_details';
 
 @Injectable()
 export class LessonService {
@@ -52,9 +53,10 @@ export class LessonService {
     headers.set('Content-Type', null);
     headers.set('Accept', 'multipart/form-data');
     const params = new HttpParams();
-    return this.httpClient.post(url, formData, { params, headers }).map((res: any) => {
-      return res;
-    });
+    return this.httpClient.post(url, formData, { params, headers }).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
   }
-
 }
