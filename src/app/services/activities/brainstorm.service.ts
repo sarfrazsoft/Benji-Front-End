@@ -17,6 +17,8 @@ import {
 import { pushIdeaIntoCategory } from './idea-list-functions/push-idea-into-category/push-idea-into-category';
 import { removeIdeaFromCategory } from './idea-list-functions/remove-idea-from-category/remove-idea-from-category';
 import { sortByFirstToLast } from './idea-list-functions/sort-ideas-by-next-previous/sort-ideas-by-next-previous';
+import { sortIdeasByPin } from './idea-list-functions/sort-ideas-by-pin/sort-ideas-by-pin';
+import { sortIdeasByProvidedOrder } from './idea-list-functions/sort-ideas-by-provided-order/sort-ideas-by-provided-order';
 
 @Injectable()
 export class BrainstormService {
@@ -215,21 +217,11 @@ export class BrainstormService {
     return this.sortIdeas(board, columns);
   }
 
-  sortIdeas(board: Board, columns) {
+  sortIdeas(board: Board, columns: Array<Category>) {
     if (board.sort === 'unsorted') {
-      // This code snippet is using a for loop to iterate through an array of "columns".
-      //  For each column, it is accessing a property called "brainstormidea_set" and
-      // using the JavaScript sort method to sort the ideas within that property. The
-      // sorting is being done based on the value of the "pinned" property of each idea.
-      // If two ideas have the same value for "pinned", they will be considered equal and
-      // their order will not be changed. If one idea has a "pinned" value of true and the
-      // other has a "pinned" value of false, the idea with the true value will be considered
-      // "smaller" and will come first in the sorted array.
       for (let i = 0; i < columns.length; i++) {
         const col = columns[i];
-        col.brainstormidea_set = col.brainstormidea_set.sort((a: Idea, b: Idea) => {
-          return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
-        });
+        col.brainstormidea_set = sortIdeasByPin(col.brainstormidea_set);
       }
       return columns;
     } else {
@@ -247,9 +239,7 @@ export class BrainstormService {
           }
         });
 
-        col.brainstormidea_set = col.brainstormidea_set.sort((a: Idea, b: Idea) => {
-          return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
-        });
+        col.brainstormidea_set = sortIdeasByPin(col.brainstormidea_set);
       }
       return columns;
     }
@@ -499,7 +489,7 @@ export class BrainstormService {
     }
   }
 
-  uncategorizedPopulateIdeas(board) {
+  uncategorizedPopulateIdeas(board: Board) {
     const ideas = [];
     board.brainstormcategory_set.forEach((category) => {
       if (!category.removed && category.brainstormidea_set) {
@@ -581,6 +571,15 @@ export class BrainstormService {
   }
 
   uncategorizedSortIdeas(board: Board, existingIdeas: Array<Idea>) {
+    if (board.sort === 'unsorted') {
+      existingIdeas = sortIdeasByPin(existingIdeas);
+
+      // now sort based on the meta sort property
+      existingIdeas = sortIdeasByProvidedOrder(existingIdeas, board.meta?.post_order);
+      console.log(board.meta?.post_order);
+      console.log(existingIdeas);
+      return existingIdeas;
+    }
     // sort based on time first and then by the selected filter
     existingIdeas.sort((a: Idea, b: Idea) => {
       return Number(moment(b.time)) - Number(moment(a.time));
@@ -598,16 +597,6 @@ export class BrainstormService {
     });
     existingIdeas = existingIdeas.sort((a: Idea, b: Idea) => {
       return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
-    });
-    return existingIdeas;
-  }
-
-  sortIdeasOnRank(board: Board, existingIdeas: Array<Idea>, ranks: Array<PostOrder>) {
-    // sort based on time first and then by the selected filter
-    existingIdeas.sort((a: Idea, b: Idea) => {
-      const rankA = ranks.find((x) => a.id.toString() === x.ideaId);
-      const rankB = ranks.find((x) => b.id.toString() === x.ideaId);
-      return Number(rankA.order) - Number(rankB.order);
     });
     return existingIdeas;
   }

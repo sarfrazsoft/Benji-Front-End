@@ -367,8 +367,8 @@ export interface BoardMetaData {
 }
 
 export interface PostOrder {
-  ideaId: string;
-  order: string;
+  ideaId: number;
+  order: number;
 }
 
 export interface ColsCategoryChangeIdeaOrderInfo {
