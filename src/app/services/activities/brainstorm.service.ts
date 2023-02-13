@@ -168,13 +168,6 @@ export class BrainstormService {
     const findObjectById = (id) => {
       return ideas.find((obj) => obj.id === id);
     };
-    // if the ideas contain ideas that have next_idea and previous_idea null
-    // that means this category and ideas are legacy content that does not have
-    // next_idea and previous_idea sorts
-    if (ideas.filter((obj) => obj.next_idea === null && obj.previous_idea === null).length > 0) {
-      remove(ideas, { id: removedId });
-      return ideas;
-    }
     try {
       const removedObject = findObjectById(removedId);
       if (!removedObject) {
