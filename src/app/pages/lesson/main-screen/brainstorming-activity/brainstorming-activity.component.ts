@@ -55,12 +55,11 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
-  @Input() peakBackState = false;
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit
+{
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
   _activityState: UpdateMessage;
-  peakBackStage = null;
   showParticipantUI = false;
   showParticipantsGroupsDropdown = false;
   participantCode: number;
@@ -218,6 +217,7 @@ export class MainScreenBrainstormingActivityComponent
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
       this.updateLessonInfo();
+      console.log(cloneDeep(this.activityState));
       // set meeting mode at the start
       this.updateMeetingMode();
     } else if (currentEventType === EventTypes.hostChangeBoardEvent) {
@@ -241,13 +241,7 @@ export class MainScreenBrainstormingActivityComponent
       if (this.isHost) {
         this.navigateToNewlyAddedBoard();
       }
-    }
-    // else if (currentEventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
-    // update the data in service. no children components will fire ngonchanges
-    // this.brainstormEventService.ideaCommentEvent = this.activityState
-    // console.log(this.activityState.event_msg);
-    // }
-    else if (currentEventType === EventTypes.brainstormToggleMeetingMode) {
+    } else if (currentEventType === EventTypes.brainstormToggleMeetingMode) {
       this.updateMeetingMode();
       this.bringUsersToHostBoard();
     } else if (this.activityState.eventType === EventTypes.getUpdatedLessonDetailEvent) {
@@ -310,6 +304,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   updateLessonInfo() {
+    this.title.setTitle(this.activityState?.lesson_run?.lesson?.lesson_name ?? 'Benji');
     this.brainstormService.lessonName = this.activityState.lesson_run.lesson.lesson_name;
     this.brainstormService.lessonDescription = this.activityState.lesson_run.lesson.lesson_description;
     this.brainstormService.lessonImage = this.lessonService.setCoverPhoto(

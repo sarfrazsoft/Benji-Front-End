@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BrainstormService } from 'src/app';
+import { PostOrderOptions } from 'src/app/globals';
 import {
   Board,
   BoardSort,
@@ -16,6 +17,7 @@ import {
   BrainstormToggleParticipantNameEvent,
   EventTypes,
   SettingsTypes,
+  SortOrderEntery,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
@@ -35,24 +37,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
 
   @Output() sendMessage = new EventEmitter<any>();
   @Output() settingsNavClosed = new EventEmitter<any>();
-  postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
-    {
-      value: 'newest_to_oldest',
-      name: 'Newest to oldest',
-    },
-    {
-      value: 'oldest_to_newest',
-      name: 'Oldest to newest',
-    },
-    {
-      value: 'likes',
-      name: 'Likes',
-    },
-    {
-      value: 'unsorted',
-      name: 'Unsorted',
-    },
-  ];
+  postOrderDropdown: Array<SortOrderEntery> = PostOrderOptions;
 
   defaultSort = 'newest_to_oldest';
   participants = [];
@@ -73,6 +58,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
 
   showBottom = true;
   settingTypes = SettingsTypes;
+  boardTypes = BoardTypes;
   lessonRunCode: number;
 
   constructor(

@@ -14,6 +14,11 @@ import {
   Idea,
   PostOrder,
 } from '../backend/schema';
+import { pushIdeaIntoCategory } from './idea-list-functions/push-idea-into-category/push-idea-into-category';
+import { removeIdeaFromCategory } from './idea-list-functions/remove-idea-from-category/remove-idea-from-category';
+import { sortByFirstToLast } from './idea-list-functions/sort-ideas-by-next-previous/sort-ideas-by-next-previous';
+import { sortIdeasByPin } from './idea-list-functions/sort-ideas-by-pin/sort-ideas-by-pin';
+import { sortIdeasByProvidedOrder } from './idea-list-functions/sort-ideas-by-provided-order/sort-ideas-by-provided-order';
 
 @Injectable()
 export class BrainstormService {
@@ -133,29 +138,52 @@ export class BrainstormService {
     return arr;
   }
 
-  addIdeaToCategory(act: Board, existingCategories, callback) {
-    let changedCategory: Category;
-    act.brainstormcategory_set.forEach((category: Category, index) => {
-      existingCategories.forEach((existingCategory) => {
-        if (existingCategory.id === category.id) {
-          const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-          if (BEIdeas.length === existingCategory.brainstormidea_set.length) {
+  addIdeaToCategory(act: Board, existingCategories) {
+    act.brainstormcategory_set.forEach((BEcategory: Category, index) => {
+      existingCategories.forEach((existingCategory: Category) => {
+        if (existingCategory.id === BEcategory.id) {
+          const BEIdeas = BEcategory.brainstormidea_set?.filter((idea) => !idea.removed);
+          if (BEIdeas && BEIdeas.length === existingCategory.brainstormidea_set.length) {
           } else {
             const myDifferences = differenceBy(BEIdeas, existingCategory.brainstormidea_set, 'id');
-            existingCategory.brainstormidea_set.push(myDifferences[0]);
-            changedCategory = cloneDeep(existingCategory);
+            const idea = myDifferences[0];
+            // const arr = existingCategory.brainstormidea_set.filter((i) => !i.removed);
+            console.log(idea, existingCategory.brainstormidea_set);
+            try {
+              existingCategory.brainstormidea_set = pushIdeaIntoCategory(
+                existingCategory.brainstormidea_set,
+                idea
+              );
+            } catch (error) {
+              console.log(error);
+            }
           }
         }
       });
     });
-    callback(changedCategory);
   }
 
-  populateCategories(board: Board, columns) {
+  removeIdeaFromCategory(ideas: Array<Idea>, removedId: number) {
+    // Helper function to find the object with a given id
+    const findObjectById = (id) => {
+      return ideas.find((obj) => obj.id === id);
+    };
+    try {
+      const removedObject = findObjectById(removedId);
+      if (!removedObject) {
+        throw new Error(`Object with id ${removedId} not found in the array`);
+      }
+      ideas = removeIdeaFromCategory(ideas, removedId);
+      return ideas;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  populateCategories(board: Board, columns: Array<Category>) {
     columns = [];
     board.brainstormcategory_set.sort((a, b) => {
       return a.id - b.id;
-      // return b.id - a.id;
     });
     board.brainstormcategory_set.forEach((category) => {
       if (category.brainstormidea_set) {
@@ -170,17 +198,23 @@ export class BrainstormService {
 
     columns = board.brainstormcategory_set.filter((cat) => !cat.removed);
 
+    for (let i = 0; i < columns.length; i++) {
+      const column: Category = columns[i];
+      try {
+        column.brainstormidea_set = sortByFirstToLast(column.brainstormidea_set);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     return this.sortIdeas(board, columns);
   }
 
-  sortIdeas(board: Board, columns) {
+  sortIdeas(board: Board, columns: Array<Category>) {
     if (board.sort === 'unsorted') {
-      // do nothing
       for (let i = 0; i < columns.length; i++) {
         const col = columns[i];
-        col.brainstormidea_set = col.brainstormidea_set.sort((a: Idea, b: Idea) => {
-          return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
-        });
+        col.brainstormidea_set = sortIdeasByPin(col.brainstormidea_set);
       }
       return columns;
     } else {
@@ -198,9 +232,7 @@ export class BrainstormService {
           }
         });
 
-        col.brainstormidea_set = col.brainstormidea_set.sort((a: Idea, b: Idea) => {
-          return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
-        });
+        col.brainstormidea_set = sortIdeasByPin(col.brainstormidea_set);
       }
       return columns;
     }
@@ -342,7 +374,7 @@ export class BrainstormService {
     act.brainstormcategory_set.forEach((category, index) => {
       existingCategories.forEach((existingCategory) => {
         if (existingCategory.id === category.id) {
-          const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+          const BEIdeas = category.brainstormidea_set?.filter((idea) => !idea.removed);
           if (BEIdeas.length === existingCategory.brainstormidea_set.length) {
           } else {
             const myDifferences: Array<any> = differenceBy(
@@ -353,7 +385,10 @@ export class BrainstormService {
             for (let i = 0; i < myDifferences.length; i++) {
               const element = myDifferences[i];
               if (element) {
-                remove(existingCategory.brainstormidea_set, (idea: any) => idea.id === element.id);
+                existingCategory.brainstormidea_set = removeIdeaFromCategory(
+                  existingCategory.brainstormidea_set,
+                  element.id
+                );
               }
             }
           }
@@ -447,7 +482,7 @@ export class BrainstormService {
     }
   }
 
-  uncategorizedPopulateIdeas(board) {
+  uncategorizedPopulateIdeas(board: Board) {
     const ideas = [];
     board.brainstormcategory_set.forEach((category) => {
       if (!category.removed && category.brainstormidea_set) {
@@ -529,6 +564,13 @@ export class BrainstormService {
   }
 
   uncategorizedSortIdeas(board: Board, existingIdeas: Array<Idea>) {
+    if (board.sort === 'unsorted') {
+      existingIdeas = sortIdeasByPin(existingIdeas);
+
+      // now sort based on the meta sort property
+      existingIdeas = sortIdeasByProvidedOrder(existingIdeas, board.meta?.post_order);
+      return existingIdeas;
+    }
     // sort based on time first and then by the selected filter
     existingIdeas.sort((a: Idea, b: Idea) => {
       return Number(moment(b.time)) - Number(moment(a.time));
@@ -546,16 +588,6 @@ export class BrainstormService {
     });
     existingIdeas = existingIdeas.sort((a: Idea, b: Idea) => {
       return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
-    });
-    return existingIdeas;
-  }
-
-  sortIdeasOnRank(board: Board, existingIdeas: Array<Idea>, ranks: Array<PostOrder>) {
-    // sort based on time first and then by the selected filter
-    existingIdeas.sort((a: Idea, b: Idea) => {
-      const rankA = ranks.find((x) => a.id.toString() === x.ideaId);
-      const rankB = ranks.find((x) => b.id.toString() === x.ideaId);
-      return Number(rankA.order) - Number(rankB.order);
     });
     return existingIdeas;
   }
@@ -661,5 +693,27 @@ export class BrainstormService {
       }
     });
     return selectedBoard;
+  }
+
+  getIdeaFromCategory(category: Category, first: boolean): Idea | null {
+    try {
+      const ideas = category.brainstormidea_set.filter((idea) => !idea.removed);
+      if (ideas.length) {
+        if (ideas.length === 1) {
+          return ideas[0];
+        }
+        let currentId = first ? ideas[0].previous_idea : ideas[0].next_idea;
+        let current = ideas.find((item) => item.id === currentId);
+        while (current && current[first ? 'previous_idea' : 'next_idea']) {
+          currentId = current[first ? 'previous_idea' : 'next_idea'];
+          current = ideas.find((item) => item.id === currentId);
+        }
+        return current || ideas[0];
+      }
+      return null;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
 }

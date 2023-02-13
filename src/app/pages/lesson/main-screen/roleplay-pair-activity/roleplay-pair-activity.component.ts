@@ -1,7 +1,5 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { concat } from 'lodash';
+import { Component, OnInit } from '@angular/core';
 import { EmojiLookupService } from 'src/app/services';
-import { RoleplayPair } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -13,20 +11,8 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent imple
   ngOnInit() {
     super.ngOnInit();
   }
-  getGroupText(userGroup: RoleplayPair) {
-    return concat(userGroup.primary_roleplayuser_set, userGroup.secondary_roleplayuser_set)
-      .map((u) => u.user.first_name)
-      .join(' + ');
-  }
 
   constructor(private emoji: EmojiLookupService) {
     super();
-  }
-
-  isReversed() {
-    return (
-      this.activityState.roleplaypairactivity.reverse_group_activity !== null &&
-      this.activityState.roleplaypairactivity.reverse_group_activity !== undefined
-    );
   }
 }

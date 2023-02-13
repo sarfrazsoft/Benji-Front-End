@@ -90,6 +90,9 @@ export interface BrainstormSubmitResponse {
   idea_image: IdeaDocument;
   idea_document: IdeaDocument;
   idea_video: IdeaDocument;
+
+  next_idea: number;
+  previous_idea: number;
 }
 
 export interface BrainstormEditResponse {
@@ -218,4 +221,12 @@ export interface BrainstormSetCategoryResponse {
   category: number;
   brainstormidea_id: number;
   participant: number;
+  next_idea: number;
+  previous_idea: number;
+}
+export interface BrainstormIdeaRearrangeResponse {
+  brainstormidea_id: number;
+  previous_idea: number;
+  next_idea: number;
+  category: number;
 }

@@ -87,4 +87,5 @@ export enum EventTypes {
   brainstormRemoveCommentHeartEvent = 'BrainstormRemoveCommentHeartEvent',
 
   brainstormSetCategoryEvent = 'BrainstormSetCategoryEvent',
+  brainstormIdeaRearrangeEvent = 'BrainstormIdeaRearrangeEvent',
 }

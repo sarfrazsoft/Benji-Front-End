@@ -1,41 +1,22 @@
 <div class="admin-panel" fxLayout="column">
-  <div class="dashboard-header" fxLayout="row" fxLayoutAlign="space-between center">
-    <div class="dashboard-heading">
-      <h1>{{ folderName ? folderName : adminName + '’s Spaces' }}</h1>
-    </div>
-    <div fxLayout="row" fxLayoutGap="16px">
-      <div fxLayout="row" fxLayoutGap="8px">
-        <div
-          [ngClass]="{ active: layout === 'tilesLayout' }"
-          class="layout-icons"
-          (click)="toggleLayout('tilesLayout')"
-          fxLayoutAlign="center center"
-        >
-          <img class="tiles" src="/assets/img/dashboard/tiles.svg" />
-        </div>
-        <div
-          [ngClass]="{ active: layout === 'listLayout' }"
-          (click)="toggleLayout('listLayout')"
-          class="layout-icons"
-          fxLayoutAlign="center center"
-        >
-          <img class="list" src="/assets/img/dashboard/list.svg" />
-        </div>
-      </div>
-      <button class="dashboard-secondary-button bg-primary-color white-color" (click)="openCreateSession()">
-        + New Space
-      </button>
-    </div>
-  </div>
+  <benji-dashboard-header
+    [lessonRuns]="lessonRuns"
+    [selectedFolderId]="selectedFolderId"
+    [folderName]="folderName"
+    [folderLessonsIDs]="folderLessonsIDs"
+    (toggleLayout)="toggleLayout($event)"
+    [layout]="layout"
+  >
+  </benji-dashboard-header>
   <div class="subsection-container">
     <benji-lessons-list
       [lessons]="lessons"
       [lessonRuns]="lessonRuns"
       [isTemplates]="false"
       [layout]="layout"
-      (openCreateSession)="openCreateSession()"
+      (openCreateSession)="header.openCreateSession()"
       (setLessonRuns)="setLessonRuns($event)"
-      (openProPlanDialog)="openProPlanDialog()"
+      (openProPlanDialog)="header.openProPlanDialog()"
     >
     </benji-lessons-list>
   </div>

@@ -68,8 +68,8 @@ export class PostLayoutService {
       gridItems.forEach((itemElem: Item, i) => {
         const el = itemElem.getElement();
         ideasOrder.push({
-          ideaId: el.getAttribute('id'),
-          order: i.toString(),
+          ideaId: parseInt(el.getAttribute('id'), 10),
+          order: i,
         });
       });
       // if (board.sort !== 'unsorted') {
@@ -77,6 +77,9 @@ export class PostLayoutService {
       //     this.sendMessage$.next(new BrainstormBoardSortOrderEvent('unsorted', board_id));
       //   }, 1000);
       // }
+      if (board.sort !== 'unsorted') {
+        return;
+      }
       this.sendMessage$.next(
         new SetMetaDataBoardEvent(board_id, {
           ...board.meta,
@@ -143,7 +146,7 @@ export class PostLayoutService {
     const sortedArray = [];
     sortOrder.forEach((orderItem) => {
       unsortedGridItems.forEach((item) => {
-        if (orderItem.ideaId === item.getElement().getAttribute('id')) {
+        if (orderItem.ideaId.toString() === item.getElement().getAttribute('id')) {
           sortedArray.push(item);
         }
       });

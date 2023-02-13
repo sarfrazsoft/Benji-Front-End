@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+<div class="myloader" *ngIf="loading">
+  <benji-loading-screen
+    [title]="'Loading your dashboard'"
+    [subTitle]="'This might take a moment or so...'"
+  ></benji-loading-screen>
+</div>
+<router-outlet *ngIf="!loading"></router-outlet>

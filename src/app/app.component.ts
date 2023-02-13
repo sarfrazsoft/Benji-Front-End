@@ -1,5 +1,13 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
+import {
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+  RouterEvent,
+} from '@angular/router';
 import * as LogRocket from 'logrocket';
 import { Branding } from './services/backend/schema';
 import { ContextService } from './services/context.service';
@@ -12,12 +20,18 @@ import { UtilsService } from './services/utils.service';
 })
 export class AppComponent implements OnInit {
   apiUrl = 'test';
+  loading = true;
 
   constructor(
     private contextService: ContextService,
     private utilsService: UtilsService,
+    private router: Router,
     @Inject(DOCUMENT) private _document: HTMLDocument
-  ) {}
+  ) {
+    router.events.subscribe((routerEvent: RouterEvent) => {
+      this.checkRouterEvent(routerEvent);
+    });
+  }
 
   ngOnInit() {
     let color = '#555BEA';
@@ -281,6 +295,20 @@ export class AppComponent implements OnInit {
       return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
     } else {
       return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+    }
+  }
+
+  checkRouterEvent(routerEvent: RouterEvent): void {
+    if (routerEvent instanceof NavigationStart) {
+      this.loading = true;
+    }
+
+    if (
+      routerEvent instanceof NavigationEnd ||
+      routerEvent instanceof NavigationCancel ||
+      routerEvent instanceof NavigationError
+    ) {
+      this.loading = false;
     }
   }
 }

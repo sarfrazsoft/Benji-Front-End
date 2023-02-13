@@ -137,7 +137,8 @@ benji-session-navigation {
   }
 }
 .mat-menu-panel.mat-elevation-z4 {
-  box-shadow: 0px 1px 3px #d5d9de;
+  box-shadow: unset;
+  filter: drop-shadow(0px 0.5px 3px rgba(55, 53, 47, 0.2));
   color: $black;
 }
 

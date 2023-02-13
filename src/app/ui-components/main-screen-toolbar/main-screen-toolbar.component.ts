@@ -90,7 +90,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   notificationCount = 0;
   hostname = window.location.host + '/participant/join?link=';
 
-  _activityState: UpdateMessage;
   oldParticipantCode: number;
 
   constructor(
@@ -131,7 +130,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     }
 
     // boardsCount is being used in MainScreenLessonComponent
-    this.contextService.boardsCount = (this.activityState.brainstormactivity.boards.filter((board) => board.removed === false)).length;
+    this.contextService.boardsCount = this.activityState.brainstormactivity.boards.filter(
+      (board) => board.removed === false
+    ).length;
   }
 
   copyMessage(val: string) {
@@ -145,7 +146,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       this.activityState.eventType === EventTypes.notificationEvent
     ) {
     } else {
-      this._activityState = this.activityState;
       this.oldParticipantCode = this.participantCode;
     }
 
@@ -260,7 +260,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.participantCodes.length = 0;
     const p = [];
 
-    this._activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+    this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
       if (participant.is_active) {
         p.push(participant.participant_code);
       }
@@ -272,7 +272,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     if (this.isHost) {
       this.router.navigate(['/dashboard/']);
     } else if (this.isParticipant) {
-      this._activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+      this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
         if (participant.participant_code === this.participantCode && participant?.user?.id) {
           this.router.navigate(['/dashboard/']);
         }

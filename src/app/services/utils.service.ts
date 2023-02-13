@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { SnackBarComponent } from '../ui-components/snack-bar-component/snack-bar.component';
+import { environment } from 'src/environments/environment';
 @Injectable()
 export class UtilsService {
   notificationConfig: MatSnackBarConfig = {
@@ -200,6 +201,10 @@ export class UtilsService {
       timeStamp = timeStamp.replace(/\syears/, 'yr');
     }
     return timeStamp;
+  }
+
+  goToStripe(userEmail: string, userId: number) {
+    document.location.href = environment.stripe + '?prefilled_email=' + userEmail + '&client_reference_id=' + userId;
   }
 }
 

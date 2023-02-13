@@ -367,8 +367,8 @@ export interface BoardMetaData {
 }
 
 export interface PostOrder {
-  ideaId: string;
-  order: string;
+  ideaId: number;
+  order: number;
 }
 
 export interface ColsCategoryChangeIdeaOrderInfo {
@@ -387,6 +387,11 @@ export interface ColsIdeaOrderInfo {
 export type BoardStatus = 'open' | 'view_only' | 'closed' | 'private';
 
 export type BoardSort = 'newest_to_oldest' | 'oldest_to_newest' | 'likes' | 'unsorted';
+
+export interface SortOrderEntery {
+  value: BoardSort;
+  name: string;
+}
 
 export type PostSize = 'small' | 'medium' | 'large';
 
@@ -474,6 +479,9 @@ export interface Idea {
   idea_document: IdeaDocument;
   idea_video: IdeaDocument;
   meta: any;
+
+  next_idea: number;
+  previous_idea: number;
 }
 
 export interface IdeaHeart {

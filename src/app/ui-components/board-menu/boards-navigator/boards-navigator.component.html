@@ -17,6 +17,7 @@
     [ngStyle]="{ display: boardsNavHovered || closeBoardsNavHovered ? 'block' : 'none' }"
     class="close-boards-nav"
     [class.bg-primary-color]="closeBoardsNavHovered"
+    [class.border-color-primary]="closeBoardsNavHovered"
     (click)="toggleBoardsNavigator.emit()"
     (mouseover)="closeBoardsNavHovered = true"
     (mouseout)="closeBoardsNavHovered = false"

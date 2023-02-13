@@ -5,6 +5,7 @@ import { UpdateMessage } from '../backend/schema';
 import {
   BrainstormRemoveIdeaCommentResponse,
   BrainstormRemoveIdeaHeartResponse,
+  BrainstormSetCategoryResponse,
   BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartResponse,
 } from '../backend/schema/event-responses';
@@ -30,6 +31,10 @@ export class BrainstormEventService {
 
   set ideaRemoveCommentReplyEvent(l: BrainstormRemoveIdeaCommentResponse) {
     this.ideaRemoveCommentReplyEvent$.next(l);
+  }
+
+  set categoryChangedForIdea(l: BrainstormSetCategoryResponse) {
+    this.categoryChangedForIdea$.next(l);
   }
 
   set ideaRemoveCommentEvent(l: BrainstormRemoveIdeaCommentResponse) {
@@ -64,6 +69,8 @@ export class BrainstormEventService {
   ideaCommentEvent$ = new Subject<BrainstormSubmitIdeaCommentResponse>();
 
   ideaCommentReplyEvent$ = new Subject<BrainstormSubmitIdeaCommentResponse>();
+
+  categoryChangedForIdea$ = new Subject<BrainstormSetCategoryResponse>();
 
   ideaCommentAddHeartEvent$ = new Subject<BrainstormSubmitIdeaHeartResponse>();
 
