@@ -1401,12 +1401,13 @@ ng-dropdown-panel {
         width: unset;
         min-width: unset;
         .brainstorm-idea {
-          min-width: calc(100vw - 32px);
+          min-width: calc(100vw - 24px);
           max-width: 100%;
           &.small,
           &.medium,
           &.large {
-            min-width: calc(100vw - 32px);
+            min-width: calc(100vw - 24px);
+            max-width: calc(100vw - 24px);
           }
         }
       }
@@ -1441,8 +1442,17 @@ ng-dropdown-panel {
       }
     }
   }
-  benji-ms-brainstorming-activity .brainstorm-container .submitted-ideas {
+  benji-ms-brainstorming-activity .brainstorm-container {
     .uncategorized {
+      .brainstorm-idea {
+        max-width: 100%;
+        &.small,
+        &.medium,
+        &.large {
+          min-width: calc(100vw - 32px);
+          max-width: calc(100vw - 32px);
+        }
+      }
       .prose-sm {
         p {
           font-size: 1rem;
@@ -1493,18 +1503,18 @@ ng-dropdown-panel {
   }
 
   // Cards on mobile should be 100% width
-  .cdk-drag-preview.brainstorm-idea.small,
-  .cdk-drag-dragging.brainstorm-idea.small,
-  .brainstorm-idea.small,
-  .cdk-drag-preview.brainstorm-idea.medium,
-  .cdk-drag-dragging.brainstorm-idea.medium,
-  .brainstorm-idea.medium,
-  .cdk-drag-preview.brainstorm-idea.large,
-  .cdk-drag-dragging.brainstorm-idea.large,
-  .brainstorm-idea.large {
-    width: unset;
-    min-width: unset;
-  }
+  // .cdk-drag-preview.brainstorm-idea.small,
+  // .cdk-drag-dragging.brainstorm-idea.small,
+  // .brainstorm-idea.small,
+  // .cdk-drag-preview.brainstorm-idea.medium,
+  // .cdk-drag-dragging.brainstorm-idea.medium,
+  // .brainstorm-idea.medium,
+  // .cdk-drag-preview.brainstorm-idea.large,
+  // .cdk-drag-dragging.brainstorm-idea.large,
+  // .brainstorm-idea.large {
+  //   width: unset;
+  //   min-width: unset;
+  // }
 }
 
 .active-lesson-menu {
