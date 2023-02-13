@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { cloneDeep } from 'lodash';
 import { BrainstormService } from 'src/app/services';
 import { UpdateMessage } from 'src/app/services/backend/schema';
 import { LessonRun } from 'src/app/services/backend/schema/course_details';
@@ -7,6 +9,7 @@ import { GetUpdatedLessonDetailEvent } from 'src/app/services/backend/schema/mes
 import { LessonService } from 'src/app/services/lesson.service';
 import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
 
+@UntilDestroy()
 @Component({
   selector: 'benji-lesson-name',
   templateUrl: './lesson-name.component.html',
@@ -17,6 +20,7 @@ export class LessonNameComponent implements OnInit {
 
   lessonRun: LessonRun;
   lessonName: string;
+  lessonDescription: string;
   coverPhoto: string;
   lessonImage: string;
   imageUrl: string;
@@ -24,13 +28,13 @@ export class LessonNameComponent implements OnInit {
   constructor(
     private matDialog: MatDialog,
     private brainstormService: BrainstormService,
-    private lessonService: LessonService,
+    private lessonService: LessonService
   ) {}
 
   ngOnInit() {
-    this.lessonRun = this.activityState.lesson_run;
+    this.lessonRun = cloneDeep(this.activityState?.lesson_run);
     this.coverPhoto = this.lessonService.setCoverPhoto(this.lessonRun.lessonrun_images);
-    this.brainstormService.lessonName$.subscribe((lessonName: string) => {
+    this.brainstormService.lessonName$.pipe(untilDestroyed(this)).subscribe((lessonName: string) => {
       if (lessonName) {
         setTimeout(() => {
           this.lessonName = lessonName;
@@ -42,6 +46,7 @@ export class LessonNameComponent implements OnInit {
     this.brainstormService.lessonDescription$.subscribe((lessonDescription: string) => {
       if (lessonDescription) {
         this.lessonRun.lesson.lesson_description = lessonDescription;
+        this.lessonDescription = lessonDescription;
       }
     });
 
@@ -56,8 +61,8 @@ export class LessonNameComponent implements OnInit {
       .open(SessionSettingsDialogComponent, {
         data: {
           id: this.lessonRun.lesson.id,
-          title: this.lessonRun.lesson.lesson_name,
-          description: this.lessonRun.lesson.lesson_description,
+          title: this.lessonName,
+          description: this.lessonDescription,
           lessonImage: this.lessonImage,
           imageUrl: this.imageUrl,
           createSession: false,

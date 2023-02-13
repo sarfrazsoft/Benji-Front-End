@@ -57,11 +57,9 @@ export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges, OnDestroy, AfterViewInit
 {
-  @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
   _activityState: UpdateMessage;
-  peakBackStage = null;
   showParticipantUI = false;
   showParticipantsGroupsDropdown = false;
   participantCode: number;
@@ -219,6 +217,7 @@ export class MainScreenBrainstormingActivityComponent
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
       this.updateLessonInfo();
+      console.log(cloneDeep(this.activityState));
       // set meeting mode at the start
       this.updateMeetingMode();
     } else if (currentEventType === EventTypes.hostChangeBoardEvent) {
