@@ -99,8 +99,10 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     if (localStorage.getItem('host_' + this.roomCode)) {
-      LogRocket.identify(localStorage);
       this.permissionsService.loadPermissions(['ADMIN']);
+      if (localStorage.getItem('participant_' + this.roomCode)) {
+        localStorage.removeItem('participant_' + this.roomCode);
+      }
     } else if (localStorage.getItem('participant_' + this.roomCode)) {
       this.loadParticipantPermissions();
       this.clientType = 'participant';
