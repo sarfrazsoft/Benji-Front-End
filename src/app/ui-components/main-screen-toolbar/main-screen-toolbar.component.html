@@ -25,7 +25,7 @@
       />
       <benji-lesson-name
         *ngIf="!mobileScreen"
-        [activityState]="_activityState"
+        [activityState]="activityState"
         (socketMessage)="socketMessage.emit($event)"
       >
       </benji-lesson-name>

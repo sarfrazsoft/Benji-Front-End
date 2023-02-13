@@ -33,19 +33,25 @@ export class LessonNameComponent implements OnInit {
 
   ngOnInit() {
     this.lessonRun = cloneDeep(this.activityState?.lesson_run);
-    this.coverPhoto = this.lessonService.setCoverPhoto(this.lessonRun.lessonrun_images);
+    if (this.lessonRun?.lessonrun_images) {
+      this.coverPhoto = this.lessonService.setCoverPhoto(this.lessonRun?.lessonrun_images);
+    }
     this.brainstormService.lessonName$.pipe(untilDestroyed(this)).subscribe((lessonName: string) => {
       if (lessonName) {
         setTimeout(() => {
           this.lessonName = lessonName;
         }, 0);
-        this.lessonRun.lesson.lesson_name = lessonName;
+        if (this.lessonRun) {
+          this.lessonRun.lesson.lesson_name = lessonName;
+        }
       }
     });
 
     this.brainstormService.lessonDescription$.subscribe((lessonDescription: string) => {
       if (lessonDescription) {
-        this.lessonRun.lesson.lesson_description = lessonDescription;
+        if (this.lessonRun) {
+          this.lessonRun.lesson.lesson_description = lessonDescription;
+        }
         this.lessonDescription = lessonDescription;
       }
     });
