@@ -23,12 +23,10 @@ import { Category, Idea } from '../../../backend/schema';
 
 export function moveIdea(ideas: Idea[], fromIndex: number, toIndex: number) {
   if (fromIndex < 0 || fromIndex >= ideas.length) {
-    console.error('Invalid fromIndex');
-    return;
+    throw new Error('Invalid fromIndex');
   }
   if (toIndex < 0 || toIndex > ideas.length) {
-    console.error('Invalid toIndex');
-    return;
+    throw new Error('Invalid toIndex');
   }
 
   const idea = ideas[fromIndex];

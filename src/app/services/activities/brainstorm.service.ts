@@ -576,8 +576,6 @@ export class BrainstormService {
 
       // now sort based on the meta sort property
       existingIdeas = sortIdeasByProvidedOrder(existingIdeas, board.meta?.post_order);
-      console.log(board.meta?.post_order);
-      console.log(existingIdeas);
       return existingIdeas;
     }
     // sort based on time first and then by the selected filter
