@@ -1,14 +1,10 @@
-
 <ng-container *ngxPermissionsOnly="'ADMIN'">
-  <div 
-    class="session-title admin"
-    (click)="openSessionSettings()"
-    >
-      {{ lessonName }}
+  <div class="session-title admin" (click)="openSessionSettings()">
+    {{ lessonName }}
   </div>
 </ng-container>
 <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
   <div class="session-title">
-      {{ lessonName }}
+    {{ lessonName }}
   </div>
 </ng-container>

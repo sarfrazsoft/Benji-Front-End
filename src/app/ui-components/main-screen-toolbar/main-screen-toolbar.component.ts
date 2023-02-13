@@ -11,6 +11,7 @@ import {
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
@@ -91,12 +92,14 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   hostname = window.location.host + '/participant/join?link=';
 
   oldParticipantCode: number;
+  mobileScreen: boolean;
 
   constructor(
     public contextService: ContextService,
     private utilsService: UtilsService,
     private permissionsService: NgxPermissionsService,
-    private router: Router
+    private router: Router,
+    private deviceDetectorService: DeviceDetectorService
   ) {}
 
   ngOnInit() {
@@ -133,6 +136,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.contextService.boardsCount = this.activityState.brainstormactivity.boards.filter(
       (board) => board.removed === false
     ).length;
+
+    this.mobileScreen = this.deviceDetectorService.isMobile();
   }
 
   copyMessage(val: string) {

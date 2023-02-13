@@ -14,7 +14,7 @@
     </div>
   </div>
   <div
-    [ngStyle]="{ display: boardsNavHovered || closeBoardsNavHovered ? 'block' : 'none' }"
+    [ngStyle]="{ display: (boardsNavHovered || closeBoardsNavHovered) && !mobileScreen ? 'block' : 'none' }"
     class="close-boards-nav"
     [class.bg-primary-color]="closeBoardsNavHovered"
     [class.border-color-primary]="closeBoardsNavHovered"

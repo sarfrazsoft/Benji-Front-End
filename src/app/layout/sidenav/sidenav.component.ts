@@ -83,7 +83,7 @@ export class SidenavComponent implements OnInit {
     items: [
       {
         navName: 'Help Center',
-        navRoute: 'https://guides.mybenji.com/',
+        navRoute: 'https://mybenji.notion.site/',
         icon: '/assets/img/dashboard/help.svg',
         hoverIcon: '/assets/img/dashboard/help-hover.svg',
       },

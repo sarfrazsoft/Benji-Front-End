@@ -711,9 +711,73 @@ ng-dropdown-panel.post-idea-categories-dropdown {
   }
 }
 
-.idea-detailed-dialog {
+// CSS for tip-tap-editor in idea detailed
+.idea-detailed-dialog,
+.idea-detailed-mobile-dialog {
   benji-tiptap-editor .ProseMirror {
     min-height: unset;
+  }
+  mat-dialog-container {
+    .content-area {
+      .prose-sm {
+        color: #37352f;
+        p {
+          font-size: 1rem;
+          line-height: 1.5rem;
+          letter-spacing: -0.011rem;
+          a {
+            color: #555bea;
+          }
+          strong {
+            color: #37352f;
+          }
+        }
+        blockquote {
+          border-left: 3px solid;
+          color: #37352f;
+          p {
+            font-style: normal;
+            font-weight: 400;
+            &::after,
+            &::before {
+              content: unset !important;
+            }
+          }
+        }
+        ul {
+          margin-left: 5px;
+          > li {
+            &::before {
+              background-color: #37352f;
+              width: 6px;
+              height: 6px;
+            }
+          }
+        }
+        ol {
+          margin-left: 6px;
+        }
+        ul > li,
+        ol > li {
+          p,
+          p:first-child,
+          p:last-child {
+            margin-top: 4px;
+            margin-bottom: 4px;
+          }
+        }
+        p,
+        blockquote,
+        ul,
+        ol {
+          margin-bottom: 8px;
+          margin-top: 8px;
+          li {
+            margin: 0px 12px 0px 0px !important;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -861,64 +925,6 @@ ng-dropdown-panel.post-idea-categories-dropdown {
           color: #bdbdbd;
         }
       }
-      .prose-sm {
-        color: #37352f;
-        p {
-          font-size: 1rem;
-          line-height: 1.5rem;
-          letter-spacing: -0.011rem;
-          a {
-            color: #555bea;
-          }
-          strong {
-            color: #37352f;
-          }
-        }
-        blockquote {
-          border-left: 3px solid;
-          color: #37352f;
-          p {
-            font-style: normal;
-            font-weight: 400;
-            &::after,
-            &::before {
-              content: unset !important;
-            }
-          }
-        }
-        ul {
-          margin-left: 5px;
-          > li {
-            &::before {
-              background-color: #37352f;
-              width: 6px;
-              height: 6px;
-            }
-          }
-        }
-        ol {
-          margin-left: 6px;
-        }
-        ul > li,
-        ol > li {
-          p,
-          p:first-child,
-          p:last-child {
-            margin-top: 4px;
-            margin-bottom: 4px;
-          }
-        }
-        p,
-        blockquote,
-        ul,
-        ol {
-          margin-bottom: 8px;
-          margin-top: 8px;
-          li {
-            margin: 0px 12px 0px 0px !important;
-          }
-        }
-      }
       .description {
         border: unset;
         width: 100%;
@@ -1056,7 +1062,8 @@ ng-dropdown-panel.post-idea-categories-dropdown {
           .user-feed {
             .comments {
               .like-reply {
-                .like, .reply {
+                .like,
+                .reply {
                   font-size: 12px;
                 }
               }
@@ -1075,13 +1082,13 @@ ng-dropdown-panel.post-idea-categories-dropdown {
                     font-size: 14px;
                     margin-top: 4px;
                   }
-                } 
+                }
               }
               .comment-reply-wrapper .comment-reply .textarea-wrapper textarea {
                 font-size: 14px;
                 line-height: 20px;
               }
-            } 
+            }
           }
         }
       }
@@ -1100,7 +1107,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         width: 100%;
         overflow: auto;
         max-height: 70vh;
-        // TODO sarfraz height: 100% doesn't let 
+        // TODO sarfraz height: 100% doesn't let
         // you add a comment when there are comments just reaching
         // the comment box
         height: 100%;
@@ -1413,11 +1420,12 @@ ng-dropdown-panel.post-idea-categories-dropdown {
                     font-size: 14px;
                     margin-top: 4px;
                   }
-                } 
-              } 
+                }
+              }
             }
             .like-reply {
-              .like, .reply {
+              .like,
+              .reply {
                 font-size: 12px;
               }
             }

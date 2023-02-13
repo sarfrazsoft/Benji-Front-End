@@ -1493,6 +1493,20 @@ ng-dropdown-panel {
   }
 }
 
+// Cards on mobile should be 100% width
+.cdk-drag-preview.brainstorm-idea.small,
+.cdk-drag-dragging.brainstorm-idea.small,
+.brainstorm-idea.small,
+.cdk-drag-preview.brainstorm-idea.medium,
+.cdk-drag-dragging.brainstorm-idea.medium,
+.brainstorm-idea.medium,
+.cdk-drag-preview.brainstorm-idea.large,
+.cdk-drag-dragging.brainstorm-idea.large,
+.brainstorm-idea.large {
+  width: unset;
+  min-width: unset;
+}
+
 .active-lesson-menu {
   min-height: unset !important;
   border-radius: 8px !important;

@@ -19,11 +19,15 @@
       <img
         [src]="darkLogo"
         alt="Benji Logo"
-        [ngClass]="{ 'has-name': lessonName }"
+        [ngClass]="{ 'has-name': lessonName && !mobileScreen }"
         class="logo"
         (click)="logoClicked()"
       />
-      <benji-lesson-name [activityState]="activityState" (socketMessage)="socketMessage.emit($event)">
+      <benji-lesson-name
+        *ngIf="!mobileScreen"
+        [activityState]="_activityState"
+        (socketMessage)="socketMessage.emit($event)"
+      >
       </benji-lesson-name>
     </div>
     <ng-container>

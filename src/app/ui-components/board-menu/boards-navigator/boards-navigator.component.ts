@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { cloneDeep } from 'lodash';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormEventService, BrainstormService, ContextService } from 'src/app';
 import { getBoard } from 'src/app/services/activities/board-list-functions/get-board/get-board';
@@ -61,6 +62,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   meetingMode = false;
   boardsNavHovered: boolean;
   closeBoardsNavHovered: boolean;
+  mobileScreen: boolean;
 
   constructor(
     private dialog: MatDialog,
@@ -68,7 +70,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     private brainstormEventService: BrainstormEventService,
     private boardStatusService: BoardStatusService,
     private permissionsService: NgxPermissionsService,
-    private utilsService: UtilsService,
+    private deviceDetectorService: DeviceDetectorService,
     public contextService: ContextService
   ) {}
 
@@ -122,6 +124,8 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     this.brainstormService.meetingMode$.pipe(untilDestroyed(this)).subscribe((mode: boolean) => {
       this.meetingMode = mode;
     });
+
+    this.mobileScreen = this.deviceDetectorService.isMobile();
   }
 
   selectedBoardChanged(board) {
@@ -276,6 +280,10 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
         this.sendMessage.emit(new HostChangeBoardEvent(board.id));
       }
     });
+
+    if (this.deviceDetectorService.isMobile) {
+      this.toggleBoardsNavigator.emit();
+    }
   }
 
   duplicateBoard() {
