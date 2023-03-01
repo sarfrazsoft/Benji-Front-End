@@ -2,14 +2,18 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
-import * as global from 'src/app/globals';
-import { BeforeLessonRunDetails, CoverPhoto, LessonRunDetails } from 'src/app/services/backend/schema/course_details';
-import { environment } from 'src/environments/environment';
-import { AuthService, BackendRestService, ContextService } from 'src/app/services';
-import { UtilsService } from 'src/app/services/utils.service';
-import { LessonService } from 'src/app/services/lesson.service';
-import { Branding, TeamUser } from 'src/app/services/backend/schema';
 import { FormControl, Validators } from '@angular/forms';
+import * as global from 'src/app/globals';
+import { AuthService, BackendRestService, ContextService } from 'src/app/services';
+import { Branding, TeamUser } from 'src/app/services/backend/schema';
+import {
+  BeforeLessonRunDetails,
+  CoverPhoto,
+  LessonRunDetails,
+} from 'src/app/services/backend/schema/course_details';
+import { LessonService } from 'src/app/services/lesson.service';
+import { UtilsService } from 'src/app/services/utils.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'benji-participant-join',
@@ -85,7 +89,7 @@ export class ParticipantJoinComponent implements OnInit {
     }
     this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo = info.logo ? info.logo.toString() : "/assets/img/Benji_logo.svg";
+        this.logo = info.logo ? info.logo.toString() : '/assets/img/Benji_logo.svg';
       }
     });
   }
@@ -101,7 +105,6 @@ export class ParticipantJoinComponent implements OnInit {
   public validateRoomCode() {
     this.backend.validateRoomCode(this.roomCode).subscribe(
       (res: LessonRunDetails) => {
-
         // We have lessonrun_images in res. One of them is being used as cover photo
         this.lessonrRunImages = res.lessonrun_images;
         this.coverPhoto = this.lessonService.setCoverPhoto(this.lessonrRunImages);
@@ -156,7 +159,11 @@ export class ParticipantJoinComponent implements OnInit {
             this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
           }
         } else if (res && res.message === 'A participant with that display name already exists') {
-          this.participantAlreadyExistsError = true;
+          // this.participantAlreadyExistsError = true;
+          this.utilsService.openWarningNotification(
+            'A participant with that name has already joined. Try a different name.',
+            ''
+          );
         } else {
           this.loginError = true;
         }
@@ -165,11 +172,6 @@ export class ParticipantJoinComponent implements OnInit {
         console.log(err);
         if (err && err.error && err.error.non_field_errors) {
           if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
-            console.log('err');
-            this.utilsService.openWarningNotification(
-              'A participant with that name has already joined. Try a different name.',
-              ''
-            );
           }
         }
       }

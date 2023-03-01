@@ -208,7 +208,11 @@ export class AuthService {
         map((res: Participant) => {
           if (res['message']) {
             // TODO ask Akash to change the response type to something fixed
-            this.setParticipantSession(res['participant']);
+            if (res['message'] === 'A participant with that display name already exists') {
+              // do nothing
+            } else {
+              this.setParticipantSession(res['participant']);
+            }
           } else {
             this.setParticipantSession(res);
           }

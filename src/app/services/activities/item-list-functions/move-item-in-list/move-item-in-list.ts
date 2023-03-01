@@ -21,7 +21,13 @@ import { Category, Idea } from '../../../backend/schema';
 // If the item was moved to the last position, the new previous_idea will be the item at the
 //  index one less than the new location and the new next_idea will be set to null.
 
-export function moveIdea(ideas: Idea[], fromIndex: number, toIndex: number) {
+export function moveItem(
+  ideas: any[],
+  fromIndex: number,
+  toIndex: number,
+  previousPointer: string,
+  nextPointer: string
+) {
   if (fromIndex < 0 || fromIndex >= ideas.length) {
     throw new Error('Invalid fromIndex');
   }
@@ -47,22 +53,22 @@ export function moveIdea(ideas: Idea[], fromIndex: number, toIndex: number) {
   }
 
   if (previousId !== null) {
-    ideas[toIndex - 1].next_idea = idea.id;
+    ideas[toIndex - 1][nextPointer] = idea.id;
   }
   if (nextId !== null) {
-    ideas[toIndex + 1].previous_idea = idea.id;
+    ideas[toIndex + 1][previousPointer] = idea.id;
   }
 
-  idea.previous_idea = previousId;
-  idea.next_idea = nextId;
+  idea[previousPointer] = previousId;
+  idea[nextPointer] = nextId;
 
   // set the previous_idea of the first item to null if it's being moved to the first position
   if (toIndex === 0) {
-    idea.previous_idea = null;
+    idea[previousPointer] = null;
   }
 
   if (toIndex === ideas.length - 1) {
-    idea.next_idea = null;
+    idea[nextPointer] = null;
   }
 
   return idea;

@@ -1,121 +1,135 @@
-<div
-  class="submitted-ideas categorized"
-  fxLayout="row"
-  cdkDropListGroup>
-  <ng-container *ngFor="let column of columns; let i = index">
-    <ng-container *ngIf="!column.removed">
+<div class="benji-categorized-ideas">
+  <!-- [cdkDropListData]="column.brainstormidea_set" -->
+  <!-- cdkDropListGroup -->
+  <div
+    fxLayout="row"
+    (cdkDropListDropped)="columnDropped($event)"
+    [cdkDropListData]="columns"
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+  >
+    <div class="categorized-submitted-ideas categorized" cdkDropListGroup fxLayout="row">
       <div
-        class="column"
-        [ngClass]="columnSize"
-        cdkDropList
-        [cdkDropListData]="column.brainstormidea_set"
-        (cdkDropListDropped)="drop($event)"
-        [ngStyle]="{'min-width.px': minWidth}"
+        cdkDrag
+        [cdkDragDisabled]="!isHost"
+        class="column-container"
+        *ngFor="let column of columns; let i = index"
         [attr.columnID]="column.id"
       >
-        <div class="header" (click)="columnHeaderClicked(column)">
-          <div class="grey-bg">
-            <div
-              fxLayout="row"
-              fxLayoutAlign="space-between center"
-              *ngIf="!column.editing"
-            >
-              <div class="column-name black-color" fxFlex fxLayoutAlign="space-between">
-                <div fxLayoutAlign="start center">
-                  {{ column.category_name }}
+        <div *ngIf="!column.removed">
+          <div
+            class="categorized-column"
+            [ngClass]="columnSize"
+            cdkDropList
+            [cdkDropListData]="column.brainstormidea_set"
+            (cdkDropListDropped)="drop($event)"
+            [ngStyle]="{ 'min-width.px': minWidth }"
+            [attr.columnID]="column.id"
+          >
+            <div class="header" (click)="columnHeaderClicked(column)">
+              <div class="grey-bg">
+                <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="!column.editing">
+                  <div class="column-name black-color" fxFlex fxLayoutAlign="space-between">
+                    <div fxLayoutAlign="start center">
+                      {{ column.category_name }}
+                    </div>
+                    <ng-container *ngxPermissionsOnly="'ADMIN'">
+                      <button
+                        [matMenuTriggerFor]="menu"
+                        benji-click-stop-propagation
+                        disableRipple
+                        aria-label="Example icon-button with a menu"
+                        fxLayoutAlign="start start"
+                      >
+                        <mat-icon>more_horiz</mat-icon>
+                      </button>
+                    </ng-container>
+                  </div>
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item (click)="deleteCol(column.id)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Delete</span>
+                    </button>
+                    <button mat-menu-item (click)="columnHeaderClicked(column)">
+                      <mat-icon>create</mat-icon>
+                      <span>Rename</span>
+                    </button>
+                  </mat-menu>
                 </div>
-                <ng-container *ngxPermissionsOnly="'ADMIN'">
-                  <button
-                    [matMenuTriggerFor]="menu"
-                    benji-click-stop-propagation
-                    disableRipple
-                    aria-label="Example icon-button with a menu"
-                    fxLayoutAlign="start start"
-                  >
-                    <mat-icon>more_horiz</mat-icon>
-                  </button>
+                <ng-container *ngIf="column.editing">
+                  <input
+                    #colName
+                    type="text"
+                    (blur)="onColumnNameBlur(column, $event)"
+                    value="{{ column.category_name }}"
+                  />
                 </ng-container>
               </div>
-              <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="deleteCol(column.id)">
-                  <mat-icon>delete</mat-icon>
-                  <span>Delete</span>
-                </button>
-                <button mat-menu-item (click)="columnHeaderClicked(column)">
-                  <mat-icon>create</mat-icon>
-                  <span>Rename</span>
-                </button>
-              </mat-menu>
             </div>
-            <ng-container *ngIf="column.editing">
-              <input
-                #colName
-                type="text"
-                (blur)="onColumnNameBlur(column, $event)"
-                value="{{ column.category_name }}"
-              />
-            </ng-container>
-          </div>
-        </div>
-        <!-- <div class="ideas" [ngStyle]="{'min-width.px': minWidth}"> -->
-        <div class="ideas">
-          <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
-            <textarea
-              #textInput
-              (blur)="saveNewIdea(column, textInput.value)"
-              (keyup.enter)="saveNewIdea(column, textInput.value)"
-            ></textarea>
-          </div>
-          <div class="ideas-list-container">
-            <div 
-              *ngFor="let item of column.brainstormidea_set; let i = index" 
-              class="masonry-item"
-              [attr.ideaId]="item.id">
-              <ng-container *ngIf="canViewIdea(item)">
-                <benji-brainstorm-card
-                  [board]="board"
-                  [item]="item"
-                  [act]="act"
-                  [activityState]="activityState"
-                  [participantCode]="participantCode"
-                  (deleteIdea)="delete($event)"
-                  (ideaDetailedDialogOpened)="ideaDetailedDialogOpened($event)"
-                  (ideaDetailedDialogClosed)="ideaDetailedDialogClosed($event)"
-                  [ideaDetailedDialogOpen]="ideaDetailedDialogOpen"
-                  [sendMessage]="sendMessage"
-                  (commentEdited)="refreshMasonryLayout()"
-                  [isColumnsLayout]="isColumnsLayout"
-                  [category]="column"
-                  [myGroup]="myGroup"
-                  [avatarSize]="'small'"
-                  [userRole]="getUserRole(item)"
-                  [eventType]="eventType">
-                </benji-brainstorm-card>
-              </ng-container>
+            <!-- <div class="ideas" [ngStyle]="{'min-width.px': minWidth}"> -->
+            <div class="ideas">
+              <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
+                <textarea
+                  #textInput
+                  (blur)="saveNewIdea(column, textInput.value)"
+                  (keyup.enter)="saveNewIdea(column, textInput.value)"
+                ></textarea>
+              </div>
+              <div class="categorized-ideas-list-container">
+                <div
+                  *ngFor="let item of column.brainstormidea_set; let i = index"
+                  class="masonry-item"
+                  [attr.ideaId]="item.id"
+                >
+                  <ng-container *ngIf="canViewIdea(item)">
+                    <benji-brainstorm-card
+                      [board]="board"
+                      [item]="item"
+                      [act]="act"
+                      [activityState]="activityState"
+                      [participantCode]="participantCode"
+                      (deleteIdea)="delete($event)"
+                      (ideaDetailedDialogOpened)="ideaDetailedDialogOpened($event)"
+                      (ideaDetailedDialogClosed)="ideaDetailedDialogClosed($event)"
+                      [ideaDetailedDialogOpen]="ideaDetailedDialogOpen"
+                      [sendMessage]="sendMessage"
+                      (commentEdited)="refreshMasonryLayout()"
+                      [isColumnsLayout]="isColumnsLayout"
+                      [category]="column"
+                      [myGroup]="myGroup"
+                      [avatarSize]="'small'"
+                      [userRole]="getUserRole(item)"
+                      [eventType]="eventType"
+                    >
+                    </benji-brainstorm-card>
+                  </ng-container>
+                </div>
+              </div>
+              <div
+                class="add-card"
+                (click)="addCard(column)"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="5px"
+              >
+                <mat-icon>add</mat-icon>
+                <span>New Card</span>
+              </div>
             </div>
-          </div>
-          <div
-            class="add-card"
-            (click)="addCard(column)"
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="5px">
-            <mat-icon>add</mat-icon>
-            <span>New Card</span>
           </div>
         </div>
       </div>
-    </ng-container>
-  </ng-container>
-  <ng-container *ngxPermissionsOnly="'ADMIN'">
-    <div class="column">
-      <div class="header" fxLayoutAlign="center center">
-        <div
-          class="add-column"
-          (click)="addColumn(board.brainstormcategory_set.length)">
-          + New Group
+      <ng-container *ngxPermissionsOnly="'ADMIN'">
+        <div class="column-container">
+          <div class="categorized-column">
+            <div class="header" fxLayoutAlign="center center">
+              <div class="add-column" (click)="addColumn(board.brainstormcategory_set.length)">
+                + New Group
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
-  </ng-container>
+  </div>
 </div>

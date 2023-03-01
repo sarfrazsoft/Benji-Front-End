@@ -23,19 +23,16 @@ import * as global from 'src/app/globals';
 import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
 import { BrainstormEventService, PostLayoutService } from 'src/app/services';
 import { BrainstormService } from 'src/app/services/activities/brainstorm.service';
+import { getItemFromList } from 'src/app/services/activities/item-list-functions/get-item-from-list/get-item-from-list';
 import { insertAt } from 'src/app/services/activities/idea-list-functions/insert-at/insert-at';
-import { moveIdea } from 'src/app/services/activities/idea-list-functions/move-idea-in-list/move-idea-in-list';
-import { pushIdeaIntoCategory } from 'src/app/services/activities/idea-list-functions/push-idea-into-category/push-idea-into-category';
-import { removeIdeaFromCategory } from 'src/app/services/activities/idea-list-functions/remove-idea-from-category/remove-idea-from-category';
+import { moveItem } from 'src/app/services/activities/item-list-functions/move-item-in-list/move-item-in-list';
+import { removeItemFromList } from 'src/app/services/activities/item-list-functions/remove-item-from-category/remove-item-from-category';
 import {
   Board,
   BrainstormActivity,
-  BrainstormCreateCategoryEvent,
   BrainstormIdeaRearrangeEvent,
-  BrainstormRemoveCategoryEvent,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormRemoveIdeaHeartEvent,
-  BrainstormRenameCategoryEvent,
   BrainstormSetCategoryEvent,
   BrainstormSetCategoryResponse,
   BrainstormSubmitIdeaCommentEvent,
@@ -50,6 +47,12 @@ import {
   SetMetaDataBoardEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import {
+  BrainstormCategoryRearrangeEvent,
+  BrainstormCreateCategoryEvent,
+  BrainstormRemoveCategoryEvent,
+  BrainstormRenameCategoryEvent,
+} from 'src/app/services/backend/schema/messages/category-events';
 import { UtilsService } from 'src/app/services/utils.service';
 import { environment } from 'src/environments/environment';
 import { BaseActivityComponent } from '../../../shared/base-activity.component';
@@ -122,7 +125,7 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
     //         idea = tempIdea;
     //         console.log(cloneDeep(this.board.brainstormcategory_set[j].brainstormidea_set));
     //         console.log(tempIdea);
-    //         this.board.brainstormcategory_set[j].brainstormidea_set = removeIdeaFromCategory(
+    //         this.board.brainstormcategory_set[j].brainstormidea_set = removeItemFromList(
     //           this.board.brainstormcategory_set[j].brainstormidea_set,
     //           tempIdea.id
     //         );
@@ -268,7 +271,15 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
   }
 
   addColumn(newCategoryNumber) {
-    this.sendMessage.emit(new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber, this.board.id));
+    const lastCategory = getItemFromList(this.columns, 'last', 'previous_category', 'next_category');
+
+    let lastCategoryId = null;
+    if (lastCategory) {
+      lastCategoryId = lastCategory.id;
+    }
+    this.sendMessage.emit(
+      new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber, this.board.id, lastCategoryId)
+    );
   }
 
   deleteCol(categoryId) {
@@ -347,6 +358,28 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
     }
   }
 
+  columnDropped(event: CdkDragDrop<Category[]>) {
+    if (event.previousIndex === event.currentIndex) {
+      return;
+    }
+    const movedCategory = moveItem(
+      cloneDeep(event.container.data),
+      event.previousIndex,
+      event.currentIndex,
+      'previous_category',
+      'next_category'
+    );
+    console.log(movedCategory);
+    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    this.sendMessage.emit(
+      new BrainstormCategoryRearrangeEvent(
+        movedCategory.id,
+        movedCategory.previous_category,
+        movedCategory.next_category
+      )
+    );
+  }
+
   sendCategorizeEvent(event: CdkDragDrop<Idea[]>) {
     const movedIdeaInOriginalState = event.previousContainer.data[event.previousIndex];
     const categoryId = parseInt(event.container.element.nativeElement.getAttribute('columnID'), 10);
@@ -382,16 +415,18 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
       // for (let j = 0; j < this.columns.length; j++) {
       //   const col = this.columns[j];
       //   if (col.id === categoryId) {
-      //     col.brainstormidea_set = removeIdeaFromCategory(
+      //     col.brainstormidea_set = removeItemFromList(
       //       event.previousContainer.data,
       //       movedIdeaInOriginalState.id
       //     );
       //     event.previousContainer.data = col.brainstormidea_set;
       //   }
       // }
-      event.previousContainer.data = removeIdeaFromCategory(
+      event.previousContainer.data = removeItemFromList(
         event.previousContainer.data,
-        movedIdeaInOriginalState.id
+        movedIdeaInOriginalState.id,
+        'previous_idea',
+        'next_idea'
       );
       // transferArrayItem(
       //   event.previousContainer.data,
@@ -399,7 +434,7 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
       //   event.previousIndex,
       //   event.currentIndex
       // );
-      // removeIdeaFromCategory(event.previousContainer.data, movedIdeaInOriginalState.id);
+      // removeItemFromList(event.previousContainer.data, movedIdeaInOriginalState.id);
       // event.previousContainer.data
 
       // console.log(cloneDeep(event.previousContainer.data));
@@ -417,18 +452,24 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
       const i = {
         id: movedIdeaInOriginalState.id,
         category: categoryId,
-        next_idea: movedIdea.next_idea,
         previous_idea: movedIdea.previous_idea,
+        next_idea: movedIdea.next_idea,
       };
       this.sendMessage.emit(new BrainstormSetCategoryEvent(i));
     }
   }
 
   sendRearrangeEvent(event: CdkDragDrop<Idea[]>) {
-    const movedIdea = moveIdea(cloneDeep(event.container.data), event.previousIndex, event.currentIndex);
+    const movedIdea = moveItem(
+      cloneDeep(event.container.data),
+      event.previousIndex,
+      event.currentIndex,
+      'previous_idea',
+      'next_idea'
+    );
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     this.sendMessage.emit(
-      new BrainstormIdeaRearrangeEvent(movedIdea.id, movedIdea.next_idea, movedIdea.previous_idea)
+      new BrainstormIdeaRearrangeEvent(movedIdea.id, movedIdea.previous_idea, movedIdea.next_idea)
     );
   }
 

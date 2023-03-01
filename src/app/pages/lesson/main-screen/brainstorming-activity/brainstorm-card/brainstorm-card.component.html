@@ -179,7 +179,7 @@
       (mousedown)="mouseDownEvent($event)"
       (mouseup)="mouseUpEvent($event, item)"
       (click)="ideaCardClicked($event)"
-      >
+    >
       <!-- benji-click-stop-propagation -->
       <div *ngIf="item.title || item.idea" class="title-description">
         <div *ngIf="item.title" class="title" [ngClass]="{ spaced: item.idea }">{{ item.title }}</div>
@@ -189,7 +189,8 @@
             (navigateToBoard)="navigateToBoard($event)"
             [editable]="false"
             [lessonRunCode]="lessonRunCode"
-            [defaultValue]="item.idea"> 
+            [defaultValue]="item.idea"
+          >
           </benji-tiptap-editor>
         </div>
       </div>
@@ -239,7 +240,8 @@
           [ideaDetailedDialogRef]="ideaDetailedDialogRef"
           [avatarSize]="avatarSize"
           (sendMessage)="sendMessage.emit($event)"
-          (viewChanged)="viewChanged.emit()">
+          (viewChanged)="viewChanged.emit()"
+        >
         </benji-card-feedback>
       </ng-container>
     </div>

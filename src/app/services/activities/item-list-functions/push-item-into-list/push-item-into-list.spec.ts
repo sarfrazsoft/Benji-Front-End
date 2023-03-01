@@ -1,8 +1,8 @@
 import { Idea } from '../../../backend/schema';
-import { IdeaBuilder } from '../idea-builder';
-import { pushIdeaIntoCategory } from './push-idea-into-category';
+import { IdeaBuilder } from '../../object-builders/idea-builder';
+import { pushItemIntoList } from './push-item-into-list';
 
-describe('pushIdeaIntoCategory', () => {
+describe('pushItemIntoList', () => {
   let ideaBuilder: IdeaBuilder;
   let idea: Idea;
   let ideasArray: Array<Idea>;
@@ -14,7 +14,7 @@ describe('pushIdeaIntoCategory', () => {
   });
 
   it('should add the idea to the array', () => {
-    const newArr = pushIdeaIntoCategory(ideasArray, idea);
+    const newArr = pushItemIntoList(ideasArray, idea, 'previous_idea', 'next_idea');
     expect(newArr.length).toBe(1);
     expect(newArr[0].id).toBe(idea.id);
   });
@@ -23,8 +23,8 @@ describe('pushIdeaIntoCategory', () => {
     const idea1 = new IdeaBuilder().withId(1).withPreviousIdea(null).withNextIdea(null).build();
     const idea2 = new IdeaBuilder().withId(2).withPreviousIdea(idea.id).withNextIdea(null).build();
 
-    let newArr = pushIdeaIntoCategory(ideasArray, idea1);
-    newArr = pushIdeaIntoCategory(newArr, idea2);
+    let newArr = pushItemIntoList(ideasArray, idea1, 'previous_idea', 'next_idea');
+    newArr = pushItemIntoList(newArr, idea2, 'previous_idea', 'next_idea');
 
     expect(newArr.length).toBe(2);
     expect(newArr[0].id).toBe(idea1.id);
@@ -45,9 +45,9 @@ describe('pushIdeaIntoCategory', () => {
       .withNextIdea(lastIdea.id)
       .build();
 
-    let newArr = pushIdeaIntoCategory(ideasArray, firstIdea);
-    newArr = pushIdeaIntoCategory(newArr, lastIdea);
-    newArr = pushIdeaIntoCategory(newArr, middleIdea);
+    let newArr = pushItemIntoList(ideasArray, firstIdea, 'previous_idea', 'next_idea');
+    newArr = pushItemIntoList(newArr, lastIdea, 'previous_idea', 'next_idea');
+    newArr = pushItemIntoList(newArr, middleIdea, 'previous_idea', 'next_idea');
 
     expect(newArr.length).toBe(3);
     expect(newArr[0].id).toBe(firstIdea.id);
@@ -75,10 +75,10 @@ describe('pushIdeaIntoCategory', () => {
 
     const smallestAddedIdea = new IdeaBuilder().withId(4).withPreviousIdea(null).withNextIdea(1).build();
 
-    pushIdeaIntoCategory(ideasArray, firstIdea);
-    pushIdeaIntoCategory(ideasArray, lastIdea);
-    pushIdeaIntoCategory(ideasArray, middleIdea);
-    pushIdeaIntoCategory(ideasArray, smallestAddedIdea);
+    pushItemIntoList(ideasArray, firstIdea, 'previous_idea', 'next_idea');
+    pushItemIntoList(ideasArray, lastIdea, 'previous_idea', 'next_idea');
+    pushItemIntoList(ideasArray, middleIdea, 'previous_idea', 'next_idea');
+    pushItemIntoList(ideasArray, smallestAddedIdea, 'previous_idea', 'next_idea');
 
     // response should be
     // [smallestAddedIdea, fistIdea, middleIdea, lastIdea]

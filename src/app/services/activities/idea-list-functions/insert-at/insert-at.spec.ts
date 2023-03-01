@@ -1,5 +1,5 @@
 import { Idea } from '../../../backend/schema';
-import { IdeaBuilder } from '../idea-builder';
+import { IdeaBuilder } from '../../object-builders/idea-builder';
 import { insertAt } from './insert-at';
 
 describe('insertAt', () => {

@@ -17,7 +17,7 @@ import { cloneDeep } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
-import { getIdeaFromCategory } from 'src/app/services/activities/idea-list-functions/get-idea-from-category/get-idea-from-category';
+import { getItemFromList } from 'src/app/services/activities/item-list-functions/get-item-from-list/get-item-from-list';
 import {
   Board,
   BoardStatus,
@@ -36,7 +36,10 @@ import {
 import { environment } from 'src/environments/environment';
 import { ConfirmationDialogComponent } from '../../dialogs/confirmation/confirmation.dialog';
 import { GiphyPickerDialogComponent } from '../../dialogs/giphy-picker-dialog/giphy-picker.dialog';
-import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/image-picker.dialog';
+import {
+  DialogResult,
+  ImagePickerDialogComponent,
+} from '../../dialogs/image-picker-dialog/image-picker.dialog';
 import { FileProgress } from '../uploadcare-widget/uploadcare-widget.component';
 
 export interface IdeaDetailedInfo {
@@ -295,6 +298,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.imageSelected = true;
       if (this.data.item.idea_image.document) {
         this.imageSrc = this.data.item.idea_image.document;
+        if (!this.imageSrc.startsWith('/media') && !this.imageSrc.startsWith('https')) {
+          this.imageSrc = '/media' + this.imageSrc;
+        }
       } else if (this.data.item.idea_image.document_url) {
         this.imageSrc = this.data.item.idea_image.document_url;
       }
@@ -473,7 +479,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
         panelClass: ['dashboard-dialog', 'image-picker-dialog'],
       })
       .afterClosed()
-      .subscribe((res) => {
+      .subscribe((res: DialogResult) => {
         if (res) {
           this.uploadPanelExpanded = false;
           this.clearPDF();
@@ -490,6 +496,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             };
             reader.readAsDataURL(file);
           } else if (res.type === 'unsplash') {
+            console.log(res.data);
             this.selectedImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
@@ -710,7 +717,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   categoryChanged(category) {
-    const lastIdea = getIdeaFromCategory(category, 'last');
+    const lastIdea = getItemFromList(category.brainstormidea_set, 'last', 'previous_idea', 'next_idea');
     if (lastIdea) {
       this.sendMessage.emit(
         new BrainstormSetCategoryEvent({

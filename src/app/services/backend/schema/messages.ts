@@ -32,7 +32,11 @@ import {
   WhereDoYouStandChoice,
 } from './activities';
 import { Lesson, LessonRun, RunningTools } from './course_details';
-import { BrainstormBoardBackgroundResponse, BrainstormSetCategoryResponse } from './event-responses';
+import {
+  BrainstormBoardBackgroundResponse,
+  BrainstormCategoryRearrangeResponse,
+  BrainstormSetCategoryResponse,
+} from './event-responses';
 import { ToggleBlurBackgroundImageResponse } from './event-responses';
 import { ChangeBoardBackgroundTypeResponse } from './event-responses';
 import {
@@ -140,6 +144,7 @@ export type EventResponseTypes =
   | BrainstormCreateCategoryResponse
   | BrainstormRemoveCategoryResponse
   | BrainstormRenameCategoryResponse
+  | BrainstormCategoryRearrangeResponse
   | BrainstormAddBoardResponse
   | Board
   | BrainstormRemoveBoardResponse
@@ -558,33 +563,6 @@ export class BrainstormRemoveIdeaPinEvent extends BrainstormRemoveSubmissionEven
   event_name = 'BrainstormRemoveIdeaPinEvent';
 }
 
-export class BrainstormRenameCategoryEvent extends ActivityEvent {
-  event_name = 'BrainstormRenameCategoryEvent';
-
-  constructor(category: number, name: string, board: number) {
-    super();
-    this.extra_args = { category: category, category_name: name, board: board };
-  }
-}
-
-export class BrainstormCreateCategoryEvent extends ActivityEvent {
-  event_name = 'BrainstormCreateCategoryEvent';
-
-  constructor(category: string, board: number) {
-    super();
-    this.extra_args = { category_name: category, board: board };
-  }
-}
-
-export class BrainstormRemoveCategoryEvent extends ActivityEvent {
-  event_name = 'BrainstormRemoveCategoryEvent';
-
-  constructor(catId: number, deleteIdeas: boolean) {
-    super();
-    this.extra_args = { category: catId, delete_ideas: deleteIdeas };
-  }
-}
-
 export class BrainstormVoteEvent extends ActivityEvent {
   event_name = 'BrainstormVoteEvent';
 
@@ -976,12 +954,12 @@ export class BrainstormRearrangeBoardEvent extends ActivityEvent {
 }
 export class BrainstormIdeaRearrangeEvent extends ActivityEvent {
   event_name = 'BrainstormIdeaRearrangeEvent';
-  constructor(brainstormidea: number, nextIdea: number, previousIdea: number) {
+  constructor(brainstormidea: number, previousIdea: number, nextIdea: number) {
     super();
     this.extra_args = {
       brainstormidea: brainstormidea,
-      next_idea: nextIdea,
       previous_idea: previousIdea,
+      next_idea: nextIdea,
     };
   }
 }

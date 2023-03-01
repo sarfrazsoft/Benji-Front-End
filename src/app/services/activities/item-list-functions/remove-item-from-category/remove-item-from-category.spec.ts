@@ -1,8 +1,8 @@
 import { Idea } from '../../../backend/schema';
-import { IdeaBuilder } from '../idea-builder';
-import { removeIdeaFromCategory } from './remove-idea-from-category';
+import { IdeaBuilder } from '../../object-builders/idea-builder';
+import { removeItemFromList } from './remove-item-from-category';
 
-describe('removeIdeaFromCategory', () => {
+describe('removeItemFromList', () => {
   let firstIdea: Idea;
   let thirdIdea: Idea;
   let secondIdea: Idea;
@@ -17,7 +17,7 @@ describe('removeIdeaFromCategory', () => {
 
   it('should delete the first idea', () => {
     const ideas = [firstIdea, thirdIdea, secondIdea];
-    const updatedIdeas = removeIdeaFromCategory(ideas, firstIdea.id);
+    const updatedIdeas = removeItemFromList(ideas, firstIdea.id, 'previous_idea', 'next_idea');
 
     expect(updatedIdeas.length).toEqual(2);
 
@@ -34,7 +34,7 @@ describe('removeIdeaFromCategory', () => {
     firstIdea = new IdeaBuilder().withId(1).withPreviousIdea(null).withNextIdea(2).build();
     secondIdea = new IdeaBuilder().withId(2).withPreviousIdea(firstIdea.id).withNextIdea(null).build();
     const ideas = [firstIdea, secondIdea];
-    const updatedIdeas = removeIdeaFromCategory(ideas, firstIdea.id);
+    const updatedIdeas = removeItemFromList(ideas, firstIdea.id, 'previous_idea', 'next_idea');
 
     expect(updatedIdeas.length).toEqual(1);
 
@@ -47,7 +47,7 @@ describe('removeIdeaFromCategory', () => {
     firstIdea = new IdeaBuilder().withId(1).withPreviousIdea(null).withNextIdea(2).build();
     secondIdea = new IdeaBuilder().withId(2).withPreviousIdea(firstIdea.id).withNextIdea(null).build();
     const ideas = [firstIdea, secondIdea];
-    const updatedIdeas = removeIdeaFromCategory(ideas, secondIdea.id);
+    const updatedIdeas = removeItemFromList(ideas, secondIdea.id, 'previous_idea', 'next_idea');
 
     expect(updatedIdeas.length).toEqual(1);
 
@@ -60,7 +60,7 @@ describe('removeIdeaFromCategory', () => {
     firstIdea = new IdeaBuilder().withId(1).withPreviousIdea(34).withNextIdea(2).build();
     secondIdea = new IdeaBuilder().withId(2).withPreviousIdea(firstIdea.id).withNextIdea(44).build();
     const ideas = [firstIdea, secondIdea];
-    const updatedIdeas = removeIdeaFromCategory(ideas, secondIdea.id);
+    const updatedIdeas = removeItemFromList(ideas, secondIdea.id, 'previous_idea', 'next_idea');
 
     expect(updatedIdeas.length).toEqual(1);
 
@@ -75,7 +75,7 @@ describe('removeIdeaFromCategory', () => {
     thirdIdea = new IdeaBuilder().withId(3).withPreviousIdea(null).withNextIdea(null).build();
 
     const ideas = [firstIdea, thirdIdea, secondIdea];
-    const updatedIdeas = removeIdeaFromCategory(ideas, secondIdea.id);
+    const updatedIdeas = removeItemFromList(ideas, secondIdea.id, 'previous_idea', 'next_idea');
 
     expect(updatedIdeas.length).toEqual(2);
 
@@ -90,7 +90,7 @@ describe('removeIdeaFromCategory', () => {
 
   it('should delete the last idea', () => {
     const ideas = [thirdIdea, firstIdea, secondIdea];
-    const updatedIdeas = removeIdeaFromCategory(ideas, thirdIdea.id);
+    const updatedIdeas = removeItemFromList(ideas, thirdIdea.id, 'previous_idea', 'next_idea');
 
     expect(updatedIdeas.length).toEqual(2);
     expect(updatedIdeas[0]).toEqual(firstIdea);
@@ -103,7 +103,7 @@ describe('removeIdeaFromCategory', () => {
 
   it('should delete the middle idea', () => {
     const ideas = [firstIdea, secondIdea, thirdIdea];
-    const updatedIdeas = removeIdeaFromCategory(ideas, secondIdea.id);
+    const updatedIdeas = removeItemFromList(ideas, secondIdea.id, 'previous_idea', 'next_idea');
 
     expect(updatedIdeas.length).toEqual(2);
     expect(updatedIdeas[0].id).toEqual(firstIdea.id);
@@ -117,7 +117,7 @@ describe('removeIdeaFromCategory', () => {
 
   it('should delete the fourth idea', () => {
     const ideas = [firstIdea, secondIdea, thirdIdea, fourthIdea];
-    const updatedIdeas = removeIdeaFromCategory(ideas, fourthIdea.id);
+    const updatedIdeas = removeItemFromList(ideas, fourthIdea.id, 'previous_idea', 'next_idea');
 
     expect(updatedIdeas.length).toEqual(3);
     expect(updatedIdeas[0].id).toEqual(firstIdea.id);
@@ -135,7 +135,7 @@ describe('removeIdeaFromCategory', () => {
 
   it('should delete the third idea', () => {
     const ideas = [firstIdea, secondIdea, thirdIdea, fourthIdea];
-    const updatedIdeas = removeIdeaFromCategory(ideas, secondIdea.id);
+    const updatedIdeas = removeItemFromList(ideas, secondIdea.id, 'previous_idea', 'next_idea');
 
     expect(updatedIdeas.length).toEqual(3);
     expect(updatedIdeas[0].id).toEqual(firstIdea.id);
@@ -155,7 +155,7 @@ describe('removeIdeaFromCategory', () => {
     const idea1 = new IdeaBuilder().withId(1).withPreviousIdea(null).withNextIdea(null).build();
     let ideasArray1 = [idea1];
 
-    ideasArray1 = removeIdeaFromCategory(ideasArray1, idea1.id);
+    ideasArray1 = removeItemFromList(ideasArray1, idea1.id, 'previous_idea', 'next_idea');
 
     expect(ideasArray1.length).toBe(0);
   });
@@ -165,7 +165,7 @@ describe('removeIdeaFromCategory', () => {
     const idea2 = new IdeaBuilder().withId(2).withPreviousIdea(1).withNextIdea(null).build();
     let ideasArray1 = [idea1, idea2];
 
-    ideasArray1 = removeIdeaFromCategory(ideasArray1, 4);
+    ideasArray1 = removeItemFromList(ideasArray1, 4, 'previous_idea', 'next_idea');
 
     expect(ideasArray1.length).toBe(2);
   });

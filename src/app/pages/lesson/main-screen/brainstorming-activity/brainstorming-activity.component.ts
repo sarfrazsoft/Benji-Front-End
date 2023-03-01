@@ -217,7 +217,6 @@ export class MainScreenBrainstormingActivityComponent
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
       this.updateLessonInfo();
-      console.log(cloneDeep(this.activityState));
       // set meeting mode at the start
       this.updateMeetingMode();
     } else if (currentEventType === EventTypes.hostChangeBoardEvent) {

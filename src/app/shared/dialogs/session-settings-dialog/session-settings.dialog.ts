@@ -49,7 +49,7 @@ export class SessionSettingsDialogComponent implements OnInit {
       title: new FormControl('', [Validators.required]),
       description: new FormControl(''),
     });
-    this.form.setValue({ title: this.data.title, description: this.data.description });
+    this.form.setValue({ title: this.data.title, description: this.data.description ?? null });
     this.createSession = this.data.createSession;
 
     if (this.data.lessonImage || this.data.imageUrl) {
@@ -85,7 +85,8 @@ export class SessionSettingsDialogComponent implements OnInit {
         lesson_name: val.title,
         lesson_description: val.description,
         lesson_image: this.selectedImage ? this.selectedImage : this.data.lessonImage,
-        lesson_image_name: this.selectedImageName ? this.selectedImageName : null, // Ask Mahin what name to pass
+        // Ask Mahin what name to pass
+        lesson_image_name: this.selectedImageName ? this.selectedImageName : null,
         image_url: this.imageUrl ? this.imageUrl : this.data.imageUrl,
       };
       this.updateLesson(l, this.data.id)

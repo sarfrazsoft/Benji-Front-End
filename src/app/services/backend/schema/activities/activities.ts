@@ -458,6 +458,8 @@ export interface Category {
   brainstormidea_set: Array<Idea>;
   category_name: string;
   removed: boolean;
+  next_category: number;
+  previous_category: number;
 }
 
 export interface Idea {

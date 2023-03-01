@@ -13,7 +13,6 @@ import { BackendSocketService } from 'src/app/services/backend/backend-socket.se
 import {
   ActivityEvent,
   Board,
-  BrainstormCreateCategoryEvent,
   EventTypes,
   ServerMessage,
   TeamUser,
@@ -28,6 +27,7 @@ import {
   BrainstormBoardBackgroundResponse,
   BrainstormBoardPostSizeResponse,
   BrainstormBoardSortOrderResponse,
+  BrainstormCategoryRearrangeResponse,
   BrainstormChangeBoardStatusResponse,
   BrainstormChangeModeResponse,
   BrainstormCreateCategoryResponse,
@@ -338,6 +338,12 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         this.oldServerMessage
       );
       this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
+    } else if (msg.eventtype === EventTypes.brainstormCategoryRearrangeEvent) {
+      this.contextService.rearrangeCategory(
+        msg.event_msg as BrainstormCategoryRearrangeResponse,
+        this.oldServerMessage
+      );
+      this.serverMessage = this.updateServerMessage(msg, this.oldServerMessage);
     } else if (msg.eventtype === EventTypes.brainstormRemoveCategoryEvent) {
       this.contextService.removeCategory(
         msg.event_msg as BrainstormRemoveCategoryResponse,
@@ -452,7 +458,6 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
-      console.log(cloneDeep(this.serverMessage));
       this.oldServerMessage = cloneDeep(this.serverMessage);
     } else {
       // if that event is not optimized

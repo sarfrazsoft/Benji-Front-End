@@ -14,9 +14,9 @@ import {
   Idea,
   PostOrder,
 } from '../backend/schema';
-import { pushIdeaIntoCategory } from './idea-list-functions/push-idea-into-category/push-idea-into-category';
-import { removeIdeaFromCategory } from './idea-list-functions/remove-idea-from-category/remove-idea-from-category';
-import { sortByFirstToLast } from './idea-list-functions/sort-ideas-by-next-previous/sort-ideas-by-next-previous';
+import { pushItemIntoList } from './item-list-functions/push-item-into-list/push-item-into-list';
+import { removeItemFromList } from './item-list-functions/remove-item-from-category/remove-item-from-category';
+import { sortByFirstToLast } from './item-list-functions/sort-items-by-next-previous/sort-items-by-next-previous';
 import { sortIdeasByPin } from './idea-list-functions/sort-ideas-by-pin/sort-ideas-by-pin';
 import { sortIdeasByProvidedOrder } from './idea-list-functions/sort-ideas-by-provided-order/sort-ideas-by-provided-order';
 
@@ -150,9 +150,11 @@ export class BrainstormService {
             // const arr = existingCategory.brainstormidea_set.filter((i) => !i.removed);
             console.log(idea, existingCategory.brainstormidea_set);
             try {
-              existingCategory.brainstormidea_set = pushIdeaIntoCategory(
+              existingCategory.brainstormidea_set = pushItemIntoList(
                 existingCategory.brainstormidea_set,
-                idea
+                idea,
+                'previous_idea',
+                'next_idea'
               );
             } catch (error) {
               console.log(error);
@@ -163,7 +165,7 @@ export class BrainstormService {
     });
   }
 
-  removeIdeaFromCategory(ideas: Array<Idea>, removedId: number) {
+  removeItemFromList(ideas: Array<Idea>, removedId: number) {
     // Helper function to find the object with a given id
     const findObjectById = (id) => {
       return ideas.find((obj) => obj.id === id);
@@ -173,7 +175,7 @@ export class BrainstormService {
       if (!removedObject) {
         throw new Error(`Object with id ${removedId} not found in the array`);
       }
-      ideas = removeIdeaFromCategory(ideas, removedId);
+      ideas = removeItemFromList(ideas, removedId, 'previous_idea', 'next_idea');
       return ideas;
     } catch (error) {
       console.log(error);
@@ -182,26 +184,27 @@ export class BrainstormService {
 
   populateCategories(board: Board, columns: Array<Category>) {
     columns = [];
-    board.brainstormcategory_set.sort((a, b) => {
-      return a.id - b.id;
-    });
     board.brainstormcategory_set.forEach((category) => {
       if (category.brainstormidea_set) {
         category.brainstormidea_set.forEach((idea) => {
           idea = { ...idea, showClose: false, editing: false, addingIdea: false };
         });
         category.brainstormidea_set = category.brainstormidea_set.filter((idea) => !idea.removed);
-      } else {
-        // Editor preview panel
       }
     });
 
     columns = board.brainstormcategory_set.filter((cat) => !cat.removed);
 
+    columns = sortByFirstToLast(columns, 'previous_category', 'next_category');
+
     for (let i = 0; i < columns.length; i++) {
       const column: Category = columns[i];
       try {
-        column.brainstormidea_set = sortByFirstToLast(column.brainstormidea_set);
+        column.brainstormidea_set = sortByFirstToLast(
+          column.brainstormidea_set,
+          'previous_idea',
+          'next_idea'
+        );
       } catch (error) {
         console.log(error);
       }
@@ -385,9 +388,11 @@ export class BrainstormService {
             for (let i = 0; i < myDifferences.length; i++) {
               const element = myDifferences[i];
               if (element) {
-                existingCategory.brainstormidea_set = removeIdeaFromCategory(
+                existingCategory.brainstormidea_set = removeItemFromList(
                   existingCategory.brainstormidea_set,
-                  element.id
+                  element.id,
+                  'previous_idea',
+                  'next_idea'
                 );
               }
             }
@@ -695,25 +700,25 @@ export class BrainstormService {
     return selectedBoard;
   }
 
-  getIdeaFromCategory(category: Category, first: boolean): Idea | null {
-    try {
-      const ideas = category.brainstormidea_set.filter((idea) => !idea.removed);
-      if (ideas.length) {
-        if (ideas.length === 1) {
-          return ideas[0];
-        }
-        let currentId = first ? ideas[0].previous_idea : ideas[0].next_idea;
-        let current = ideas.find((item) => item.id === currentId);
-        while (current && current[first ? 'previous_idea' : 'next_idea']) {
-          currentId = current[first ? 'previous_idea' : 'next_idea'];
-          current = ideas.find((item) => item.id === currentId);
-        }
-        return current || ideas[0];
-      }
-      return null;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  }
+  // getItemFromList(category: Category, first: boolean): Idea | null {
+  //   try {
+  //     const ideas = category.brainstormidea_set.filter((idea) => !idea.removed);
+  //     if (ideas.length) {
+  //       if (ideas.length === 1) {
+  //         return ideas[0];
+  //       }
+  //       let currentId = first ? ideas[0].previous_idea : ideas[0].next_idea;
+  //       let current = ideas.find((item) => item.id === currentId);
+  //       while (current && current[first ? 'previous_idea' : 'next_idea']) {
+  //         currentId = current[first ? 'previous_idea' : 'next_idea'];
+  //         current = ideas.find((item) => item.id === currentId);
+  //       }
+  //       return current || ideas[0];
+  //     }
+  //     return null;
+  //   } catch (error) {
+  //     console.error(error);
+  //     return null;
+  //   }
+  // }
 }

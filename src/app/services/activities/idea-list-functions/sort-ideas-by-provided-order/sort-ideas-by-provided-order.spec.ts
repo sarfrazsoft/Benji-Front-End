@@ -1,4 +1,4 @@
-import { IdeaBuilder } from '../idea-builder';
+import { IdeaBuilder } from '../../object-builders/idea-builder';
 import { sortIdeasByProvidedOrder } from './sort-ideas-by-provided-order';
 
 describe('sortIdeasByProvidedOrder', () => {

@@ -23,7 +23,7 @@ import {
   ContextService,
   SharingToolService,
 } from 'src/app/services';
-import { getIdeaFromCategory } from 'src/app/services/activities/idea-list-functions/get-idea-from-category/get-idea-from-category';
+import { getItemFromList } from 'src/app/services/activities/item-list-functions/get-item-from-list/get-item-from-list';
 import {
   Board,
   BoardMode,
@@ -296,7 +296,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       if (result) {
         // every posted idea go through here
         if (category) {
-          const lastIdea = getIdeaFromCategory(category, 'last');
+          const lastIdea = getItemFromList(category.brainstormidea_set, 'last', 'previous_idea', 'next_idea');
           result = {
             next_idea: null,
             previous_idea: lastIdea?.id ?? null,

@@ -1,8 +1,8 @@
 import { Idea } from '../../../backend/schema';
-import { IdeaBuilder } from '../idea-builder';
-import { moveIdea } from './move-idea-in-list';
+import { IdeaBuilder } from '../../object-builders/idea-builder';
+import { moveItem } from './move-item-in-list';
 
-describe('moveIdeaInList', () => {
+describe('moveItem', () => {
   let idea: Idea;
   let ideasArray: Array<Idea>;
 
@@ -18,7 +18,7 @@ describe('moveIdeaInList', () => {
     ideasArray = [idea1, idea2];
 
     // move first item to second place
-    const movedIdea = moveIdea(ideasArray, 0, 1);
+    const movedIdea = moveItem(ideasArray, 0, 1, 'previous_idea', 'next_idea');
 
     expect(movedIdea.id).toBe(idea1.id);
     expect(movedIdea.previous_idea).toBe(idea2.id);
@@ -32,7 +32,7 @@ describe('moveIdeaInList', () => {
     ideasArray = [idea1, idea2];
 
     // move first item to second place
-    const movedIdea = moveIdea(ideasArray, 1, 0);
+    const movedIdea = moveItem(ideasArray, 1, 0, 'previous_idea', 'next_idea');
 
     expect(movedIdea.id).toBe(idea2.id);
     expect(movedIdea.previous_idea).toBe(null);
@@ -46,7 +46,7 @@ describe('moveIdeaInList', () => {
 
     ideasArray = [idea1, idea2, idea3];
 
-    const movedIdea = moveIdea(ideasArray, 0, 1);
+    const movedIdea = moveItem(ideasArray, 0, 1, 'previous_idea', 'next_idea');
 
     expect(movedIdea.id).toBe(idea1.id);
     expect(movedIdea.previous_idea).toBe(idea2.id);
@@ -60,7 +60,7 @@ describe('moveIdeaInList', () => {
 
     ideasArray = [idea1, idea2, idea3];
 
-    const movedIdea = moveIdea(ideasArray, 1, 2);
+    const movedIdea = moveItem(ideasArray, 1, 2, 'previous_idea', 'next_idea');
 
     expect(movedIdea.id).toBe(idea2.id);
     expect(movedIdea.previous_idea).toBe(idea3.id);
@@ -74,7 +74,7 @@ describe('moveIdeaInList', () => {
 
     ideasArray = [idea1, idea2, idea3];
 
-    expect(() => moveIdea(ideasArray, 6, 2)).toThrowError('Invalid fromIndex');
+    expect(() => moveItem(ideasArray, 6, 2, 'previous_idea', 'next_idea')).toThrowError('Invalid fromIndex');
   });
 
   it('should throw invalid to index error', () => {
@@ -84,7 +84,7 @@ describe('moveIdeaInList', () => {
 
     ideasArray = [idea1, idea2, idea3];
 
-    expect(() => moveIdea(ideasArray, 1, 9)).toThrowError('Invalid toIndex');
+    expect(() => moveItem(ideasArray, 1, 9, 'previous_idea', 'next_idea')).toThrowError('Invalid toIndex');
   });
 });
 

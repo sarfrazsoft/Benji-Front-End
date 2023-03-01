@@ -150,6 +150,14 @@ export interface BrainstormCreateCategoryResponse {
   board: number;
   id: number;
   removed: boolean;
+  previous_category: number;
+  next_category: number;
+}
+
+export interface BrainstormCategoryRearrangeResponse {
+  category_id: number;
+  previous_category: number;
+  next_category: number;
 }
 
 export interface BrainstormRemoveCategoryResponse {

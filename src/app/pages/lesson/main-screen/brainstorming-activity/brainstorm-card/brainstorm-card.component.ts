@@ -225,6 +225,17 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   ngOnChanges(changes) {
+    if (this.item.idea_image) {
+      if (this.item.idea_image.document) {
+        // this.imageSrc = this.item.idea_image.document;
+        if (
+          !this.item.idea_image.document.startsWith('/media') &&
+          !this.item.idea_image.document.startsWith('https')
+        ) {
+          this.item.idea_image.document = '/media' + this.item.idea_image.document;
+        }
+      }
+    }
     if (this.eventType === EventTypes.brainstormEditIdeaSubmitEvent) {
       if (this.item.idea_video && this.videoAvailable) {
         if (this.oldVideo !== this.item.idea_video.id) {
@@ -443,6 +454,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        console.log(result);
         this.brainstormService.saveIdea$.next(result);
       }
       this.ideaDetailedDialogRef = null;

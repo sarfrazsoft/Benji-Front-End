@@ -26,14 +26,11 @@ import {
 import {
   AvatarSize,
   Board,
-  BrainstormRemoveIdeaCommentEvent,
   BrainstormSubmitIdeaCommentEvent,
   EventTypes,
   Idea,
-  IdeaComment,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { BrainstormSubmitIdeaCommentResponse } from 'src/app/services/backend/schema/event-responses';
 import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';

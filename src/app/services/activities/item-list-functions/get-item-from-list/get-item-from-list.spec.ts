@@ -1,7 +1,7 @@
 import { Category, Idea } from '../../../backend/schema';
-import { getIdeaFromCategory } from './get-idea-from-category';
+import { getItemFromList } from './get-item-from-list';
 
-describe('getIdeaFromCategory', () => {
+describe('getItemFromList', () => {
   it('should return the first idea when first parameter is first', () => {
     const category = {
       brainstormidea_set: [
@@ -10,7 +10,7 @@ describe('getIdeaFromCategory', () => {
         { id: 3, removed: false, next_idea: null, previous_idea: 2 },
       ],
     } as Category;
-    const result = getIdeaFromCategory(category, 'first');
+    const result = getItemFromList(category.brainstormidea_set, 'first', 'previous_idea', 'next_idea');
 
     expect(result).toEqual({ id: 1, removed: false, next_idea: 2, previous_idea: null } as Idea);
   });
@@ -23,7 +23,7 @@ describe('getIdeaFromCategory', () => {
         { id: 3, removed: false, next_idea: null, previous_idea: 2 },
       ],
     } as Category;
-    const result = getIdeaFromCategory(category, 'last');
+    const result = getItemFromList(category.brainstormidea_set, 'last', 'previous_idea', 'next_idea');
     expect(result).toEqual({ id: 3, removed: false, next_idea: null, previous_idea: 2 } as Idea);
   });
 
@@ -31,7 +31,7 @@ describe('getIdeaFromCategory', () => {
     const category = {
       brainstormidea_set: [],
     } as Category;
-    const result = getIdeaFromCategory(category, 'first');
+    const result = getItemFromList(category.brainstormidea_set, 'first', 'previous_idea', 'next_idea');
     expect(result).toBeNull();
   });
 
@@ -39,7 +39,7 @@ describe('getIdeaFromCategory', () => {
     const category = {
       brainstormidea_set: [{ id: 1, removed: false, next_idea: null, previous_idea: null }],
     } as Category;
-    const result = getIdeaFromCategory(category, 'first');
+    const result = getItemFromList(category.brainstormidea_set, 'first', 'previous_idea', 'next_idea');
     expect(result).toEqual({ id: 1, removed: false, next_idea: null, previous_idea: null } as Idea);
   });
 
@@ -51,7 +51,7 @@ describe('getIdeaFromCategory', () => {
         { id: 3, removed: true, next_idea: null, previous_idea: 2 },
       ],
     } as Category;
-    const result = getIdeaFromCategory(category, 'first');
+    const result = getItemFromList(category.brainstormidea_set, 'first', 'previous_idea', 'next_idea');
     expect(result).toBeNull();
   });
 
@@ -62,7 +62,7 @@ describe('getIdeaFromCategory', () => {
         { id: 1, removed: false, next_idea: 2, previous_idea: null },
       ],
     } as Category;
-    const result = getIdeaFromCategory(category, 'last');
+    const result = getItemFromList(category.brainstormidea_set, 'last', 'previous_idea', 'next_idea');
     expect(result).toBeNull();
   });
 
@@ -74,7 +74,7 @@ describe('getIdeaFromCategory', () => {
         { id: 2, removed: false, next_idea: 3, previous_idea: 1 },
       ],
     } as Category;
-    const result = getIdeaFromCategory(category, 'first');
+    const result = getItemFromList(category.brainstormidea_set, 'first', 'previous_idea', 'next_idea');
     expect(result).toEqual({ id: 1, removed: false, next_idea: 2, previous_idea: null } as Idea);
   });
 
@@ -86,7 +86,7 @@ describe('getIdeaFromCategory', () => {
         { id: 1, removed: false, next_idea: 2, previous_idea: null },
       ],
     } as Category;
-    const result = getIdeaFromCategory(category, 'last');
+    const result = getItemFromList(category.brainstormidea_set, 'last', 'previous_idea', 'next_idea');
     expect(result).toEqual({ id: 3, removed: false, next_idea: null, previous_idea: 2 } as Idea);
   });
 
@@ -94,7 +94,7 @@ describe('getIdeaFromCategory', () => {
     const category = {
       brainstormidea_set: undefined,
     } as Category;
-    const result = getIdeaFromCategory(category, 'first');
+    const result = getItemFromList(category.brainstormidea_set, 'first', 'previous_idea', 'next_idea');
     expect(result).toBeNull();
   });
 
@@ -102,7 +102,7 @@ describe('getIdeaFromCategory', () => {
     const category = {
       brainstormidea_set: null,
     } as Category;
-    const result = getIdeaFromCategory(category, 'first');
+    const result = getItemFromList(category.brainstormidea_set, 'first', 'previous_idea', 'next_idea');
     expect(result).toBeNull();
   });
 });

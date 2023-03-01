@@ -1,7 +1,7 @@
 import { Idea } from '../../backend/schema';
-import { IdeaBuilder } from './idea-builder';
+import { removeItemFromList } from '../item-list-functions/remove-item-from-category/remove-item-from-category';
+import { IdeaBuilder } from '../object-builders/idea-builder';
 import { insertAt } from './insert-at/insert-at';
-import { removeIdeaFromCategory } from './remove-idea-from-category/remove-idea-from-category';
 
 describe('insertAt', () => {
   let idea: Idea;
@@ -23,7 +23,7 @@ describe('insertAt', () => {
     const idea4 = new IdeaBuilder().withId(idea4Id).withPreviousIdea(idea3.id).withNextIdea(null).build();
     let ideasArray2 = [idea3, idea4];
 
-    ideasArray2 = removeIdeaFromCategory(ideasArray2, idea4.id);
+    ideasArray2 = removeItemFromList(ideasArray2, idea4.id, 'previous_idea', 'next_idea');
     const movedIdea = insertAt(ideasArray1, idea4, 2);
 
     expect(ideasArray2.length).toBe(1);
@@ -63,7 +63,7 @@ describe('insertAt', () => {
     const idea4 = new IdeaBuilder().withId(idea4Id).withPreviousIdea(null).withNextIdea(null).build();
     const ideasArray2 = [idea4];
 
-    ideasArray1 = removeIdeaFromCategory(ideasArray1, idea3.id);
+    ideasArray1 = removeItemFromList(ideasArray1, idea3.id, 'previous_idea', 'next_idea');
     const movedIdea = insertAt(ideasArray2, idea3, 1);
 
     expect(ideasArray1.length).toBe(2);
@@ -95,7 +95,7 @@ describe('insertAt', () => {
     const idea3 = new IdeaBuilder().withId(3).withPreviousIdea(null).withNextIdea(null).build();
     let ideasArray2 = [idea3];
 
-    ideasArray2 = removeIdeaFromCategory(ideasArray2, idea3.id);
+    ideasArray2 = removeItemFromList(ideasArray2, idea3.id, 'previous_idea', 'next_idea');
     const movedIdea = insertAt(ideasArray1, idea3, 1);
 
     expect(ideasArray2.length).toBe(0);

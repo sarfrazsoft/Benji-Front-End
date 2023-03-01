@@ -26,6 +26,7 @@ export type EventType =
   | 'BrainstormCreateCategoryEvent'
   | 'BrainstormRemoveCategoryEvent'
   | 'BrainstormRenameCategoryEvent'
+  | 'BrainstormCategoryRearrangeEvent'
   | 'BrainstormAddBoardEventBaseEvent'
   | 'DuplicateBoardEvent'
   | 'BrainstormRemoveBoardEvent'
@@ -69,6 +70,7 @@ export enum EventTypes {
   brainstormCreateCategoryEvent = 'BrainstormCreateCategoryEvent',
   brainstormRemoveCategoryEvent = 'BrainstormRemoveCategoryEvent',
   brainstormRenameCategoryEvent = 'BrainstormRenameCategoryEvent',
+  brainstormCategoryRearrangeEvent = 'BrainstormCategoryRearrangeEvent',
   brainstormAddBoardEventBaseEvent = 'BrainstormAddBoardEventBaseEvent',
   duplicateBoardEvent = 'DuplicateBoardEvent',
   brainstormRemoveBoardEvent = 'BrainstormRemoveBoardEvent',
